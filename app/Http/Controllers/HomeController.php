@@ -79,6 +79,7 @@ class HomeController extends Controller
     {
         if (! $request->session()->get('verified_parent')) {
             $classrooms = Classroom::orderBy('name', 'asc')->get();
+
             return Inertia::render('public/FinanceGate', [
                 'classrooms' => $classrooms,
             ]);
@@ -117,7 +118,7 @@ class HomeController extends Controller
             'agreed.accepted' => 'Anda harus mencentang persetujuan syarat dan ketentuan terlebih dahulu.',
         ]);
 
-        $classroomName = \App\Models\Classroom::where('id', $request->classroom_id)->value('name') ?? 'Unknown';
+        $classroomName = Classroom::where('id', $request->classroom_id)->value('name') ?? 'Unknown';
 
         $inputName = strtolower(trim($request->student_name));
         $inputName = preg_replace('/\s+/', ' ', $inputName);
@@ -177,10 +178,10 @@ class HomeController extends Controller
     public function programs()
     {
         $programs = Program::with([
-            'activities' => fn ($q) => $q->orderBy('activity_date', 'desc'),
+            'activities' => fn ($q) => $q->orderBy('activity_date', 'asc'),
             'activities.documents',
             'documents' => fn ($q) => $q->whereNull('program_activity_id'),
-        ])->orderBy('created_at', 'desc')->get();
+        ])->orderBy('start_date', 'asc')->get();
 
         return Inertia::render('public/Programs', [
             'programs' => $programs,

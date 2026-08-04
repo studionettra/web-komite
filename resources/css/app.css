@@ -33,3 +33,37 @@ button,
 label {
     cursor: pointer;
 }
+
+/* Modern thin scrollbar — visible only on hover */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    transition: scrollbar-color 0.3s ease;
+}
+
+.custom-scrollbar:hover {
+    scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+
+/* WebKit (Chrome, Edge, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 9999px;
+    transition: background 0.3s ease;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.5);
+}

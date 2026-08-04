@@ -27,7 +27,7 @@ class ProgramController extends Controller
         $program->load([
             'documents' => fn ($q) => $q->whereNull('program_activity_id'),
             'users',
-            'activities' => fn ($q) => $q->orderBy('activity_date', 'desc'),
+            'activities' => fn ($q) => $q->orderBy('activity_date', 'asc'),
             'activities.documents',
         ]);
 

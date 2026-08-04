@@ -96,10 +96,10 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
     }, []);
 
     const getProgramIcon = (title: string) => {
-        if (!title) return <CalendarBlank weight="fill" className="h-28 w-28 text-slate-100 transition-colors duration-500 group-hover:text-blue-100 absolute -bottom-6 -right-6 z-0" />;
+        if (!title) return <CalendarBlank weight="fill" className="absolute -bottom-4 -right-4 z-0 h-20 w-20 text-slate-100 transition-colors duration-500 group-hover:text-blue-100 sm:-bottom-6 sm:-right-6 sm:h-28 sm:w-28" />;
 
         const t = title.toLowerCase();
-        const iconClass = "h-28 w-28 text-slate-100 transition-colors duration-500 group-hover:text-blue-100 absolute -bottom-6 -right-6 z-0 rotate-[-10deg]";
+        const iconClass = "absolute -bottom-4 -right-4 z-0 h-20 w-20 rotate-[-10deg] text-slate-100 transition-colors duration-500 group-hover:text-blue-100 sm:-bottom-6 sm:-right-6 sm:h-28 sm:w-28";
 
         if (t.includes('berbagi')) return <Heart weight="fill" className={iconClass} />;
         if (t.includes('lomba') || t.includes('hut')) return <Trophy weight="fill" className={iconClass} />;
@@ -120,10 +120,10 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
             <Head title="Beranda - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu" />
 
             {/* Hero Section */}
-            <section className="relative overflow-hidden border-b border-slate-200 bg-slate-50 pt-24 pb-20 lg:pt-32 lg:pb-28">
+            <section className="relative overflow-hidden border-b border-slate-200 bg-slate-50 pt-20 pb-16 sm:pt-24 sm:pb-20 lg:pt-32 lg:pb-28">
                 <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                     {heroProgram ? (
-                        <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
+                        <div className="flex flex-col items-center gap-8 sm:gap-12 lg:flex-row lg:gap-16">
                             {/* Text Content */}
                             <div className="w-full lg:w-1/2">
                                 <div
@@ -133,10 +133,10 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
                                         ? 'Sedang Berlangsung'
                                         : 'Program Terdekat'}
                                 </div>
-                                <h1 className="mb-6 text-4xl leading-[1.15] font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+                                <h1 className="mb-4 text-3xl leading-[1.15] font-bold tracking-tight text-slate-900 sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl">
                                     {heroProgram.title}
                                 </h1>
-                                <p className="mb-8 max-w-lg text-lg leading-relaxed text-slate-600">
+                                <p className="mb-6 max-w-lg text-base leading-relaxed text-slate-600 sm:mb-8 sm:text-lg">
                                     {heroProgram.description ||
                                         'Mari dukung dan sukseskan program komite ini bersama-sama demi kemajuan pendidikan anak-anak kita.'}
                                 </p>
@@ -180,26 +180,26 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
                             </div>
 
                             {/* Image Content */}
-                            <div className="w-full lg:w-1/2 relative group z-10">
+                            <div className="relative z-10 w-full group lg:w-1/2">
                                 {/* Animated Background Icons */}
                                 {/* Top Left */}
                                 <div className={`absolute top-4 left-4 -z-10 text-blue-300 transition-all duration-1000 ease-out delay-100 origin-bottom-right ${isLoaded ? '-translate-x-[50%] -translate-y-[50%] rotate-[-15deg] opacity-100 scale-100' : 'translate-x-0 translate-y-0 rotate-0 opacity-0 scale-50'}`}>
-                                    <GraduationCap weight="duotone" className="h-28 w-28 drop-shadow-lg" />
+                                    <GraduationCap weight="duotone" className="h-16 w-16 drop-shadow-lg sm:h-28 sm:w-28" />
                                 </div>
                                 {/* Top Right */}
                                 <div className={`absolute top-4 right-4 -z-10 text-yellow-400 transition-all duration-1000 ease-out delay-300 origin-bottom-left ${isLoaded ? 'translate-x-[50%] -translate-y-[50%] rotate-[20deg] opacity-100 scale-100' : 'translate-x-0 translate-y-0 rotate-0 opacity-0 scale-50'}`}>
-                                    <Palette weight="duotone" className="h-24 w-24 drop-shadow-lg" />
+                                    <Palette weight="duotone" className="h-14 w-14 drop-shadow-lg sm:h-24 sm:w-24" />
                                 </div>
                                 {/* Bottom Right */}
                                 <div className={`absolute bottom-4 right-4 -z-10 text-emerald-300 transition-all duration-1000 ease-out delay-500 origin-top-left ${isLoaded ? 'translate-x-[50%] translate-y-[50%] rotate-[30deg] opacity-100 scale-100' : 'translate-x-0 translate-y-0 rotate-0 opacity-0 scale-50'}`}>
-                                    <BookOpen weight="duotone" className="h-32 w-32 drop-shadow-lg" />
+                                    <BookOpen weight="duotone" className="h-20 w-20 drop-shadow-lg sm:h-32 sm:w-32" />
                                 </div>
                                 {/* Bottom Left */}
                                 <div className={`absolute bottom-4 left-4 -z-10 text-pink-300 transition-all duration-1000 ease-out delay-700 origin-top-right ${isLoaded ? '-translate-x-[50%] translate-y-[50%] rotate-[-25deg] opacity-100 scale-100' : 'translate-x-0 translate-y-0 rotate-0 opacity-0 scale-50'}`}>
-                                    <Backpack weight="duotone" className="h-24 w-24 drop-shadow-lg" />
+                                    <Backpack weight="duotone" className="h-14 w-14 drop-shadow-lg sm:h-24 sm:w-24" />
                                 </div>
                                 
-                                <div className="relative z-10 aspect-[4/3] w-full overflow-hidden rounded-3xl bg-slate-200 shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
+                                <div className="relative z-10 aspect-[4/3] w-full overflow-hidden rounded-2xl bg-slate-200 shadow-xl transition-transform duration-700 group-hover:scale-[1.02] sm:rounded-3xl sm:shadow-2xl">
                                     {heroProgram ? (
                                         heroProgram.image ? (
                                             <img
@@ -227,14 +227,14 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
                         </div>
                     ) : (
                         <div className="py-16 text-center">
-                            <h1 className="mb-6 text-4xl leading-[1.15] font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+                            <h1 className="mb-4 text-3xl leading-[1.15] font-bold tracking-tight text-slate-900 sm:mb-6 sm:text-4xl md:text-5xl lg:text-6xl">
                                 Transparansi untuk{' '}
                                 <br className="hidden sm:block" />
                                 <span className="text-blue-600">
                                     Pendidikan Anak Kita
                                 </span>
                             </h1>
-                            <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-slate-600">
+                            <p className="mx-auto mb-6 max-w-2xl text-base leading-relaxed text-slate-600 sm:mb-8 sm:text-lg">
                                 Temukan informasi program kerja, laporan
                                 keuangan, dan ruang partisipasi secara terbuka
                                 dari Komite KBIT-TKIT Al-Ikhlash Pasar Minggu.
@@ -244,21 +244,21 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
 
                     {/* Upcoming Sessions Content (Inside Hero Section) */}
                     {upcomingSessions && upcomingSessions.length > 0 && (
-                        <div className="mt-20 pt-12 border-t border-slate-200/80">
-                            <div className="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
+                        <div className="mt-12 pt-8 border-t border-slate-200/80 sm:mt-20 sm:pt-12">
+                            <div className="mb-6 flex flex-col items-center justify-between gap-3 sm:mb-8 sm:flex-row sm:gap-4">
                                 <div>
-                                    <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Program Yang Akan Datang</h2>
-                                    <p className="mt-2 text-slate-600">Jadwal sesi program yang akan datang</p>
+                                    <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl md:text-3xl">Program Yang Akan Datang</h2>
+                                    <p className="mt-1 text-sm text-slate-600 sm:mt-2 sm:text-base">Jadwal sesi program yang akan datang</p>
                                 </div>
                                 <Link href="/program" className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700">
                                     Lihat Semua Program <span aria-hidden="true">&rarr;</span>
                                 </Link>
                             </div>
-                            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
                                 {upcomingSessions.map((session: any) => (
-                                    <div key={session.id} className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md hover:border-blue-300">
+                                    <div key={session.id} className="group relative overflow-hidden rounded-xl border border-slate-200/80 bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md hover:border-blue-300 sm:rounded-2xl sm:p-6">
                                         <div className="relative z-10">
-                                            <div className="mb-4 flex items-center justify-between">
+                                            <div className="mb-3 flex flex-wrap items-center justify-between gap-1 sm:mb-4">
                                                 <span className="inline-flex items-center rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700 transition-colors group-hover:bg-blue-100">
                                                     {new Date(session.activity_date).toLocaleDateString('id-ID', {
                                                         day: 'numeric',
@@ -272,7 +272,7 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
                                                     </span>
                                                 )}
                                             </div>
-                                            <h4 className="mb-2 text-lg font-bold text-slate-900 leading-tight group-hover:text-blue-600 transition-colors">{session.title}</h4>
+                                            <h4 className="mb-1.5 text-base font-bold leading-tight text-slate-900 transition-colors group-hover:text-blue-600 sm:mb-2 sm:text-lg">{session.title}</h4>
                                             {session.program && (
                                                 <p className="text-sm font-medium text-slate-500 line-clamp-2">{session.program.title}</p>
                                             )}
@@ -296,9 +296,9 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
             />
 
             {/* Financial CTA Banner */}
-            <section className="border-t border-slate-200 bg-slate-50 py-16">
+            <section className="border-t border-slate-200 bg-slate-50 py-10 sm:py-16">
                 <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                    <div className="relative overflow-hidden rounded-3xl bg-slate-900 shadow-lg">
+                    <div className="relative overflow-hidden rounded-2xl bg-slate-900 shadow-lg sm:rounded-3xl">
                         {/* Background pattern */}
                         <div className="absolute inset-0 opacity-10">
                             <svg
@@ -313,15 +313,15 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
                             </svg>
                         </div>
 
-                        <div className="relative flex flex-col items-center justify-between gap-8 p-8 md:flex-row md:p-12 lg:p-16">
+                        <div className="relative flex flex-col items-center justify-between gap-6 p-6 sm:gap-8 sm:p-8 md:flex-row md:p-12 lg:p-16">
                             <div className="max-w-2xl">
                                 <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800 px-3 py-1 text-xs font-bold tracking-wider text-slate-300 uppercase">
                                     Transparansi
                                 </div>
-                                <h2 className="mb-4 text-3xl font-bold tracking-tight text-white md:text-4xl">
+                                <h2 className="mb-3 text-2xl font-bold tracking-tight text-white sm:mb-4 sm:text-3xl md:text-4xl">
                                     Laporan Keuangan
                                 </h2>
-                                <p className="text-lg leading-relaxed text-slate-300">
+                                <p className="text-sm leading-relaxed text-slate-300 sm:text-lg">
                                     Kami berkomitmen untuk mengelola dana komite
                                     secara transparan dan akuntabel. Akses
                                     seluruh rincian pemasukan dan pengeluaran
@@ -332,7 +332,7 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
                             <div className="w-full shrink-0 md:w-auto">
                                 <Link
                                     href="/keuangan"
-                                    className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-white px-8 py-4 font-bold text-slate-900 shadow-sm transition-all duration-200 hover:scale-105 hover:bg-slate-100 md:w-auto"
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-slate-900 shadow-sm transition-all duration-200 hover:scale-105 hover:bg-slate-100 sm:gap-3 sm:px-8 sm:py-4 sm:text-base md:w-auto"
                                 >
                                     <svg
                                         className="h-5 w-5"
@@ -356,9 +356,9 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
             </section>
 
             {/* Instagram Feed Section */}
-            <section className="bg-white py-20">
+            <section className="bg-white py-12 sm:py-20">
                 <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                    <div className="mb-12 flex flex-col items-center justify-between gap-6 sm:flex-row">
+                    <div className="mb-8 flex flex-col items-center justify-between gap-4 sm:mb-12 sm:flex-row sm:gap-6">
                         <div className="flex items-center gap-4">
                             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-linear-to-tr from-yellow-400 via-red-500 to-purple-500 text-white">
                                 <svg
@@ -375,8 +375,8 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
                                 </svg>
                             </div>
                             <div>
-                                <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-                                    Ikuti Aktivits Kami di Instagram
+                                <h2 className="text-lg font-bold tracking-tight text-slate-900 sm:text-2xl">
+                                    Ikuti Aktivitas Kami di Instagram
                                 </h2>
                             </div>
                         </div>
@@ -384,13 +384,13 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
                             href="https://www.instagram.com/tkit.alikhlash/?hl=en"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-full bg-linear-to-r from-purple-600 to-pink-500 px-6 py-3 font-bold whitespace-nowrap text-white shadow-md transition-all duration-200 hover:-translate-y-px hover:shadow-lg"
+                            className="inline-flex items-center gap-2 rounded-full bg-linear-to-r from-purple-600 to-pink-500 px-5 py-2.5 text-sm font-bold whitespace-nowrap text-white shadow-md transition-all duration-200 hover:-translate-y-px hover:shadow-lg sm:px-6 sm:py-3 sm:text-base"
                         >
                             Follow Now
                         </a>
                     </div>
 
-                    <div className="mt-8 min-h-75 w-full">
+                    <div className="mt-6 min-h-75 w-full sm:mt-8">
                         <div
                             className="elfsight-app-81fba1fa-87f5-4b47-bdbd-1eff0f9bdbf6"
                             data-elfsight-app-lazy="true"

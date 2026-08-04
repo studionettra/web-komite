@@ -183,22 +183,22 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
         <DashboardLayout>
             <Head title="Notulensi Rapat" />
 
-            <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+            <div className="mb-4 flex flex-col items-start justify-between gap-3 sm:mb-6 sm:flex-row sm:items-center sm:gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                    <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
                         Notulensi Rapat
                     </h1>
-                    <p className="mt-1 text-slate-500">
+                    <p className="mt-1 text-sm text-slate-500">
                         Catat keputusan dan tindak lanjut dari setiap pertemuan
                         komite.
                     </p>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
                 {canManageMeeting && (
                     <div className="lg:col-span-1">
-                        <div className="sticky top-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <div className="sticky top-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
                             <div className="mb-6 flex items-center justify-between">
                                 <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
                                     <Note
@@ -286,7 +286,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                     </label>
 
                                     <div
-                                        className={`flex min-h-11.5 w-full cursor-text flex-wrap items-center gap-2 rounded-xl border bg-slate-50 px-3 py-2 transition-colors hover:bg-white ${isDropdownOpen ? 'border-blue-500 ring-2 ring-blue-500/20' : 'border-slate-300'}`}
+                                        className={`flex min-h-11.5 w-full cursor-text flex-wrap items-center gap-1.5 rounded-xl border bg-slate-50 px-3 py-2 transition-colors hover:bg-white sm:gap-2 ${isDropdownOpen ? 'border-blue-500 ring-2 ring-blue-500/20' : 'border-slate-300'}`}
                                         onClick={() => setIsDropdownOpen(true)}
                                     >
                                         {selectedAttendees.length === 0 && (
@@ -298,7 +298,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         {selectedAttendees.map((name) => (
                                             <span
                                                 key={name}
-                                                className="inline-flex items-center gap-1 rounded-lg border border-blue-200/60 bg-blue-50 px-2.5 py-1 text-sm font-semibold text-blue-700 shadow-sm"
+                                                className="inline-flex items-center gap-1 rounded-lg border border-blue-200/60 bg-blue-50 px-2 py-0.5 text-xs font-semibold text-blue-700 shadow-sm sm:px-2.5 sm:py-1 sm:text-sm"
                                             >
                                                 {name}
                                                 <button
@@ -333,7 +333,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                     setIsDropdownOpen(false)
                                                 }
                                             ></div>
-                                            <div className="absolute z-20 mt-2 max-h-60 w-full overflow-y-auto rounded-xl border border-slate-200 bg-white py-1.5 shadow-lg">
+                                            <div className="custom-scrollbar absolute z-20 mt-2 max-h-60 w-full overflow-y-auto rounded-xl border border-slate-200 bg-white py-1.5 shadow-lg">
                                                 {COMMITTEE_MEMBERS.map(
                                                     (name) => {
                                                         const isSelected =
@@ -500,15 +500,15 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                     {!canManageMeeting ? (
                         <div className="space-y-6">
                             {meetings.data.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+                                <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm sm:p-12">
                                     <UsersThree
                                         weight="duotone"
                                         className="mb-4 h-16 w-16 text-slate-300"
                                     />
-                                    <h3 className="text-lg font-bold text-slate-700">
+                                    <h3 className="text-base font-bold text-slate-700 sm:text-lg">
                                         Belum Ada Notulensi
                                     </h3>
-                                    <p className="mt-2 text-slate-500">
+                                    <p className="mt-2 max-w-sm text-sm text-slate-500">
                                         Belum ada catatan rapat komite yang
                                         dipublikasikan.
                                     </p>
@@ -710,20 +710,20 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         <tr>
                                             <th
                                                 scope="col"
-                                                className="px-6 py-4 text-left text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                                className="px-4 py-3 text-left text-xs font-bold tracking-wider text-slate-500 uppercase sm:px-6 sm:py-4"
                                             >
                                                 Tanggal & Agenda
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="px-6 py-4 text-left text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                                className="px-4 py-3 text-left text-xs font-bold tracking-wider text-slate-500 uppercase sm:px-6 sm:py-4"
                                             >
                                                 Keputusan
                                             </th>
                                             {canManageMeeting && (
                                                 <th
                                                     scope="col"
-                                                    className="px-6 py-4 text-right text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                                    className="px-4 py-3 text-right text-xs font-bold tracking-wider text-slate-500 uppercase sm:px-6 sm:py-4"
                                                 >
                                                     Aksi
                                                 </th>
@@ -755,9 +755,9 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         {meetings.data.map((meeting: any) => (
                                             <tr
                                                 key={meeting.id}
-                                                className="block border-b border-slate-100 p-5 transition-colors last:border-0 hover:bg-slate-50/80 md:table-row md:border-0 md:p-0"
+                                                className="block border-b border-slate-100 p-4 transition-colors last:border-0 hover:bg-slate-50/80 sm:p-5 md:table-row md:border-0 md:p-0"
                                             >
-                                                <td className="block px-0 py-2 align-top md:table-cell md:px-6 md:py-4">
+                                                <td className="block px-0 py-2 align-top md:table-cell md:px-4 md:py-4 lg:px-6">
                                                     <div className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold tracking-wider text-slate-500 uppercase">
                                                         <CalendarBlank weight="bold" />
                                                         {meeting.date
@@ -790,7 +790,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                         </div>
                                                     )}
                                                 </td>
-                                                <td className="mt-3 block px-0 py-2 align-top md:mt-0 md:table-cell md:px-6 md:py-4">
+                                                <td className="mt-3 block px-0 py-2 align-top md:mt-0 md:table-cell md:px-4 md:py-4 lg:px-6">
                                                     <div className="flex items-start gap-2">
                                                         <CheckCircle
                                                             weight="fill"
@@ -857,7 +857,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                         )}
                                                 </td>
                                                 {canManageMeeting && (
-                                                    <td className="mt-4 block border-t border-slate-100 px-0 pt-4 text-right align-top whitespace-nowrap md:mt-0 md:table-cell md:border-0 md:px-6 md:py-4">
+                                                    <td className="mt-4 block border-t border-slate-100 px-0 pt-4 text-right align-top whitespace-nowrap md:mt-0 md:table-cell md:border-0 md:px-4 md:py-4 lg:px-6">
                                                         <div className="grid grid-cols-3 gap-3 md:flex md:justify-end md:gap-2">
                                                             <button
                                                                 onClick={() => shareToWhatsApp(meeting)}
@@ -911,7 +911,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                 </table>
                             </div>
                             {meetings.links && meetings.links.length > 3 && (
-                                <div className="flex flex-wrap justify-center gap-1.5 border-t border-slate-100 bg-white px-6 py-4 sm:justify-start">
+                                <div className="flex flex-wrap justify-center gap-1.5 border-t border-slate-100 bg-white px-4 py-3 sm:justify-start sm:px-6 sm:py-4">
                                     {meetings.links.map(
                                         (link: any, k: number) =>
                                             link.url ? (
@@ -936,7 +936,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                 </div>
                             )}
                             {meetings.total > 0 && (
-                                <div className="border-t border-slate-100 bg-slate-50 px-6 py-4 text-center text-xs font-medium text-slate-500 sm:text-left">
+                                <div className="border-t border-slate-100 bg-slate-50 px-4 py-3 text-center text-xs font-medium text-slate-500 sm:px-6 sm:py-4 sm:text-left">
                                     Menampilkan{' '}
                                     {(meetings.current_page - 1) *
                                         meetings.per_page +

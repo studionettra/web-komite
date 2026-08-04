@@ -134,7 +134,7 @@ export default function Organization() {
             <Head title="Susunan Pengurus - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu" />
 
             {/* Hero Section */}
-            <section className="relative z-0 overflow-hidden border-b-[6px] border-dashed border-sky-200 bg-sky-50 pt-32 pb-24 text-center">
+            <section className="relative z-0 overflow-hidden border-b-[6px] border-dashed border-sky-200 bg-sky-50 pt-28 pb-16 text-center sm:pt-32 sm:pb-24">
                 {/* Animated Background Icons */}
                 <div
                     className={`absolute top-4 -left-4 -z-10 origin-bottom-right text-blue-400 transition-all delay-100 duration-1000 ease-out md:top-10 md:left-[10%] ${isLoaded ? '-translate-x-[20%] translate-y-[20%] scale-100 rotate-[-15deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
@@ -174,12 +174,12 @@ export default function Organization() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                        className="inline-block rounded-3xl border border-white bg-white/60 p-8 shadow-sm backdrop-blur-md"
+                        className="inline-block rounded-2xl border border-white bg-white/60 p-5 shadow-sm backdrop-blur-md sm:rounded-3xl sm:p-8"
                     >
-                        <h1 className="mb-6 text-4xl leading-none font-extrabold tracking-tight text-slate-800 md:text-6xl">
+                        <h1 className="mb-4 text-2xl leading-none font-extrabold tracking-tight text-slate-800 sm:mb-6 sm:text-4xl md:text-5xl">
                             Struktur Kepengurusan
                         </h1>
-                        <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-600 md:text-xl">
+                        <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-lg">
                             Mengenal lebih dekat para pengurus Komite KBIT-TKIT
                             Al-Ikhlash Pasar Minggu Periode 2026-2027 yang
                             berdedikasi tinggi untuk kemajuan peserta didik dan
@@ -190,29 +190,29 @@ export default function Organization() {
             </section>
 
             {/* Structure Grid */}
-            <section className="bg-white pb-32">
+            <section className="bg-white pb-16 sm:pb-32">
                 <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                     {pengurus.map((divisi, idx) => (
                         <div
                             key={idx}
-                            className="border-b border-slate-100 py-20 last:border-0"
+                            className="border-b border-slate-100 py-12 last:border-0 sm:py-20"
                         >
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: '-100px' }}
                                 transition={{
-                                    duration: 0.5,
+                                    duration: 0.7,
                                     ease: [0.16, 1, 0.3, 1],
                                 }}
-                                className="mb-10 sm:mb-12"
+                                className="mb-8 sm:mb-12"
                             >
                                 <h2 className="text-center text-2xl font-bold tracking-tight text-slate-900 sm:text-left sm:text-3xl">
                                     {divisi.title}
                                 </h2>
                             </motion.div>
 
-                            <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 sm:gap-y-12 md:grid-cols-3 lg:grid-cols-4">
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-12 md:grid-cols-3 lg:grid-cols-4">
                                 {divisi.members.map((member, i) => (
                                     <motion.div
                                         key={i}
@@ -223,18 +223,18 @@ export default function Organization() {
                                             margin: '-50px',
                                         }}
                                         transition={{
-                                            duration: 0.5,
-                                            delay: i * 0.1,
-                                            ease: [0.16, 1, 0.3, 1],
+                                            duration: 0.8,
+                                            delay: i * 0.15,
+                                            ease: [0.25, 0.46, 0.45, 0.94],
                                         }}
                                         className="group flex flex-col"
                                     >
-                                        <div className="relative mb-5 aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-slate-100 bg-slate-50 shadow-sm transition-all duration-500 group-hover:shadow-xl">
+                                        <div className="relative mb-3 aspect-[4/5] w-full overflow-hidden rounded-2xl border border-slate-100 bg-slate-50 shadow-sm transition-all duration-500 group-hover:shadow-xl sm:mb-5 sm:rounded-[2rem]">
                                             {member.image ? (
                                                 <img
                                                     src={member.image}
                                                     alt={member.name}
-                                                    className={`h-full w-full object-cover transition-transform duration-500 ease-out ${
+                                                    className={`h-full w-full object-cover transition-transform duration-700 ease-out ${
                                                         member.role ===
                                                         'Kepala Sekolah'
                                                             ? 'scale-[1.6] object-[center_15%] group-hover:scale-[1.7]'
@@ -248,7 +248,7 @@ export default function Organization() {
                                                 </div>
                                             )}
                                         </div>
-                                        <div className="flex flex-col gap-1 text-center sm:text-left">
+                                        <div className="flex flex-col gap-0.5 text-center sm:gap-1 sm:text-left">
                                             <h3 className="text-sm leading-tight font-bold text-slate-900 transition-colors group-hover:text-blue-600 sm:text-base">
                                                 {member.name}
                                             </h3>

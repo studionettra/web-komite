@@ -235,7 +235,7 @@ export default function Programs({ programs }: any) {
         <PublicLayout>
             <Head title="Program Kerja - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu" />
 
-            <section className="relative z-0 overflow-hidden border-b-[6px] border-dashed border-sky-200 bg-sky-50 pt-32 pb-32 text-center">
+            <section className="relative z-0 overflow-hidden border-b-[6px] border-dashed border-sky-200 bg-sky-50 pt-28 pb-20 text-center sm:pt-32 sm:pb-32">
                 {/* Animated Background Icons */}
                 <div
                     className={`absolute top-4 -left-4 -z-10 origin-bottom-right text-blue-400 transition-all delay-100 duration-1000 ease-out md:top-10 md:left-[10%] ${isLoaded ? '-translate-x-[20%] translate-y-[20%] scale-100 rotate-[-15deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
@@ -271,11 +271,11 @@ export default function Programs({ programs }: any) {
                 </div>
 
                 <div className="relative z-10 mx-auto max-w-4xl px-4">
-                    <div className="inline-block rounded-3xl border border-white bg-white/60 p-8 shadow-sm backdrop-blur-md">
-                        <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-slate-800 md:text-5xl">
+                    <div className="inline-block rounded-2xl border border-white bg-white/60 p-5 shadow-sm backdrop-blur-md sm:rounded-3xl sm:p-8">
+                        <h1 className="mb-4 text-2xl font-extrabold tracking-tight text-slate-800 sm:mb-6 sm:text-4xl md:text-5xl">
                             Daftar Program
                         </h1>
-                        <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-600 md:text-xl">
+                        <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-lg">
                             Seluruh inisiatif dan program Komite KBIT-TKIT
                             Al-Ikhlash Pasar Minggu disusun untuk mendukung
                             perkembangan peserta didik secara optimal.
@@ -284,20 +284,20 @@ export default function Programs({ programs }: any) {
                 </div>
             </section>
 
-            <section className="-mt-10 py-20">
+            <section className="-mt-10 py-12 sm:py-20">
                 <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                    <div className="rounded-3xl border border-slate-100 bg-white p-8 shadow-xl shadow-slate-200/50">
+                    <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-xl shadow-slate-200/50 sm:rounded-3xl sm:p-8">
                         {programs.length === 0 ? (
                             <div className="py-20 text-center text-slate-500">
                                 Belum ada data program kerja.
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                            <div className="grid grid-cols-1 gap-4 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
                                 {programs.map((program: any) => (
                                     <div
                                         key={program.id}
                                         onClick={() => openProgram(program)}
-                                        className="group flex cursor-pointer flex-col rounded-2xl border border-slate-100 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-blue-100 hover:bg-blue-50/30 hover:shadow-lg"
+                                        className="group flex cursor-pointer flex-col rounded-xl border border-slate-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-blue-100 hover:bg-blue-50/30 hover:shadow-lg sm:rounded-2xl sm:p-6"
                                     >
                                         <div className="mb-4 flex items-start justify-between">
                                             <span className="rounded-md bg-slate-100 px-3 py-1 text-xs font-bold tracking-wider text-slate-600 uppercase transition-colors group-hover:bg-blue-100 group-hover:text-blue-700">
@@ -322,7 +322,7 @@ export default function Programs({ programs }: any) {
                                                     : '-'}
                                             </span>
                                         </div>
-                                        <h3 className="mb-3 text-xl leading-snug font-bold text-slate-900 transition-colors group-hover:text-blue-700">
+                                        <h3 className="mb-2 text-base leading-snug font-bold text-slate-900 transition-colors group-hover:text-blue-700 sm:mb-3 sm:text-xl">
                                             {program.title}
                                         </h3>
                                         <p className="mb-6 line-clamp-3 flex-1 text-sm leading-relaxed text-slate-600">
@@ -365,11 +365,11 @@ export default function Programs({ programs }: any) {
 
             {/* Modal Detail Program */}
             {selectedProgram && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-900/60 p-4 backdrop-blur-sm sm:p-6">
-                    <div className="animate-in fade-in zoom-in-95 my-auto flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl duration-200">
-                        <div className="z-10 flex shrink-0 items-start justify-between border-b border-slate-100 bg-white px-6 py-4">
+                <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-900/60 p-3 backdrop-blur-sm sm:p-6">
+                    <div className="animate-in fade-in zoom-in-95 my-auto flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl duration-200 sm:rounded-3xl">
+                        <div className="z-10 flex shrink-0 items-start justify-between border-b border-slate-100 bg-white px-4 py-3 sm:px-6 sm:py-4">
                             <div>
-                                <h2 className="text-2xl font-extrabold text-slate-900">
+                                <h2 className="text-lg font-extrabold text-slate-900 sm:text-2xl">
                                     {selectedProgram.title}
                                 </h2>
                                 <div className="mt-2 flex items-center gap-3">
@@ -408,7 +408,7 @@ export default function Programs({ programs }: any) {
                             </button>
                         </div>
 
-                        <div className="flex shrink-0 gap-6 border-b border-slate-200 bg-slate-50 px-6 pt-4">
+                        <div className="flex shrink-0 gap-4 overflow-x-auto border-b border-slate-200 bg-slate-50 px-4 pt-3 sm:gap-6 sm:px-6 sm:pt-4">
                             <button
                                 onClick={() => setActiveTab('jadwal')}
                                 className={`flex items-center gap-2 border-b-2 pb-3 text-sm font-bold transition-colors ${activeTab === 'jadwal' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
@@ -439,7 +439,7 @@ export default function Programs({ programs }: any) {
                             </button>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto p-6 md:p-8">
+                        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
                             {selectedProgram.description && (
                                 <div className="mb-8 rounded-xl border border-blue-100 bg-blue-50/50 p-4 text-sm leading-relaxed text-slate-700">
                                     {selectedProgram.description}

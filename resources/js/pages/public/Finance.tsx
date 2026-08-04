@@ -44,7 +44,7 @@ export default function Finance({
         <PublicLayout>
             <Head title="Transparansi Keuangan - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu" />
 
-            <section className="relative z-0 overflow-hidden border-b-[6px] border-dashed border-sky-200 bg-sky-50 pt-32 pb-32 text-center">
+            <section className="relative z-0 overflow-hidden border-b-[6px] border-dashed border-sky-200 bg-sky-50 pt-28 pb-20 text-center sm:pt-32 sm:pb-32">
                 {/* Animated Background Icons */}
                 <div
                     className={`absolute top-4 -left-4 -z-10 origin-bottom-right text-emerald-400 transition-all delay-100 duration-1000 ease-out md:top-10 md:left-[10%] ${isLoaded ? '-translate-x-[20%] translate-y-[20%] scale-100 rotate-[-15deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
@@ -80,11 +80,11 @@ export default function Finance({
                 </div>
 
                 <div className="relative z-10 mx-auto max-w-4xl px-4">
-                    <div className="inline-block rounded-3xl border border-white bg-white/60 p-8 shadow-sm backdrop-blur-md">
-                        <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-slate-800 md:text-5xl">
+                    <div className="inline-block rounded-2xl border border-white bg-white/60 p-5 shadow-sm backdrop-blur-md sm:rounded-3xl sm:p-8">
+                        <h1 className="mb-4 text-2xl font-extrabold tracking-tight text-slate-800 sm:mb-6 sm:text-4xl md:text-5xl">
                             Transparansi Keuangan
                         </h1>
-                        <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-600 md:text-xl">
+                        <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-lg">
                             Laporan kas Komite yang dilaporkan secara jujur,
                             akuntabel, dan real-time kepada seluruh wali murid.
                         </p>
@@ -92,28 +92,28 @@ export default function Finance({
                 </div>
             </section>
 
-            <section className="bg-slate-50/50 py-16">
+            <section className="bg-slate-50/50 py-10 sm:py-16">
                 <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                     {/* Tab Navigation if classroom data is present */}
                     {classroomSheetUrl && (
-                        <div className="mb-8 flex gap-6 border-b border-slate-200">
+                        <div className="mb-6 flex gap-3 overflow-x-auto border-b border-slate-200 sm:mb-8 sm:gap-6">
                             <button
                                 onClick={() => setActiveTab('classroom')}
-                                className={`px-2 pb-4 text-sm font-bold tracking-wide uppercase transition-all ${activeTab === 'classroom' ? 'border-b-2 border-emerald-600 text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
+                                className={`whitespace-nowrap px-2 pb-3 text-xs font-bold tracking-wide uppercase transition-all sm:pb-4 sm:text-sm ${activeTab === 'classroom' ? 'border-b-2 border-emerald-600 text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
                             >
                                 Laporan Kas Kelas ({classroomName})
                             </button>
                             <button
                                 onClick={() => setActiveTab('global')}
-                                className={`px-2 pb-4 text-sm font-bold tracking-wide uppercase transition-all ${activeTab === 'global' ? 'border-b-2 border-emerald-600 text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
+                                className={`whitespace-nowrap px-2 pb-3 text-xs font-bold tracking-wide uppercase transition-all sm:pb-4 sm:text-sm ${activeTab === 'global' ? 'border-b-2 border-emerald-600 text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
                             >
                                 Laporan Kas Keseluruhan
                             </button>
                         </div>
                     )}
 
-                    <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-                        <h2 className="text-2xl font-bold text-slate-800">
+                    <div className="mb-4 flex flex-col justify-between gap-3 sm:mb-6 sm:flex-row sm:items-center sm:gap-4">
+                        <h2 className="text-lg font-bold text-slate-800 sm:text-2xl">
                             {activeTab === 'classroom'
                                 ? `Catatan Keuangan Kelas ${classroomName}`
                                 : 'Catatan Keuangan Keseluruhan'}
@@ -124,7 +124,7 @@ export default function Finance({
                                 href={currentUrl}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 font-medium text-white shadow-sm transition-all hover:bg-emerald-700"
+                                className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-emerald-700 sm:px-4"
                             >
                                 <span>Buka di Google Sheets</span>
                                 <ArrowUpRight weight="bold" />
@@ -132,7 +132,7 @@ export default function Finance({
                         )}
                     </div>
 
-                    <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-xl shadow-slate-200/50">
+                    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl shadow-slate-200/50 sm:rounded-3xl">
                         {!currentUrl ? (
                             <div className="flex flex-col items-center justify-center p-12 text-slate-500">
                                 <TableIcon
