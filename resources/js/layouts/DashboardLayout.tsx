@@ -146,7 +146,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                                 pathname={pathname}
                                 onClick={closeSidebar}
                             >
-                                Pengaturan
+                                Pengaturan Keuangan
                             </NavLink>
                         </>
                     )}

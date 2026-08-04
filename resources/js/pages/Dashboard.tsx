@@ -95,7 +95,7 @@ export default function Dashboard(props: any) {
                                 {auth?.user?.roles?.[0]?.name || 'Admin'}
                             </div>
                             <h1 className="text-3xl font-bold tracking-tight text-white drop-shadow-sm sm:text-4xl">
-                                Selamat Datang, {auth?.user?.name || 'Pengurus'}
+                                Selamat Datang, <br /> {auth?.user?.name || 'Pengurus'}
                             </h1>
                             <p className="mt-2.5 max-w-lg leading-relaxed font-medium text-slate-300">
                                 {role === 'Bendahara'

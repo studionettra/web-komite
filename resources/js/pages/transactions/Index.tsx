@@ -19,7 +19,7 @@ export default function TransactionsIndex({
 
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <h1 className="text-2xl font-bold text-slate-800">
-                    Catatan Keuangan
+                    Catatan Keuangan Bendahara
                 </h1>
                 
                 {sheetUrl && (

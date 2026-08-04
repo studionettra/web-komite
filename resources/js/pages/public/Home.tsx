@@ -319,7 +319,7 @@ export default function Home({ heroProgram, activePrograms, upcomingSessions }: 
                                     Transparansi
                                 </div>
                                 <h2 className="mb-4 text-3xl font-bold tracking-tight text-white md:text-4xl">
-                                    Laporan Keuangan Terbuka
+                                    Laporan Keuangan
                                 </h2>
                                 <p className="text-lg leading-relaxed text-slate-300">
                                     Kami berkomitmen untuk mengelola dana komite
