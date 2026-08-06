@@ -1,7 +1,7 @@
 import React from 'react';
 import { Head } from '@inertiajs/react';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import { ClockCounterClockwise, Trash, PencilSimple, Plus, ShieldCheck, User } from '@phosphor-icons/react';
+import { ClockCounterClockwise, Trash, PencilSimple, Plus, ShieldCheck, User, CalendarBlank } from '@phosphor-icons/react';
 
 const parseUserAgent = (ua: string) => {
     if (!ua || ua === '-') return '-';
@@ -25,12 +25,13 @@ const parseUserAgent = (ua: string) => {
 };
 
 const renderDescription = (activity: any) => {
-    if (activity.log_name === 'finance_access') {
+    if (activity.log_name === 'finance_access' || activity.log_name === 'academic_access') {
         const status = activity.properties?.status === 'success' ? 'Berhasil' : 'Gagal';
+        const accessType = activity.log_name === 'finance_access' ? 'keuangan' : 'kalender akademik';
         return (
             <div>
                 <span className={`font-semibold ${status === 'Berhasil' ? 'text-emerald-600' : 'text-red-600'}`}>
-                    {status} mengakses keuangan
+                    {status} mengakses {accessType}
                 </span>
                 <div className="mt-1 text-xs text-slate-500">
                     Nama Input: <span className="font-medium text-slate-700">{activity.properties?.input_name || '-'}</span> <br/>
@@ -145,10 +146,30 @@ export default function Activities({ activities }: { activities: any }) {
                                                 <ShieldCheck weight="bold" className="h-3.5 w-3.5" />
                                                 Akses Keuangan
                                             </span>
+                                        ) : activity.log_name === 'academic_access' ? (
+                                            <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-50 px-2.5 py-1 text-xs font-semibold text-cyan-700 ring-1 ring-inset ring-cyan-700/10">
+                                                <CalendarBlank weight="bold" className="h-3.5 w-3.5" />
+                                                Akses Kalender
+                                            </span>
                                         ) : activity.log_name === 'auth' ? (
                                             <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 ring-1 ring-inset ring-blue-700/10">
                                                 <User weight="bold" className="h-3.5 w-3.5" />
                                                 Otentikasi
+                                            </span>
+                                        ) : activity.event === 'created' ? (
+                                            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-700/10">
+                                                <Plus weight="bold" className="h-3.5 w-3.5" />
+                                                Dibuat
+                                            </span>
+                                        ) : activity.event === 'updated' ? (
+                                            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                                <PencilSimple weight="bold" className="h-3.5 w-3.5" />
+                                                Diperbarui
+                                            </span>
+                                        ) : activity.event === 'deleted' ? (
+                                            <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-700 ring-1 ring-inset ring-rose-700/10">
+                                                <Trash weight="bold" className="h-3.5 w-3.5" />
+                                                Dihapus
                                             </span>
                                         ) : (
                                             <span className="inline-flex rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700 capitalize ring-1 ring-inset ring-slate-500/10">

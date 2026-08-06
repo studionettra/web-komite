@@ -113,14 +113,16 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     >
                         Program
                     </NavLink>
-                    <NavLink
-                        href="/academic-calendar"
-                        icon={CalendarBlank}
-                        pathname={pathname}
-                        onClick={closeSidebar}
-                    >
-                        Kalender Akademik
-                    </NavLink>
+                    {(auth?.user?.roles?.[0]?.name === 'Superadmin' || auth?.user?.roles?.[0]?.name === 'Sekretaris') && (
+                        <NavLink
+                            href="/academic-calendar"
+                            icon={CalendarBlank}
+                            pathname={pathname}
+                            onClick={closeSidebar}
+                        >
+                            Kalender Akademik
+                        </NavLink>
+                    )}
                     <NavLink
                         href="/meetings"
                         icon={Users}

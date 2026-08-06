@@ -13,7 +13,33 @@ class ProgramController extends Controller
 {
     public function index()
     {
-        $programs = Program::with(['users', 'activities'])->orderBy('created_at', 'desc')->paginate(10);
+        $allPrograms = Program::with(['users', 'activities'])->get()->sortBy(function ($program) {
+            $now = now()->startOfDay();
+            
+            $startDiff = $program->start_date 
+                ? abs(now()->diffInDays(\Carbon\Carbon::parse($program->start_date)->startOfDay())) 
+                : 999999;
+            
+            $activityDiff = 999999;
+            if ($program->activities->isNotEmpty()) {
+                $activityDiff = $program->activities->min(function ($activity) use ($now) {
+                    return abs($now->diffInDays(\Carbon\Carbon::parse($activity->activity_date)->startOfDay()));
+                });
+            }
+            
+            return min($startDiff, $activityDiff);
+        })->values();
+
+        $page = request()->get('page', 1);
+        $perPage = 10;
+        $programs = new \Illuminate\Pagination\LengthAwarePaginator(
+            $allPrograms->forPage($page, $perPage),
+            $allPrograms->count(),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
         $members = User::select('id', 'name')->get();
 
         return Inertia::render('programs/Index', [
@@ -25,9 +51,9 @@ class ProgramController extends Controller
     public function show(Program $program)
     {
         $program->load([
-            'documents' => fn ($q) => $q->whereNull('program_activity_id'),
+            'documents' => fn($q) => $q->whereNull('program_activity_id'),
             'users',
-            'activities' => fn ($q) => $q->orderBy('activity_date', 'asc'),
+            'activities' => fn($q) => $q->orderBy('activity_date', 'desc'),
             'activities.documents',
         ]);
 

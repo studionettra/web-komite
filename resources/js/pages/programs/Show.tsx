@@ -17,6 +17,39 @@ import { useState, useRef } from 'react';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import { confirmDelete } from '../../utils/alertManager';
 
+function TimeInput24({ value, onChange, required }: { value: string; onChange: (val: string) => void; required?: boolean }) {
+    const [hour, minute] = (value || '00:00').split(':');
+    const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
+    const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
+    const baseClass = 'rounded-xl border border-slate-300 bg-slate-50 px-3 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500 appearance-none text-center';
+
+    return (
+        <div className="flex items-center gap-1.5">
+            <select
+                value={hour || '00'}
+                onChange={(e) => onChange(`${e.target.value}:${minute || '00'}`)}
+                className={`${baseClass} flex-1`}
+                required={required}
+            >
+                {hours.map((h) => (
+                    <option key={h} value={h}>{h}</option>
+                ))}
+            </select>
+            <span className="text-lg font-bold text-slate-500">:</span>
+            <select
+                value={minute || '00'}
+                onChange={(e) => onChange(`${hour || '00'}:${e.target.value}`)}
+                className={`${baseClass} flex-1`}
+                required={required}
+            >
+                {minutes.map((m) => (
+                    <option key={m} value={m}>{m}</option>
+                ))}
+            </select>
+        </div>
+    );
+}
+
 function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [isUploading, setIsUploading] = useState(false);
@@ -458,17 +491,11 @@ export default function Show({ program }: any) {
                                     <label className="mb-1.5 block text-sm font-semibold text-slate-700">
                                         Jam Mulai (WIB)
                                     </label>
-                                    <input
-                                        type="time"
-                                        lang="en-GB"
+                                    <TimeInput24
                                         value={activityData.start_time}
-                                        onChange={(e) =>
-                                            setActivityData(
-                                                'start_time',
-                                                e.target.value,
-                                            )
+                                        onChange={(val) =>
+                                            setActivityData('start_time', val)
                                         }
-                                        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
                                         required
                                     />
                                     {activityErrors.start_time && (
@@ -481,17 +508,11 @@ export default function Show({ program }: any) {
                                     <label className="mb-1.5 block text-sm font-semibold text-slate-700">
                                         Jam Selesai (WIB)
                                     </label>
-                                    <input
-                                        type="time"
-                                        lang="en-GB"
+                                    <TimeInput24
                                         value={activityData.end_time}
-                                        onChange={(e) =>
-                                            setActivityData(
-                                                'end_time',
-                                                e.target.value,
-                                            )
+                                        onChange={(val) =>
+                                            setActivityData('end_time', val)
                                         }
-                                        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
                                         required
                                     />
                                     {activityErrors.end_time && (
@@ -596,14 +617,11 @@ export default function Show({ program }: any) {
                                     <label className="mb-1.5 block text-sm font-semibold text-slate-700">
                                         Jam Mulai (WIB)
                                     </label>
-                                    <input
-                                        type="time"
-                                        lang="en-GB"
+                                    <TimeInput24
                                         value={editData.start_time}
-                                        onChange={(e) =>
-                                            setEditData('start_time', e.target.value)
+                                        onChange={(val) =>
+                                            setEditData('start_time', val)
                                         }
-                                        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
                                         required
                                     />
                                     {editErrors.start_time && (
@@ -616,14 +634,11 @@ export default function Show({ program }: any) {
                                     <label className="mb-1.5 block text-sm font-semibold text-slate-700">
                                         Jam Selesai (WIB)
                                     </label>
-                                    <input
-                                        type="time"
-                                        lang="en-GB"
+                                    <TimeInput24
                                         value={editData.end_time}
-                                        onChange={(e) =>
-                                            setEditData('end_time', e.target.value)
+                                        onChange={(val) =>
+                                            setEditData('end_time', val)
                                         }
-                                        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
                                         required
                                     />
                                     {editErrors.end_time && (
@@ -779,7 +794,21 @@ export default function Show({ program }: any) {
                             </div>
                         ) : (
                             <div className="space-y-6">
-                                {program.activities?.map((activity: any) => (
+                                {program.activities?.slice().sort((a: any, b: any) => {
+                                    const now = new Date();
+                                    now.setHours(0, 0, 0, 0);
+                                    
+                                    const dateA = new Date(a.activity_date);
+                                    dateA.setHours(0, 0, 0, 0);
+                                    
+                                    const dateB = new Date(b.activity_date);
+                                    dateB.setHours(0, 0, 0, 0);
+                                    
+                                    const diffA = Math.abs(dateA.getTime() - now.getTime());
+                                    const diffB = Math.abs(dateB.getTime() - now.getTime());
+                                    
+                                    return diffA - diffB;
+                                }).map((activity: any) => (
                                     <ActivityCard
                                         key={activity.id}
                                         activity={activity}

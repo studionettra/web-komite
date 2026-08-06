@@ -215,6 +215,20 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                     <label className="mb-1.5 block text-sm font-semibold text-slate-700">
                                         Gambar Banner (Opsional)
                                     </label>
+                                    
+                                    {isEditing && programs.data.find((p: any) => p.id === editingId)?.image && (
+                                        <div className="mb-3">
+                                            <p className="mb-1.5 text-xs font-medium text-slate-500">Banner saat ini:</p>
+                                            <div className="relative overflow-hidden rounded-xl border border-slate-200">
+                                                <img 
+                                                    src={`/storage/${programs.data.find((p: any) => p.id === editingId)?.image}`} 
+                                                    alt="Current banner" 
+                                                    className="h-32 w-full object-cover" 
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+
                                     <input
                                         type="file"
                                         accept="image/png, image/jpeg, image/jpg"
@@ -223,6 +237,11 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                         }
                                         className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500 file:mr-4 file:rounded-full file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"
                                     />
+                                    {isEditing && (
+                                        <p className="mt-2 text-xs text-slate-500">
+                                            * Biarkan kosong jika Anda tidak ingin mengubah banner saat ini.
+                                        </p>
+                                    )}
                                     {errors.image && (
                                         <div className="mt-1 text-xs text-rose-500">
                                             {errors.image}

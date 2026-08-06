@@ -5,6 +5,7 @@ import DashboardLayout from '../../layouts/DashboardLayout';
 
 export default function Edit({ mustVerifyEmail, status }: { mustVerifyEmail: boolean, status?: string }) {
     const user = usePage().props.auth.user as any;
+    const isSuperadmin = user?.roles?.[0]?.name === 'Superadmin';
 
     const { data: profileData, setData: setProfileData, patch: patchProfile, errors: profileErrors, processing: profileProcessing, recentlySuccessful: profileSuccessful } = useForm({
         name: user.name,
@@ -72,9 +73,15 @@ export default function Edit({ mustVerifyEmail, status }: { mustVerifyEmail: boo
                                 type="email"
                                 value={profileData.email}
                                 onChange={(e) => setProfileData('email', e.target.value)}
-                                className="w-full rounded-xl border border-slate-300 px-4 py-2.5 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className={`w-full rounded-xl border border-slate-300 px-4 py-2.5 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 ${!isSuperadmin ? 'bg-slate-100 text-slate-500 cursor-not-allowed' : ''}`}
                                 required
+                                disabled={!isSuperadmin}
                             />
+                            {!isSuperadmin && (
+                                <p className="mt-1.5 text-xs text-slate-500">
+                                    * Alamat email tidak dapat diubah selain oleh Superadmin.
+                                </p>
+                            )}
                             {profileErrors.email && <p className="mt-1.5 text-sm text-red-500">{profileErrors.email}</p>}
                         </div>
 

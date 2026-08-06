@@ -365,7 +365,7 @@ export default function Programs({ programs }: any) {
 
             {/* Modal Detail Program */}
             {selectedProgram && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-900/60 p-3 backdrop-blur-sm sm:p-6">
+                <div className="custom-scrollbar fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-900/60 p-3 backdrop-blur-sm sm:p-6">
                     <div className="animate-in fade-in zoom-in-95 my-auto flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl duration-200 sm:rounded-3xl">
                         <div className="z-10 flex shrink-0 items-start justify-between border-b border-slate-100 bg-white px-4 py-3 sm:px-6 sm:py-4">
                             <div>
@@ -439,7 +439,7 @@ export default function Programs({ programs }: any) {
                             </button>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+                        <div className="custom-scrollbar flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
                             {selectedProgram.description && (
                                 <div className="mb-8 rounded-xl border border-blue-100 bg-blue-50/50 p-4 text-sm leading-relaxed text-slate-700">
                                     {selectedProgram.description}

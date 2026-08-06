@@ -225,7 +225,7 @@ export default function ClassroomsIndex({
                                                     )}
                                                     {classroom.google_sheet_link && (
                                                         <a href={classroom.google_sheet_link} target="_blank" rel="noreferrer" className="ml-2 inline-flex rounded-full bg-emerald-100 px-2 text-xs leading-5 font-semibold text-emerald-800 hover:bg-emerald-200">
-                                                            Taut Sheet
+                                                            Link Sheet
                                                         </a>
                                                     )}
                                                 </td>

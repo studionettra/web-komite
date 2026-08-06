@@ -26,6 +26,7 @@ Route::get('/keuangan', [HomeController::class, 'finance'])->name('public.financ
 Route::post('/keuangan/verify', [HomeController::class, 'verifyFinanceAccess'])->name('public.finance.verify');
 Route::get('/program', [HomeController::class, 'programs'])->name('public.programs');
 Route::get('/kalender-akademik', [AcademicCalendarController::class, 'index'])->name('public.academic-calendar');
+Route::post('/kalender-akademik/verify', [AcademicCalendarController::class, 'verifyAccess'])->name('public.academic-calendar.verify');
 Route::get('/kebijakan-privasi', [HomeController::class, 'privacyPolicy'])->name('public.privacy-policy');
 Route::get('/syarat-dan-ketentuan', [HomeController::class, 'termsAndConditions'])->name('public.terms-and-conditions');
 
