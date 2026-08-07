@@ -26,12 +26,14 @@ class ClassroomController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:classrooms,name',
             'korlas_id' => 'nullable|exists:users,id',
-            'google_sheet_link' => 'nullable|url|max:255',
+            'google_sheet_status' => 'required|in:active,preparing,hidden',
+            'google_sheet_link' => 'nullable|url|max:255|required_if:google_sheet_status,active',
         ]);
 
         Classroom::create([
             'name' => $request->name,
             'korlas_id' => $request->korlas_id,
+            'google_sheet_status' => $request->google_sheet_status,
             'google_sheet_link' => $request->google_sheet_link,
         ]);
 
@@ -43,12 +45,14 @@ class ClassroomController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:classrooms,name,'.$classroom->id,
             'korlas_id' => 'nullable|exists:users,id',
-            'google_sheet_link' => 'nullable|url|max:255',
+            'google_sheet_status' => 'required|in:active,preparing,hidden',
+            'google_sheet_link' => 'nullable|url|max:255|required_if:google_sheet_status,active',
         ]);
 
         $classroom->update([
             'name' => $request->name,
             'korlas_id' => $request->korlas_id,
+            'google_sheet_status' => $request->google_sheet_status,
             'google_sheet_link' => $request->google_sheet_link,
         ]);
 

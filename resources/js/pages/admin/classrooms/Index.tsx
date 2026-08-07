@@ -20,6 +20,7 @@ export default function ClassroomsIndex({
         useForm({
             name: '',
             korlas_id: '',
+            google_sheet_status: 'hidden',
             google_sheet_link: '',
         });
 
@@ -37,6 +38,7 @@ export default function ClassroomsIndex({
         setData({
             name: classroom.name,
             korlas_id: classroom.korlas_id ? String(classroom.korlas_id) : '',
+            google_sheet_status: classroom.google_sheet_status || 'hidden',
             google_sheet_link: classroom.google_sheet_link || '',
         });
     };
@@ -117,24 +119,106 @@ export default function ClassroomsIndex({
                             </div>
 
                             <div>
-                                <label className="mb-1 block text-sm font-medium text-slate-700">
-                                    Link Google Sheet (Opsional)
+                                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                                    Status Laporan Kas Kelas
                                 </label>
-                                <input
-                                    type="url"
-                                    value={data.google_sheet_link}
-                                    onChange={(e) =>
-                                        setData('google_sheet_link', e.target.value)
-                                    }
-                                    className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                                    placeholder="https://docs.google.com/spreadsheets/d/..."
-                                />
-                                {errors.google_sheet_link && (
-                                    <div className="mt-1 text-xs text-red-500">
-                                        {errors.google_sheet_link}
+                                <div className="mb-4 space-y-2">
+                                        <label
+                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'active' ? 'border-blue-500 bg-blue-50/50 ring-1 ring-blue-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                        >
+                                            <div className="flex w-full items-center justify-between">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <input
+                                                            type="radio"
+                                                            name="google_sheet_status"
+                                                            value="active"
+                                                            checked={data.google_sheet_status === 'active'}
+                                                            onChange={(e) => setData('google_sheet_status', e.target.value)}
+                                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                                        />
+                                                        <span className="text-sm font-medium text-slate-900">
+                                                            Tampilkan Laporan
+                                                        </span>
+                                                    </div>
+                                                    <span className="pl-6 text-xs text-slate-500">Laporan langsung dapat dilihat oleh publik/wali murid yang mengakses kelas ini.</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label
+                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'preparing' ? 'border-amber-500 bg-amber-50/50 ring-1 ring-amber-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                        >
+                                            <div className="flex w-full items-center justify-between">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <input
+                                                            type="radio"
+                                                            name="google_sheet_status"
+                                                            value="preparing"
+                                                            checked={data.google_sheet_status === 'preparing'}
+                                                            onChange={(e) => setData('google_sheet_status', e.target.value)}
+                                                            className="h-4 w-4 text-amber-600 focus:ring-amber-500"
+                                                        />
+                                                        <span className="text-sm font-medium text-slate-900">
+                                                            Sedang Disiapkan
+                                                        </span>
+                                                    </div>
+                                                    <span className="pl-6 text-xs text-slate-500">Menampilkan pesan bahwa laporan ini sedang disusun, tidak bisa dilihat publik.</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label
+                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'hidden' ? 'border-slate-500 bg-slate-50 ring-1 ring-slate-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                        >
+                                            <div className="flex w-full items-center justify-between">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <input
+                                                            type="radio"
+                                                            name="google_sheet_status"
+                                                            value="hidden"
+                                                            checked={data.google_sheet_status === 'hidden'}
+                                                            onChange={(e) => setData('google_sheet_status', e.target.value)}
+                                                            className="h-4 w-4 text-slate-600 focus:ring-slate-500"
+                                                        />
+                                                        <span className="text-sm font-medium text-slate-900">
+                                                            Sembunyikan
+                                                        </span>
+                                                    </div>
+                                                    <span className="pl-6 text-xs text-slate-500">Fitur dinonaktifkan / offline (muncul pesan bahwa laporan belum terhubung).</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                </div>
+                                {errors.google_sheet_status && (
+                                    <div className="mb-2 text-xs text-red-500">
+                                        {errors.google_sheet_status}
                                     </div>
                                 )}
                             </div>
+
+                            {data.google_sheet_status === 'active' && (
+                                <div>
+                                    <label className="mb-1 block text-sm font-medium text-slate-700">
+                                        Link Google Sheet
+                                    </label>
+                                    <input
+                                        type="url"
+                                        value={data.google_sheet_link}
+                                        onChange={(e) =>
+                                            setData('google_sheet_link', e.target.value)
+                                        }
+                                        className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                        placeholder="https://docs.google.com/spreadsheets/d/..."
+                                        required={data.google_sheet_status === 'active'}
+                                    />
+                                    {errors.google_sheet_link && (
+                                        <div className="mt-1 text-xs text-red-500">
+                                            {errors.google_sheet_link}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                             
                             <div className="relative z-20">
                                 <label className="mb-1 block text-sm font-medium text-slate-700">

@@ -7,21 +7,26 @@ import {
     Coin,
     ChartLineUp,
     Money,
+    FileText,
 } from '@phosphor-icons/react';
 import { useState, useEffect } from 'react';
 
 export default function Finance({
     sheetUrl,
+    sheetStatus,
     classroomSheetUrl,
+    classroomSheetStatus,
     classroomName,
 }: {
     sheetUrl: string | null;
+    sheetStatus: 'active' | 'preparing' | 'hidden';
     classroomSheetUrl: string | null;
+    classroomSheetStatus: 'active' | 'preparing' | 'hidden';
     classroomName: string | null;
 }) {
-    // Jika ada laporan kelas, otomatis fokus ke tab kelas
+    // Jika ada data kelas, otomatis fokus ke tab kelas
     const [activeTab, setActiveTab] = useState<'global' | 'classroom'>(
-        classroomSheetUrl ? 'classroom' : 'global',
+        classroomName ? 'classroom' : 'global',
     );
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -33,12 +38,20 @@ export default function Finance({
         if (!url) return '';
         const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
         if (match && match[1]) {
-            return `https://docs.google.com/spreadsheets/d/${match[1]}/edit?rm=minimal`;
+            let embed = `https://docs.google.com/spreadsheets/d/${match[1]}/edit?rm=minimal`;
+            const gidMatch = url.match(/[#&?]gid=([0-9]+)/);
+            if (gidMatch && gidMatch[1]) {
+                embed += `&gid=${gidMatch[1]}&single=true&widget=false&chrome=false`;
+            }
+            return embed;
         }
         return url;
     };
 
     const currentUrl = activeTab === 'classroom' ? classroomSheetUrl : sheetUrl;
+    const isGlobalTab = activeTab === 'global';
+    const isClassroomTab = activeTab === 'classroom';
+    const currentStatus = isClassroomTab ? classroomSheetStatus : sheetStatus;
 
     return (
         <PublicLayout>
@@ -95,7 +108,7 @@ export default function Finance({
             <section className="bg-slate-50/50 py-10 sm:py-16">
                 <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                     {/* Tab Navigation if classroom data is present */}
-                    {classroomSheetUrl && (
+                    {classroomName && (
                         <div className="mb-6 flex gap-3 overflow-x-auto border-b border-slate-200 sm:mb-8 sm:gap-6">
                             <button
                                 onClick={() => setActiveTab('classroom')}
@@ -118,22 +131,27 @@ export default function Finance({
                                 ? `Catatan Keuangan Kelas ${classroomName}`
                                 : 'Catatan Keuangan Keseluruhan'}
                         </h2>
-
-                        {currentUrl && (
-                            <a
-                                href={currentUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-emerald-700 sm:px-4"
-                            >
-                                <span>Buka di Google Sheets</span>
-                                <ArrowUpRight weight="bold" />
-                            </a>
-                        )}
                     </div>
 
                     <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl shadow-slate-200/50 sm:rounded-3xl">
-                        {!currentUrl ? (
+                        {currentStatus === 'preparing' ? (
+                            <div className="flex flex-col items-center justify-center p-12 text-slate-500">
+                                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-50">
+                                    <FileText
+                                        className="h-8 w-8 text-amber-500"
+                                        weight="duotone"
+                                    />
+                                </div>
+                                <h3 className="mb-2 text-lg font-medium text-slate-700">
+                                    Laporan Sedang Disiapkan
+                                </h3>
+                                <p className="text-center text-sm">
+                                    {isClassroomTab 
+                                        ? 'Koordinator Kelas sedang menyusun laporan keuangan saat ini. Silakan kembali lagi nanti.'
+                                        : 'Bendahara kami sedang menyusun laporan keuangan saat ini. Silakan kembali lagi nanti.'}
+                                </p>
+                            </div>
+                        ) : !currentUrl || currentStatus === 'hidden' ? (
                             <div className="flex flex-col items-center justify-center p-12 text-slate-500">
                                 <TableIcon
                                     className="mb-4 h-12 w-12 text-slate-300"

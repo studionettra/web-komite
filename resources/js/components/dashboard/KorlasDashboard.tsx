@@ -95,7 +95,7 @@ export default function KorlasDashboard({
                     </div>
                     <h3 className="mb-2 font-bold">Panduan Korlas</h3>
                     <p className="text-sm leading-relaxed text-slate-300">
-                        Pastikan seluruh data siswa terinput. Untuk laporan keuangan (uang kas/donasi kelas), pengurus kelas dapat mengisinya langsung dari Google Sheets.
+                        Pastikan seluruh data siswa terinput. Untuk laporan keuangan kelas (uang kas/donasi), Anda dapat menautkan link Google Sheet dan mengatur status tayangnya (Tampilkan, Sedang Disiapkan, Sembunyikan) secara mandiri dari menu Data Kas Kelas.
                     </p>
                 </div>
             </div>

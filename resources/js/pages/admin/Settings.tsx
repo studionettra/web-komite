@@ -4,6 +4,7 @@ import DashboardLayout from '../../layouts/DashboardLayout';
 
 export default function Settings({ settings }: any) {
     const { data, setData, post, processing, errors } = useForm({
+        google_spreadsheet_status: settings?.google_spreadsheet_status || 'hidden',
         google_spreadsheet_url: settings?.google_spreadsheet_url || '',
     });
 
@@ -67,27 +68,108 @@ export default function Settings({ settings }: any) {
                         <form onSubmit={submit} className="space-y-6">
                             <div>
                                 <label className="mb-2 block text-sm font-semibold text-slate-700">
-                                    Tautan (Link) Google Sheet
+                                    Status Pelaporan
                                 </label>
-                                <div className="relative">
-                                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                                        <LinkIcon className="h-5 w-5 text-slate-400" />
-                                    </div>
-                                    <input
-                                        type="url"
-                                        value={data.google_spreadsheet_url}
-                                        onChange={(e) => setData('google_spreadsheet_url', e.target.value)}
-                                        className="w-full rounded-xl border border-slate-300 bg-slate-50 py-3 pr-4 pl-11 transition-colors hover:bg-white focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20"
-                                        placeholder="Contoh: https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFM..."
-                                        required
-                                    />
+                                <div className="mb-4 grid gap-3 sm:grid-cols-3">
+                                        <label
+                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all ${data.google_spreadsheet_status === 'active' ? 'border-blue-500 bg-blue-50/50 ring-1 ring-blue-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                        >
+                                            <div className="flex w-full items-center justify-between">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="flex items-center gap-3">
+                                                        <input
+                                                            type="radio"
+                                                            name="google_spreadsheet_status"
+                                                            value="active"
+                                                            checked={data.google_spreadsheet_status === 'active'}
+                                                            onChange={(e) => setData('google_spreadsheet_status', e.target.value)}
+                                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                                        />
+                                                        <span className="text-sm font-medium text-slate-900">
+                                                            Tampilkan Laporan
+                                                        </span>
+                                                    </div>
+                                                    <span className="pl-7 text-xs text-slate-500">Laporan kas besar (global) dapat dilihat publik.</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label
+                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all ${data.google_spreadsheet_status === 'preparing' ? 'border-amber-500 bg-amber-50/50 ring-1 ring-amber-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                        >
+                                            <div className="flex w-full items-center justify-between">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="flex items-center gap-3">
+                                                        <input
+                                                            type="radio"
+                                                            name="google_spreadsheet_status"
+                                                            value="preparing"
+                                                            checked={data.google_spreadsheet_status === 'preparing'}
+                                                            onChange={(e) => setData('google_spreadsheet_status', e.target.value)}
+                                                            className="h-4 w-4 text-amber-600 focus:ring-amber-500"
+                                                        />
+                                                        <span className="text-sm font-medium text-slate-900">
+                                                            Sedang Disiapkan
+                                                        </span>
+                                                    </div>
+                                                    <span className="pl-7 text-xs text-slate-500">Menampilkan pesan bahwa admin sedang menyusun laporan ini.</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label
+                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all ${data.google_spreadsheet_status === 'hidden' ? 'border-slate-500 bg-slate-50 ring-1 ring-slate-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                        >
+                                            <div className="flex w-full items-center justify-between">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="flex items-center gap-3">
+                                                        <input
+                                                            type="radio"
+                                                            name="google_spreadsheet_status"
+                                                            value="hidden"
+                                                            checked={data.google_spreadsheet_status === 'hidden'}
+                                                            onChange={(e) => setData('google_spreadsheet_status', e.target.value)}
+                                                            className="h-4 w-4 text-slate-600 focus:ring-slate-500"
+                                                        />
+                                                        <span className="text-sm font-medium text-slate-900">
+                                                            Sembunyikan
+                                                        </span>
+                                                    </div>
+                                                    <span className="pl-7 text-xs text-slate-500">Laporan disembunyikan / offline dari halaman publik.</span>
+                                                </div>
+                                            </div>
+                                        </label>
                                 </div>
-                                {errors.google_spreadsheet_url && (
-                                    <p className="mt-1.5 text-sm font-medium text-rose-500">
-                                        {errors.google_spreadsheet_url}
+                                {errors.google_spreadsheet_status && (
+                                    <p className="mb-4 text-sm font-medium text-rose-500">
+                                        {errors.google_spreadsheet_status}
                                     </p>
                                 )}
                             </div>
+
+                            {data.google_spreadsheet_status === 'active' && (
+                                <div>
+                                    <label className="mb-2 block text-sm font-semibold text-slate-700">
+                                        Tautan (Link) Google Sheet
+                                    </label>
+                                    <div className="relative">
+                                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                                            <LinkIcon className="h-5 w-5 text-slate-400" />
+                                        </div>
+                                        <input
+                                            type="url"
+                                            value={data.google_spreadsheet_url}
+                                            onChange={(e) => setData('google_spreadsheet_url', e.target.value)}
+                                            className="w-full rounded-xl border border-slate-300 bg-slate-50 py-3 pr-4 pl-11 transition-colors hover:bg-white focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20"
+                                            placeholder="Contoh: https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFM..."
+                                            required={data.google_spreadsheet_status === 'active'}
+                                        />
+                                    </div>
+                                    {errors.google_spreadsheet_url && (
+                                        <p className="mt-1.5 text-sm font-medium text-rose-500">
+                                            {errors.google_spreadsheet_url}
+                                        </p>
+                                    )}
+                                </div>
+                            )}
 
                             <div className="flex justify-end pt-2">
                                 <button

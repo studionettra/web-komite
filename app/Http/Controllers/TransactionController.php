@@ -2,22 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\GoogleSheetService;
+use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 
 class TransactionController extends Controller
 {
     public function index()
     {
-        // For Bendahara, we use a central spreadsheet ID from .env
-        $sheetId = env('GOOGLE_SPREADSHEET_ID');
+        // Get from settings.json first, fallback to .env
+        $settingsPath = storage_path('app/settings.json');
+        $settings = [];
+
+        if (File::exists($settingsPath)) {
+            $settings = json_decode(File::get($settingsPath), true) ?? [];
+        }
+
+        $sheetId = $settings['google_spreadsheet_id'] ?? env('GOOGLE_SPREADSHEET_ID');
+        $sheetStatus = $settings['google_spreadsheet_status'] ?? 'hidden';
         $sheetUrl = $sheetId ? "https://docs.google.com/spreadsheets/d/{$sheetId}/edit" : null;
 
-        $transactions = GoogleSheetService::fetchPublicSheetData($sheetUrl);
-
         return Inertia::render('transactions/Index', [
-            'transactions' => $transactions,
             'sheetUrl' => $sheetUrl,
+            'sheetStatus' => $sheetStatus,
         ]);
     }
 }

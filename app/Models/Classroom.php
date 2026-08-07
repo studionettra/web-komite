@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Classroom extends Model
 {
-    protected $fillable = ['name', 'korlas_id', 'google_sheet_link'];
+    protected $fillable = ['name', 'korlas_id', 'google_sheet_status', 'google_sheet_link'];
 
     public function korlas()
     {

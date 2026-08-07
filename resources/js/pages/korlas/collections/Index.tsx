@@ -1,13 +1,16 @@
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import DashboardLayout from '../../../layouts/DashboardLayout';
-import { ArrowUpRight, Table as TableIcon } from '@phosphor-icons/react';
+import { ArrowUpRight, Table as TableIcon, Gear, X } from '@phosphor-icons/react';
+import { useState } from 'react';
 
 export default function KorlasCollectionsIndex({
     classroom,
     sheetUrl,
+    sheetStatus,
 }: {
     classroom: any | null;
     sheetUrl: string | null;
+    sheetStatus: 'active' | 'preparing' | 'hidden';
 }) {
     // Transform normal Google Sheet URL to an embed-friendly URL
     // Using rm=minimal hides the top toolbars but keeps the sheet tabs at the bottom
@@ -18,6 +21,31 @@ export default function KorlasCollectionsIndex({
             return `https://docs.google.com/spreadsheets/d/${match[1]}/edit?rm=minimal`;
         }
         return url;
+    };
+
+    const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+
+    const { data, setData, put, processing, errors, reset, clearErrors } = useForm({
+        google_sheet_status: sheetStatus,
+        google_sheet_link: sheetUrl || '',
+    });
+
+    const openSettingsModal = () => {
+        clearErrors();
+        setData({
+            google_sheet_status: sheetStatus,
+            google_sheet_link: sheetUrl || '',
+        });
+        setIsSettingsModalOpen(true);
+    };
+
+    const submitSettings = (e: React.FormEvent) => {
+        e.preventDefault();
+        put('/korlas/collections/settings', {
+            onSuccess: () => {
+                setIsSettingsModalOpen(false);
+            },
+        });
     };
 
     return (
@@ -37,17 +65,28 @@ export default function KorlasCollectionsIndex({
                     )}
                 </div>
 
-                {sheetUrl && (
-                    <a
-                        href={sheetUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-emerald-700 sm:px-4"
-                    >
-                        <span>Buka Untuk Mengedit</span>
-                        <ArrowUpRight weight="bold" />
-                    </a>
-                )}
+                <div className="flex flex-wrap items-center gap-2">
+                    {classroom && (
+                        <button
+                            onClick={openSettingsModal}
+                            className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition-all hover:bg-slate-50 sm:px-4"
+                        >
+                            <Gear weight="bold" />
+                            <span>Atur Laporan</span>
+                        </button>
+                    )}
+                    {sheetUrl && (
+                        <a
+                            href={sheetUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-emerald-700 sm:px-4"
+                        >
+                            <span>Buka Untuk Mengedit</span>
+                            <ArrowUpRight weight="bold" />
+                        </a>
+                    )}
+                </div>
             </div>
 
             {!classroom ? (
@@ -66,19 +105,34 @@ export default function KorlasCollectionsIndex({
                 </div>
             ) : (
                 <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                    {!sheetUrl ? (
+                    {sheetStatus === 'preparing' ? (
+                        <div className="flex flex-col items-center justify-center p-8 sm:p-12">
+                            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-50">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 256 256" className="text-amber-500">
+                                    <path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z" opacity="0.2"></path>
+                                    <path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path>
+                                </svg>
+                            </div>
+                            <h3 className="mb-2 text-base font-medium text-slate-700 sm:text-lg">
+                                Laporan Sedang Disiapkan
+                            </h3>
+                            <p className="max-w-sm text-center text-sm text-slate-500">
+                                Status laporan kas kelas <strong>{classroom.name}</strong> disetel sebagai "Sedang Disiapkan". Anda bisa menyusunnya terlebih dahulu.
+                            </p>
+                        </div>
+                    ) : !sheetUrl || sheetStatus === 'hidden' ? (
                         <div className="flex flex-col items-center justify-center p-8 sm:p-12">
                             <TableIcon
                                 className="mb-4 h-12 w-12 text-slate-300"
                                 weight="light"
                             />
                             <h3 className="mb-2 text-base font-medium text-slate-700 sm:text-lg">
-                                Google Sheet Belum Terhubung
+                                Google Sheet Belum Terhubung / Disembunyikan
                             </h3>
                             <p className="max-w-sm text-center text-sm text-slate-500">
                                 Link Google Sheet untuk kelas{' '}
-                                <strong>{classroom.name}</strong> belum diatur.
-                                Silakan hubungi admin untuk menambahkan link.
+                                <strong>{classroom.name}</strong> belum diatur atau disembunyikan.
+                                Silakan hubungi admin untuk mengubah pengaturannya.
                             </p>
                         </div>
                     ) : (
@@ -91,6 +145,144 @@ export default function KorlasCollectionsIndex({
                             ></iframe>
                         </div>
                     )}
+                </div>
+            )}
+
+            {/* Modal Pengaturan Laporan */}
+            {isSettingsModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0">
+                    <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onClick={() => setIsSettingsModalOpen(false)}></div>
+                    <div className="relative w-full max-w-lg transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8">
+                        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                            <h3 className="text-lg font-semibold text-slate-900">
+                                Pengaturan Laporan Kas
+                            </h3>
+                            <button
+                                onClick={() => setIsSettingsModalOpen(false)}
+                                className="rounded-xl p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-500"
+                            >
+                                <X weight="bold" className="h-5 w-5" />
+                            </button>
+                        </div>
+                        <form onSubmit={submitSettings}>
+                            <div className="px-6 py-4">
+                                <div className="mb-4">
+                                    <label className="mb-2 block text-sm font-semibold text-slate-700">
+                                        Status Laporan
+                                    </label>
+                                    <div className="space-y-2">
+                                        <label
+                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'active' ? 'border-blue-500 bg-blue-50/50 ring-1 ring-blue-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                        >
+                                            <div className="flex w-full items-center justify-between">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <input
+                                                            type="radio"
+                                                            value="active"
+                                                            checked={data.google_sheet_status === 'active'}
+                                                            onChange={(e) => setData('google_sheet_status', e.target.value as any)}
+                                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                                        />
+                                                        <span className="text-sm font-medium text-slate-900">
+                                                            Tampilkan Laporan
+                                                        </span>
+                                                    </div>
+                                                    <span className="pl-6 text-xs text-slate-500">Laporan akan langsung dapat dilihat oleh wali murid yang mengakses kelas ini.</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label
+                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'preparing' ? 'border-amber-500 bg-amber-50/50 ring-1 ring-amber-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                        >
+                                            <div className="flex w-full items-center justify-between">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <input
+                                                            type="radio"
+                                                            value="preparing"
+                                                            checked={data.google_sheet_status === 'preparing'}
+                                                            onChange={(e) => setData('google_sheet_status', e.target.value as any)}
+                                                            className="h-4 w-4 text-amber-600 focus:ring-amber-500"
+                                                        />
+                                                        <span className="text-sm font-medium text-slate-900">
+                                                            Sedang Disiapkan
+                                                        </span>
+                                                    </div>
+                                                    <span className="pl-6 text-xs text-slate-500">Menampilkan pesan ramah bahwa Anda sedang aktif menyusun laporan ini.</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label
+                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'hidden' ? 'border-slate-500 bg-slate-50 ring-1 ring-slate-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                        >
+                                            <div className="flex w-full items-center justify-between">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <input
+                                                            type="radio"
+                                                            value="hidden"
+                                                            checked={data.google_sheet_status === 'hidden'}
+                                                            onChange={(e) => setData('google_sheet_status', e.target.value as any)}
+                                                            className="h-4 w-4 text-slate-600 focus:ring-slate-500"
+                                                        />
+                                                        <span className="text-sm font-medium text-slate-900">
+                                                            Sembunyikan
+                                                        </span>
+                                                    </div>
+                                                    <span className="pl-6 text-xs text-slate-500">Fitur laporan dinonaktifkan sementara (muncul pesan bahwa laporan belum terhubung).</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    {errors.google_sheet_status && (
+                                        <div className="mt-1 text-xs text-red-500">
+                                            {errors.google_sheet_status}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {data.google_sheet_status === 'active' && (
+                                    <div>
+                                        <label className="mb-1 block text-sm font-medium text-slate-700">
+                                            Link Google Sheet
+                                        </label>
+                                        <input
+                                            type="url"
+                                            value={data.google_sheet_link}
+                                            onChange={(e) =>
+                                                setData('google_sheet_link', e.target.value)
+                                            }
+                                            className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                            placeholder="https://docs.google.com/spreadsheets/d/..."
+                                            required={data.google_sheet_status === 'active'}
+                                        />
+                                        {errors.google_sheet_link && (
+                                            <div className="mt-1 text-xs text-red-500">
+                                                {errors.google_sheet_link}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="bg-slate-50 px-6 py-4 sm:flex sm:flex-row-reverse">
+                                <button
+                                    type="submit"
+                                    disabled={processing}
+                                    className="inline-flex w-full justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-70 sm:ml-3 sm:w-auto"
+                                >
+                                    {processing ? 'Menyimpan...' : 'Simpan Pengaturan'}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsSettingsModalOpen(false)}
+                                    className="mt-3 inline-flex w-full justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 sm:mt-0 sm:w-auto"
+                                >
+                                    Batal
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             )}
         </DashboardLayout>

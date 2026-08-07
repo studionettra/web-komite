@@ -1,17 +1,28 @@
 import { Head } from '@inertiajs/react';
 import DashboardLayout from '../../layouts/DashboardLayout';
-import { ArrowUpRight, Table as TableIcon } from '@phosphor-icons/react';
+import { ArrowUpRight, Table as TableIcon, FileText } from '@phosphor-icons/react';
 
 export default function TransactionsIndex({
-    transactions,
     sheetUrl,
+    sheetStatus,
 }: {
-    transactions: any[];
     sheetUrl: string | null;
+    sheetStatus: 'active' | 'preparing' | 'hidden';
 }) {
-    // Check if we have headers
-    const hasData = transactions && transactions.length > 0;
-    const headers = hasData ? Object.keys(transactions[0]) : [];
+    const getEmbedUrl = (url: string | null) => {
+        if (!url) return '';
+        const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        if (match && match[1]) {
+            let embed = `https://docs.google.com/spreadsheets/d/${match[1]}/edit?rm=minimal`;
+            const gidMatch = url.match(/[#&?]gid=([0-9]+)/);
+            if (gidMatch && gidMatch[1]) {
+                // &single=true&widget=false menyembunyikan tab di bawah agar hanya menampilkan sheet spesifik
+                embed += `&gid=${gidMatch[1]}&single=true&widget=false&chrome=false`;
+            }
+            return embed;
+        }
+        return url;
+    };
 
     return (
         <DashboardLayout>
@@ -36,7 +47,22 @@ export default function TransactionsIndex({
             </div>
 
             <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                {!sheetUrl ? (
+                {sheetStatus === 'preparing' ? (
+                    <div className="flex flex-col items-center justify-center p-8 sm:p-12">
+                        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-50">
+                            <FileText
+                                className="h-8 w-8 text-amber-500"
+                                weight="duotone"
+                            />
+                        </div>
+                        <h3 className="mb-2 text-base font-medium text-slate-700 sm:text-lg">
+                            Laporan Sedang Disiapkan
+                        </h3>
+                        <p className="max-w-sm text-center text-sm text-slate-500">
+                            Bendahara sedang menyusun laporan keuangan saat ini. Silakan periksa kembali nanti.
+                        </p>
+                    </div>
+                ) : sheetStatus === 'hidden' || !sheetUrl ? (
                     <div className="flex flex-col items-center justify-center p-8 sm:p-12">
                         <TableIcon
                             className="mb-4 h-12 w-12 text-slate-300"
@@ -46,63 +72,17 @@ export default function TransactionsIndex({
                             Google Sheet Belum Terhubung
                         </h3>
                         <p className="max-w-sm text-center text-sm text-slate-500">
-                            Admin belum mengatur tautan Google Sheet untuk
-                            keuangan di pengaturan sistem (.env).
-                        </p>
-                    </div>
-                ) : !hasData ? (
-                    <div className="flex flex-col items-center justify-center p-8 sm:p-12">
-                        <TableIcon
-                            className="mb-4 h-12 w-12 text-slate-300"
-                            weight="light"
-                        />
-                        <h3 className="mb-2 text-base font-medium text-slate-700 sm:text-lg">
-                            Data Tidak Ditemukan
-                        </h3>
-                        <p className="max-w-sm text-center text-sm text-slate-500">
-                            Tidak ada data yang ditemukan, atau Google Sheet
-                            belum diatur menjadi{' '}
-                            <strong>"Anyone with the link can view"</strong>.
+                            Admin belum mengatur tautan Google Sheet untuk keuangan di Pengaturan.
                         </p>
                     </div>
                 ) : (
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-slate-200">
-                            <thead className="bg-slate-50">
-                                <tr>
-                                    {headers.map((header) => (
-                                        <th
-                                            key={header}
-                                            scope="col"
-                                            className="px-4 py-3 text-left text-xs font-bold tracking-wider text-slate-500 uppercase sm:px-6 sm:py-4"
-                                        >
-                                            {header}
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-100 bg-white">
-                                {transactions.map((row, index) => (
-                                    <tr
-                                        key={index}
-                                        className="transition-colors hover:bg-slate-50/80"
-                                    >
-                                        {headers.map((header) => (
-                                            <td
-                                                key={`${index}-${header}`}
-                                                className="px-4 py-3 text-sm whitespace-nowrap text-slate-600 sm:px-6 sm:py-4"
-                                            >
-                                                {row[header]}
-                                            </td>
-                                        ))}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <div className="border-t border-slate-100 bg-slate-50 px-4 py-3 text-xs font-medium text-slate-500 sm:px-6 sm:py-4">
-                            Menampilkan {transactions.length} baris dari Google
-                            Sheet
-                        </div>
+                    <div className="flex flex-col bg-white">
+                        <iframe
+                            src={getEmbedUrl(sheetUrl)}
+                            className="h-[500px] sm:h-[700px] w-full border-0"
+                            title="Data Keuangan"
+                            allowFullScreen
+                        ></iframe>
                     </div>
                 )}
             </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcademicCalendarController;
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\AdminAcademicMonthController;
 use App\Http\Controllers\AdminAcademicYearController;
@@ -54,12 +55,13 @@ Route::middleware(['auth', 'prevent-back-history'])->group(function () {
     Route::middleware(['role:Superadmin|Korlas'])->prefix('korlas')->name('korlas.')->group(function () {
         Route::resource('students', StudentController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('collections', [CollectionController::class, 'index'])->name('collections.index');
+        Route::put('collections/settings', [CollectionController::class, 'updateSettings'])->name('collections.settings');
     });
 
     // Superadmin | Sekretaris restricted routes
     Route::middleware(['role:Superadmin|Sekretaris'])->group(function () {
-        Route::get('/activities', [\App\Http\Controllers\ActivityLogController::class, 'index'])->name('activities.index');
-        
+        Route::get('/activities', [ActivityLogController::class, 'index'])->name('activities.index');
+
         Route::post('/programs', [ProgramController::class, 'store'])->name('programs.store');
         Route::put('/programs/{program}', [ProgramController::class, 'update'])->name('programs.update');
         Route::delete('/programs/{program}', [ProgramController::class, 'destroy'])->name('programs.destroy');

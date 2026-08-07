@@ -8,6 +8,7 @@ use App\Models\Program;
 use App\Models\ProgramActivity;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -85,22 +86,35 @@ class HomeController extends Controller
             ]);
         }
 
-        $sheetId = env('GOOGLE_SPREADSHEET_ID');
+        // Get from settings.json first, fallback to .env
+        $settingsPath = storage_path('app/settings.json');
+        $settings = [];
+
+        if (File::exists($settingsPath)) {
+            $settings = json_decode(File::get($settingsPath), true) ?? [];
+        }
+
+        $sheetId = $settings['google_spreadsheet_id'] ?? env('GOOGLE_SPREADSHEET_ID');
+        $sheetStatus = $settings['google_spreadsheet_status'] ?? 'hidden';
         $sheetUrl = $sheetId ? "https://docs.google.com/spreadsheets/d/{$sheetId}/edit" : null;
 
         $classroomSheetUrl = null;
+        $classroomSheetStatus = 'hidden';
         $classroomName = null;
         if ($classroomId = $request->session()->get('verified_parent_classroom_id')) {
             $classroom = Classroom::find($classroomId);
-            if ($classroom && $classroom->google_sheet_link) {
+            if ($classroom) {
                 $classroomSheetUrl = $classroom->google_sheet_link;
+                $classroomSheetStatus = $classroom->google_sheet_status;
                 $classroomName = $classroom->name;
             }
         }
 
         return Inertia::render('public/Finance', [
             'sheetUrl' => $sheetUrl,
+            'sheetStatus' => $sheetStatus,
             'classroomSheetUrl' => $classroomSheetUrl,
+            'classroomSheetStatus' => $classroomSheetStatus,
             'classroomName' => $classroomName,
         ]);
     }
