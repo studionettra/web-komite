@@ -93,10 +93,10 @@ export default function PublicLayout({
                     <div className="hidden items-center gap-4 md:flex">
                         <Link
                             href="/login"
-                            className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white shadow-sm transition-all hover:-translate-y-px hover:bg-blue-700 hover:shadow-md hover:shadow-blue-200 active:scale-95"
+                            className="flex items-center justify-center rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-px hover:bg-blue-700 hover:shadow-md hover:shadow-blue-200 active:scale-95"
                             title="Login Pengurus"
                         >
-                            <SignIn weight="bold" className="h-5 w-5" />
+                            Login
                         </Link>
                     </div>
                 </div>

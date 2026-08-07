@@ -33,7 +33,7 @@ class ProgramController extends Controller
         $page = request()->get('page', 1);
         $perPage = 10;
         $programs = new \Illuminate\Pagination\LengthAwarePaginator(
-            $allPrograms->forPage($page, $perPage),
+            $allPrograms->forPage($page, $perPage)->values(),
             $allPrograms->count(),
             $perPage,
             $page,
@@ -71,14 +71,19 @@ class ProgramController extends Controller
             'status' => 'required|in:planned,ongoing,completed',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
-            'image' => 'nullable|image|max:5120',
+            'images' => 'nullable|array|max:5',
+            'images.*' => 'image|max:5120',
             'assigned_users' => 'nullable|array',
             'assigned_users.*' => 'exists:users,id',
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('programs', 'public');
+        $uploadedImages = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $uploadedImages[] = $image->store('programs', 'public');
+            }
         }
+        $validated['images'] = $uploadedImages;
 
         $program = Program::create($validated);
 
@@ -99,17 +104,33 @@ class ProgramController extends Controller
             'status' => 'required|in:planned,ongoing,completed',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
-            'image' => 'nullable|image|max:5120',
+            'images' => 'nullable|array|max:5',
+            'images.*' => 'image|max:5120',
+            'existing_images' => 'nullable|array',
             'assigned_users' => 'nullable|array',
             'assigned_users.*' => 'exists:users,id',
         ]);
 
-        if ($request->hasFile('image')) {
-            if ($program->image && Storage::disk('public')->exists($program->image)) {
-                Storage::disk('public')->delete($program->image);
+        $existingImages = $request->input('existing_images', []);
+        
+        // Remove old images not in existing_images
+        $oldImages = $program->images ?? [];
+        $imagesToDelete = array_diff($oldImages, $existingImages);
+        foreach ($imagesToDelete as $img) {
+            if (Storage::disk('public')->exists($img)) {
+                Storage::disk('public')->delete($img);
             }
-            $validated['image'] = $request->file('image')->store('programs', 'public');
         }
+
+        $finalImages = $existingImages;
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $finalImages[] = $image->store('programs', 'public');
+            }
+        }
+        
+        $validated['images'] = $finalImages;
 
         $program->update($validated);
 
@@ -136,8 +157,11 @@ class ProgramController extends Controller
             return back();
         }
 
-        if ($program->image && Storage::disk('public')->exists($program->image)) {
-            Storage::disk('public')->delete($program->image);
+        $images = $program->images ?? [];
+        foreach ($images as $img) {
+            if (Storage::disk('public')->exists($img)) {
+                Storage::disk('public')->delete($img);
+            }
         }
 
         $program->delete();

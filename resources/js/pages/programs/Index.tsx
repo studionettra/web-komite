@@ -30,7 +30,8 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
             status: 'planned',
             start_date: '',
             end_date: '',
-            image: null as File | null,
+            images: [] as File[],
+            existing_images: [] as string[],
             _method: 'post',
         });
 
@@ -55,7 +56,8 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                 ? program.start_date.split('T')[0]
                 : '',
             end_date: program.end_date ? program.end_date.split('T')[0] : '',
-            image: null,
+            images: [],
+            existing_images: program.images || [],
             _method: 'put',
         });
     };
@@ -213,38 +215,52 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                 </div>
                                 <div>
                                     <label className="mb-1.5 block text-sm font-semibold text-slate-700">
-                                        Gambar Banner (Opsional)
+                                        Gambar Banner (Opsional, Maks 5)
                                     </label>
                                     
-                                    {isEditing && programs.data.find((p: any) => p.id === editingId)?.image && (
+                                    {isEditing && data.existing_images && data.existing_images.length > 0 && (
                                         <div className="mb-3">
                                             <p className="mb-1.5 text-xs font-medium text-slate-500">Banner saat ini:</p>
-                                            <div className="relative overflow-hidden rounded-xl border border-slate-200">
-                                                <img 
-                                                    src={`/storage/${programs.data.find((p: any) => p.id === editingId)?.image}`} 
-                                                    alt="Current banner" 
-                                                    className="h-32 w-full object-cover" 
-                                                />
+                                            <div className="flex flex-wrap gap-2">
+                                                {data.existing_images.map((img: string, idx: number) => (
+                                                    <div key={idx} className="relative overflow-hidden rounded-xl border border-slate-200">
+                                                        <img 
+                                                            src={`/storage/${img}`} 
+                                                            alt={`Current banner ${idx+1}`} 
+                                                            className="h-24 w-32 object-cover" 
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setData('existing_images', data.existing_images.filter((i) => i !== img))}
+                                                            className="absolute right-1 top-1 rounded-full bg-rose-500 p-1 text-white shadow-sm hover:bg-rose-600 focus:outline-none"
+                                                        >
+                                                            <Trash className="h-3 w-3" />
+                                                        </button>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
                                     )}
 
                                     <input
                                         type="file"
+                                        multiple
                                         accept="image/png, image/jpeg, image/jpg"
-                                        onChange={(e) =>
-                                            setData('image', e.target.files?.[0] || null)
-                                        }
+                                        onChange={(e) => {
+                                            if (e.target.files) {
+                                                setData('images', Array.from(e.target.files));
+                                            }
+                                        }}
                                         className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500 file:mr-4 file:rounded-full file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"
                                     />
                                     {isEditing && (
                                         <p className="mt-2 text-xs text-slate-500">
-                                            * Biarkan kosong jika Anda tidak ingin mengubah banner saat ini.
+                                            * Upload gambar baru akan ditambahkan ke daftar gambar.
                                         </p>
                                     )}
-                                    {errors.image && (
+                                    {errors.images && (
                                         <div className="mt-1 text-xs text-rose-500">
-                                            {errors.image}
+                                            {errors.images}
                                         </div>
                                     )}
                                 </div>
@@ -520,9 +536,36 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                             </table>
                         </div>
                         {programs.total > 0 && (
-                            <div className="border-t border-slate-100 bg-slate-50 px-6 py-4 text-xs font-medium text-slate-500">
-                                Menampilkan {programs.data.length} dari total{' '}
-                                {programs.total} program
+                            <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-100 bg-slate-50 px-6 py-4 sm:flex-row sm:gap-0">
+                                <div className="text-xs font-medium text-slate-500">
+                                    Menampilkan {programs.from || 0} - {programs.to || 0} dari total{' '}
+                                    {programs.total} program
+                                </div>
+                                {programs.links && programs.links.length > 3 && (
+                                    <div className="flex flex-wrap items-center gap-1">
+                                        {programs.links.map((link: any, idx: number) => (
+                                            link.url ? (
+                                                <Link
+                                                    key={idx}
+                                                    href={link.url}
+                                                    className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                                                        link.active
+                                                            ? 'bg-slate-800 text-white shadow-sm'
+                                                            : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
+                                                    }`}
+                                                >
+                                                    <span dangerouslySetInnerHTML={{ __html: link.label }} />
+                                                </Link>
+                                            ) : (
+                                                <span
+                                                    key={idx}
+                                                    className="rounded-lg px-3 py-1.5 text-sm font-medium bg-transparent text-slate-400 opacity-50 cursor-not-allowed"
+                                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                                />
+                                            )
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>

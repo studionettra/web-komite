@@ -23,7 +23,7 @@ class Program extends Model
     }
 
     protected $fillable = [
-        'title', 'description', 'image', 'frequency', 'status', 'start_date', 'end_date',
+        'title', 'description', 'images', 'frequency', 'status', 'start_date', 'end_date',
     ];
 
     protected function casts(): array
@@ -31,6 +31,7 @@ class Program extends Model
         return [
             'start_date' => 'date:Y-m-d',
             'end_date' => 'date:Y-m-d',
+            'images' => 'array',
         ];
     }
 

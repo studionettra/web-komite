@@ -11,6 +11,7 @@ import {
     X,
     CalendarBlank,
     Gear,
+    ImageSquare,
 } from '@phosphor-icons/react';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
@@ -113,6 +114,16 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     >
                         Program
                     </NavLink>
+                    {(auth?.user?.roles?.[0]?.name === 'Superadmin' || auth?.user?.roles?.[0]?.name === 'Sekretaris') && (
+                        <NavLink
+                            href="/banners"
+                            icon={ImageSquare}
+                            pathname={pathname}
+                            onClick={closeSidebar}
+                        >
+                            Manajemen Banner
+                        </NavLink>
+                    )}
                     {(auth?.user?.roles?.[0]?.name === 'Superadmin' || auth?.user?.roles?.[0]?.name === 'Sekretaris') && (
                         <NavLink
                             href="/academic-calendar"

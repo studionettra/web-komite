@@ -17,6 +17,7 @@ use App\Http\Controllers\ProgramActivityController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -85,6 +86,8 @@ Route::middleware(['auth', 'prevent-back-history'])->group(function () {
 
         Route::post('/documents', [DocumentController::class, 'store'])->name('documents.store');
         Route::delete('/documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy');
+
+        Route::resource('banners', BannerController::class)->except(['show']);
     });
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');

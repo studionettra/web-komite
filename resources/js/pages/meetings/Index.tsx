@@ -42,6 +42,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<number | null>(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [attendeeSearch, setAttendeeSearch] = useState('');
 
     const { data, setData, post, processing, errors, reset, clearErrors } =
         useForm({
@@ -71,6 +72,18 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
 
         setData('attendees', newSelected.join(', '));
     };
+
+    const selectAllAttendees = () => {
+        setData('attendees', COMMITTEE_MEMBERS.join(', '));
+    };
+
+    const deselectAllAttendees = () => {
+        setData('attendees', '');
+    };
+
+    const filteredMembers = COMMITTEE_MEMBERS.filter((name) =>
+        name.toLowerCase().includes(attendeeSearch.toLowerCase())
+    );
 
     const openCreate = () => {
         setIsEditing(false);
@@ -286,7 +299,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                     </label>
 
                                     <div
-                                        className={`flex min-h-11.5 w-full cursor-text flex-wrap items-center gap-1.5 rounded-xl border bg-slate-50 px-3 py-2 transition-colors hover:bg-white sm:gap-2 ${isDropdownOpen ? 'border-blue-500 ring-2 ring-blue-500/20' : 'border-slate-300'}`}
+                                        className={`flex max-h-40 overflow-y-auto custom-scrollbar min-h-11.5 w-full cursor-pointer flex-wrap items-start gap-1.5 rounded-xl border bg-slate-50 px-3 py-2 transition-colors hover:bg-white sm:gap-2 ${isDropdownOpen ? 'border-blue-500 ring-2 ring-blue-500/20' : 'border-slate-300'}`}
                                         onClick={() => setIsDropdownOpen(true)}
                                     >
                                         {selectedAttendees.length === 0 && (
@@ -329,55 +342,95 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         <>
                                             <div
                                                 className="fixed inset-0 z-10"
-                                                onClick={() =>
-                                                    setIsDropdownOpen(false)
-                                                }
+                                                onClick={() => {
+                                                    setIsDropdownOpen(false);
+                                                    setAttendeeSearch('');
+                                                }}
                                             ></div>
-                                            <div className="custom-scrollbar absolute z-20 mt-2 max-h-60 w-full overflow-y-auto rounded-xl border border-slate-200 bg-white py-1.5 shadow-lg">
-                                                {COMMITTEE_MEMBERS.map(
-                                                    (name) => {
-                                                        const isSelected =
-                                                            selectedAttendees.includes(
-                                                                name,
-                                                            );
-
-                                                        return (
-                                                            <button
-                                                                key={name}
-                                                                type="button"
-                                                                onClick={() => {
-                                                                    if (
-                                                                        !isSelected
-                                                                    ) {
-                                                                        toggleAttendee(
-                                                                            name,
-                                                                        );
-                                                                    }
-
-                                                                    setIsDropdownOpen(
-                                                                        false,
+                                            <div className="custom-scrollbar absolute z-20 mt-2 max-h-80 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg flex flex-col">
+                                                <div className="border-b border-slate-100 p-2">
+                                                    <input
+                                                        type="text"
+                                                        value={attendeeSearch}
+                                                        onChange={(e) => setAttendeeSearch(e.target.value)}
+                                                        placeholder="Cari nama pengurus..."
+                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+                                                        autoFocus
+                                                    />
+                                                </div>
+                                                <div className="flex items-center justify-between border-b border-slate-100 px-4 py-2 bg-slate-50/50">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            selectAllAttendees();
+                                                            setIsDropdownOpen(false);
+                                                            setAttendeeSearch('');
+                                                        }}
+                                                        className="text-xs font-semibold text-blue-600 hover:text-blue-700"
+                                                    >
+                                                        Pilih Semua
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={deselectAllAttendees}
+                                                        className="text-xs font-semibold text-slate-500 hover:text-slate-700"
+                                                    >
+                                                        Hapus Semua
+                                                    </button>
+                                                </div>
+                                                <div className="overflow-y-auto max-h-60 py-1.5">
+                                                    {filteredMembers.length === 0 ? (
+                                                        <div className="px-4 py-3 text-sm text-slate-500 text-center">
+                                                            Nama tidak ditemukan.
+                                                        </div>
+                                                    ) : (
+                                                        filteredMembers.map(
+                                                            (name) => {
+                                                                const isSelected =
+                                                                    selectedAttendees.includes(
+                                                                        name,
                                                                     );
-                                                                }}
-                                                                disabled={
-                                                                    isSelected
-                                                                }
-                                                                className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm font-medium transition-colors ${
-                                                                    isSelected
-                                                                        ? 'cursor-not-allowed bg-slate-50/50 text-slate-400'
-                                                                        : 'text-slate-700 hover:bg-blue-50 hover:text-blue-700'
-                                                                }`}
-                                                            >
-                                                                {name}
-                                                                {isSelected && (
-                                                                    <CheckCircle
-                                                                        weight="fill"
-                                                                        className="h-4 w-4 text-slate-300"
-                                                                    />
-                                                                )}
-                                                            </button>
-                                                        );
-                                                    },
-                                                )}
+
+                                                                return (
+                                                                    <button
+                                                                        key={name}
+                                                                        type="button"
+                                                                        onClick={() => {
+                                                                            if (
+                                                                                !isSelected
+                                                                            ) {
+                                                                                toggleAttendee(
+                                                                                    name,
+                                                                                );
+                                                                            }
+
+                                                                            setAttendeeSearch('');
+                                                                            setIsDropdownOpen(
+                                                                                false,
+                                                                            );
+                                                                        }}
+                                                                        disabled={
+                                                                            isSelected
+                                                                        }
+                                                                        className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm font-medium transition-colors ${
+                                                                            isSelected
+                                                                                ? 'cursor-not-allowed bg-slate-50/50 text-slate-400'
+                                                                                : 'text-slate-700 hover:bg-blue-50 hover:text-blue-700'
+                                                                        }`}
+                                                                    >
+                                                                        {name}
+                                                                        {isSelected && (
+                                                                            <CheckCircle
+                                                                                weight="fill"
+                                                                                className="h-4 w-4 text-slate-300"
+                                                                            />
+                                                                        )}
+                                                                    </button>
+                                                                );
+                                                            },
+                                                        )
+                                                    )}
+                                                </div>
                                             </div>
                                         </>
                                     )}

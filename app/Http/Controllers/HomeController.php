@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Alert;
+use App\Models\Banner;
 use App\Models\Classroom;
 use App\Models\Program;
 use App\Models\ProgramActivity;
@@ -64,10 +65,13 @@ class HomeController extends Controller
 
         $activePrograms = $activeProgramsQuery->get();
 
+        $banners = Banner::where('is_active', true)->orderBy('order', 'asc')->orderBy('created_at', 'desc')->get();
+
         return Inertia::render('public/Home', [
             'heroProgram' => $heroProgram,
             'activePrograms' => $activePrograms,
             'upcomingSessions' => $upcomingSessions,
+            'banners' => $banners,
         ]);
     }
 

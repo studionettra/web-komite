@@ -51,6 +51,26 @@ export default function Programs({ programs }: any) {
         return hasDirectDocs || hasActivityDocs;
     };
 
+    const getRelevantDate = (program: any) => {
+        if (!program.activities || program.activities.length === 0) {
+            return program.start_date;
+        }
+
+        const now = new Date();
+
+        for (const activity of program.activities) {
+            const actDate = new Date(activity.activity_date);
+            const endTimeStr = activity.end_time || '23:59:59';
+            const actEnd = new Date(`${activity.activity_date}T${endTimeStr}`);
+
+            if (actEnd >= now) {
+                return activity.activity_date;
+            }
+        }
+
+        return program.activities[program.activities.length - 1].activity_date;
+    };
+
     const renderJadwal = (program: any) => {
         if (!program.activities || program.activities.length === 0) {
             return (
@@ -297,35 +317,52 @@ export default function Programs({ programs }: any) {
                                     <div
                                         key={program.id}
                                         onClick={() => openProgram(program)}
-                                        className="group flex cursor-pointer flex-col rounded-xl border border-slate-100 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-blue-100 hover:bg-blue-50/30 hover:shadow-lg sm:rounded-2xl sm:p-6"
+                                        className="group flex cursor-pointer flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-100 hover:shadow-xl sm:rounded-2xl"
                                     >
-                                        <div className="mb-4 flex items-start justify-between">
-                                            <span className="rounded-md bg-slate-100 px-3 py-1 text-xs font-bold tracking-wider text-slate-600 uppercase transition-colors group-hover:bg-blue-100 group-hover:text-blue-700">
-                                                {program.frequency === 'monthly'
-                                                    ? 'Bulanan'
-                                                    : program.frequency ===
-                                                        'holiday'
-                                                      ? 'PHBI'
-                                                      : 'Insidental'}
-                                            </span>
-                                            <span className="text-sm font-medium text-slate-400">
-                                                {program.start_date
-                                                    ? new Date(
-                                                          program.start_date,
-                                                      ).toLocaleDateString(
-                                                          'id-ID',
-                                                          {
-                                                              month: 'short',
-                                                              year: 'numeric',
-                                                          },
-                                                      )
-                                                    : '-'}
-                                            </span>
+                                        {/* Image Header */}
+                                        <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
+                                            {program.images && program.images.length > 0 ? (
+                                                <img 
+                                                    src={`/storage/${program.images[0]}`} 
+                                                    alt={program.title}
+                                                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                />
+                                            ) : (
+                                                <div className="flex h-full w-full items-center justify-center bg-blue-50/50 text-blue-200 transition-transform duration-500 group-hover:scale-105">
+                                                    <CalendarBlank weight="duotone" className="h-16 w-16" />
+                                                </div>
+                                            )}
                                         </div>
-                                        <h3 className="mb-2 text-base leading-snug font-bold text-slate-900 transition-colors group-hover:text-blue-700 sm:mb-3 sm:text-xl">
-                                            {program.title}
-                                        </h3>
-                                        <p className="mb-6 line-clamp-3 flex-1 text-sm leading-relaxed text-slate-600">
+
+                                        {/* Card Content */}
+                                        <div className="flex flex-1 flex-col p-4 sm:p-6 transition-colors group-hover:bg-blue-50/30">
+                                            <div className="mb-4 flex items-start justify-between">
+                                                <span className="rounded-md bg-slate-100 px-3 py-1 text-xs font-bold tracking-wider text-slate-600 uppercase transition-colors group-hover:bg-blue-100 group-hover:text-blue-700">
+                                                    {program.frequency === 'monthly'
+                                                        ? 'Bulanan'
+                                                        : program.frequency ===
+                                                            'holiday'
+                                                          ? 'PHBI'
+                                                          : 'Insidental'}
+                                                </span>
+                                                <span className="text-sm font-medium text-slate-400">
+                                                    {getRelevantDate(program)
+                                                        ? new Date(
+                                                              getRelevantDate(program),
+                                                          ).toLocaleDateString(
+                                                              'id-ID',
+                                                              {
+                                                                  month: 'long',
+                                                                  year: 'numeric',
+                                                              },
+                                                          )
+                                                        : '-'}
+                                                </span>
+                                            </div>
+                                            <h3 className="mb-2 text-base leading-snug font-bold text-slate-900 transition-colors group-hover:text-blue-700 sm:mb-3 sm:text-xl">
+                                                {program.title}
+                                            </h3>
+                                            <p className="mb-6 line-clamp-3 flex-1 text-sm leading-relaxed text-slate-600">
                                             {program.description}
                                         </p>
 
@@ -354,6 +391,7 @@ export default function Programs({ programs }: any) {
                                             <span className="text-sm font-bold text-blue-600 opacity-0 transition-opacity group-hover:opacity-100">
                                                 Lihat Detail &rarr;
                                             </span>
+                                        </div>
                                         </div>
                                     </div>
                                 ))}
