@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Alert;
 use App\Models\Banner;
 use App\Models\Classroom;
+use App\Models\Post;
 use App\Models\Program;
 use App\Models\ProgramActivity;
 use App\Models\Student;
@@ -67,7 +68,7 @@ class HomeController extends Controller
 
         $banners = Banner::where('is_active', true)->orderBy('order', 'asc')->orderBy('created_at', 'desc')->get();
 
-        $recentPosts = \App\Models\Post::where('is_published', true)->orderBy('published_at', 'desc')->take(3)->get();
+        $recentPosts = Post::where('is_published', true)->orderBy('published_at', 'desc')->take(3)->get();
 
         return Inertia::render('public/Home', [
             'heroProgram' => $heroProgram,
@@ -85,7 +86,7 @@ class HomeController extends Controller
 
     public function finance(Request $request)
     {
-        if (! $request->session()->get('verified_parent')) {
+        if (! $request->session()->get('verified_finance_parent')) {
             $classrooms = Classroom::orderBy('name', 'asc')->get();
 
             return Inertia::render('public/FinanceGate', [
@@ -108,7 +109,7 @@ class HomeController extends Controller
         $classroomSheetUrl = null;
         $classroomSheetStatus = 'hidden';
         $classroomName = null;
-        if ($classroomId = $request->session()->get('verified_parent_classroom_id')) {
+        if ($classroomId = $request->session()->get('verified_finance_classroom_id')) {
             $classroom = Classroom::find($classroomId);
             if ($classroom) {
                 $classroomSheetUrl = $classroom->google_sheet_link;
@@ -161,8 +162,8 @@ class HomeController extends Controller
         });
 
         if ($matchedStudent) {
-            $request->session()->put('verified_parent', true);
-            $request->session()->put('verified_parent_classroom_id', $matchedStudent->classroom_id);
+            $request->session()->put('verified_finance_parent', true);
+            $request->session()->put('verified_finance_classroom_id', $matchedStudent->classroom_id);
             Alert::success('Akses Diberikan', 'Selamat datang, Wali dari '.$matchedStudent->name);
 
             activity('finance_access')

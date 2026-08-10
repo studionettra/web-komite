@@ -13,7 +13,7 @@ class AcademicCalendarController extends Controller
 {
     public function index(Request $request)
     {
-        if (! $request->session()->get('verified_parent')) {
+        if (! $request->session()->get('verified_academic_parent')) {
             $classrooms = Classroom::orderBy('name', 'asc')->get();
 
             return Inertia::render('public/AcademicCalendarGate', [
@@ -82,8 +82,8 @@ class AcademicCalendarController extends Controller
         });
 
         if ($matchedStudent) {
-            $request->session()->put('verified_parent', true);
-            $request->session()->put('verified_parent_classroom_id', $matchedStudent->classroom_id);
+            $request->session()->put('verified_academic_parent', true);
+            $request->session()->put('verified_academic_classroom_id', $matchedStudent->classroom_id);
             Alert::success('Akses Diberikan', 'Selamat datang, Wali dari '.$matchedStudent->name);
 
             activity('academic_access')
