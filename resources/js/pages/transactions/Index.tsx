@@ -28,8 +28,8 @@ export default function TransactionsIndex({
         <DashboardLayout>
             <Head title="Keuangan" />
 
-            <div className="mb-4 flex flex-col justify-between gap-3 sm:mb-6 sm:flex-row sm:items-center sm:gap-4">
-                <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">
+            <div className="mb-6 flex flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center">
+                <h1 className="text-2xl font-semibold tracking-tight text-slate-800 sm:text-3xl">
                     Catatan Keuangan Bendahara
                 </h1>
 
@@ -38,45 +38,47 @@ export default function TransactionsIndex({
                         href={sheetUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-emerald-700 sm:px-4"
+                        className="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3.5 text-base font-bold text-white shadow-sm transition-all hover:-translate-y-1 hover:bg-emerald-700 hover:shadow-md active:translate-y-0"
                     >
                         <span>Buka di Google Sheets</span>
-                        <ArrowUpRight weight="bold" />
+                        <ArrowUpRight weight="bold" className="h-5 w-5" />
                     </a>
                 )}
             </div>
 
-            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
                 {sheetStatus === 'preparing' ? (
-                    <div className="flex flex-col items-center justify-center p-8 sm:p-12">
-                        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-50">
+                    <div className="flex flex-col items-center justify-center p-12 py-20 text-center">
+                        <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-50">
                             <FileText
-                                className="h-8 w-8 text-amber-500"
-                                weight="duotone"
+                                className="h-10 w-10 text-amber-500"
+                                weight="fill"
                             />
                         </div>
-                        <h3 className="mb-2 text-base font-medium text-slate-700 sm:text-lg">
+                        <h3 className="mb-3 text-2xl font-semibold text-slate-800">
                             Laporan Sedang Disiapkan
                         </h3>
-                        <p className="max-w-sm text-center text-sm text-slate-500">
+                        <p className="max-w-md text-base font-medium text-slate-500">
                             Bendahara sedang menyusun laporan keuangan saat ini. Silakan periksa kembali nanti.
                         </p>
                     </div>
                 ) : sheetStatus === 'hidden' || !sheetUrl ? (
-                    <div className="flex flex-col items-center justify-center p-8 sm:p-12">
-                        <TableIcon
-                            className="mb-4 h-12 w-12 text-slate-300"
-                            weight="light"
-                        />
-                        <h3 className="mb-2 text-base font-medium text-slate-700 sm:text-lg">
+                    <div className="flex flex-col items-center justify-center p-12 py-20 text-center">
+                        <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-slate-50">
+                            <TableIcon
+                                className="h-10 w-10 text-slate-400"
+                                weight="fill"
+                            />
+                        </div>
+                        <h3 className="mb-3 text-2xl font-semibold text-slate-800">
                             Google Sheet Belum Terhubung
                         </h3>
-                        <p className="max-w-sm text-center text-sm text-slate-500">
+                        <p className="max-w-md text-base font-medium text-slate-500">
                             Admin belum mengatur tautan Google Sheet untuk keuangan di Pengaturan.
                         </p>
                     </div>
                 ) : (
-                    <div className="flex flex-col bg-white">
+                    <div className="flex flex-col bg-slate-50">
                         <iframe
                             src={getEmbedUrl(sheetUrl)}
                             className="h-[500px] sm:h-[700px] w-full border-0"

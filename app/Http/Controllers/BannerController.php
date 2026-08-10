@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Alert;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
-use App\Helpers\Alert;
 
 class BannerController extends Controller
 {
     public function index()
     {
         $banners = Banner::orderBy('order', 'asc')->orderBy('created_at', 'desc')->get();
+
         return Inertia::render('admin/banners/Index', [
-            'banners' => $banners
+            'banners' => $banners,
         ]);
     }
 
@@ -43,13 +44,14 @@ class BannerController extends Controller
         Banner::create($data);
 
         Alert::success('Berhasil', 'Banner berhasil ditambahkan');
+
         return redirect()->route('banners.index');
     }
 
     public function edit(Banner $banner)
     {
         return Inertia::render('admin/banners/Form', [
-            'banner' => $banner
+            'banner' => $banner,
         ]);
     }
 
@@ -76,6 +78,7 @@ class BannerController extends Controller
         $banner->update($data);
 
         Alert::success('Berhasil', 'Banner berhasil diperbarui');
+
         return redirect()->route('banners.index');
     }
 
@@ -84,10 +87,11 @@ class BannerController extends Controller
         if ($banner->image) {
             Storage::disk('public')->delete($banner->image);
         }
-        
+
         $banner->delete();
-        
+
         Alert::success('Berhasil', 'Banner berhasil dihapus');
+
         return redirect()->route('banners.index');
     }
 }

@@ -21,7 +21,7 @@ class AdminAcademicYearController extends Controller
     public function show(AcademicYear $academicYear)
     {
         $academicYear->load(['months' => function ($query) {
-            $query->orderBy('order_index');
+            $query->withCount(['activities', 'learningPrograms'])->orderBy('order_index');
         }]);
 
         return Inertia::render('academic-calendars/Show', [

@@ -82,7 +82,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
     };
 
     const filteredMembers = COMMITTEE_MEMBERS.filter((name) =>
-        name.toLowerCase().includes(attendeeSearch.toLowerCase())
+        name.toLowerCase().includes(attendeeSearch.toLowerCase()),
     );
 
     const openCreate = () => {
@@ -154,7 +154,9 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
 
         if (meeting.attendees) {
             text += `*Daftar Hadir:*\n`;
-            const attendeesArray = meeting.attendees.split(',').map((a: string) => a.trim());
+            const attendeesArray = meeting.attendees
+                .split(',')
+                .map((a: string) => a.trim());
             attendeesArray.forEach((a: string) => {
                 text += `- ${a}\n`;
             });
@@ -173,18 +175,23 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
             text += `*Lampiran Dokumen:*\n`;
             meeting.documents.forEach((doc: any) => {
                 // Ensure absolute URL
-                const fileUrl = new URL(`/storage/${doc.file_path}`, window.location.origin).href;
+                const fileUrl = new URL(
+                    `/storage/${doc.file_path}`,
+                    window.location.origin,
+                ).href;
                 text += `${fileUrl}\n`;
             });
         }
 
         const encodedText = encodeURIComponent(text);
-        
+
         // Cek limitasi kasar, jika lebih dari 2000 char mungkin bermasalah di beberapa browser
         if (encodedText.length > 4000) {
             // Fallback copy to clipboard
             navigator.clipboard.writeText(text).then(() => {
-                alert("Teks terlalu panjang untuk link WhatsApp, namun teks telah berhasil di-copy. Silakan paste secara manual di WhatsApp.");
+                alert(
+                    'Teks terlalu panjang untuk link WhatsApp, namun teks telah berhasil di-copy. Silakan paste secara manual di WhatsApp.',
+                );
             });
             return;
         }
@@ -208,10 +215,10 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-5">
                 {canManageMeeting && (
                     <div className="lg:col-span-1">
-                        <div className="sticky top-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+                        <div className="sticky top-6 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-5">
                             <div className="mb-6 flex items-center justify-between">
                                 <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
                                     <Note
@@ -264,11 +271,11 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         onChange={(e) =>
                                             setData('date', e.target.value)
                                         }
-                                        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         required
                                     />
                                     {errors.date && (
-                                        <div className="mt-1 text-xs text-rose-500">
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
                                             {errors.date}
                                         </div>
                                     )}
@@ -283,12 +290,12 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         onChange={(e) =>
                                             setData('agenda', e.target.value)
                                         }
-                                        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         placeholder="Contoh: Rapat Koordinasi Tahunan"
                                         required
                                     />
                                     {errors.agenda && (
-                                        <div className="mt-1 text-xs text-rose-500">
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
                                             {errors.agenda}
                                         </div>
                                     )}
@@ -299,11 +306,11 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                     </label>
 
                                     <div
-                                        className={`flex max-h-40 overflow-y-auto custom-scrollbar min-h-11.5 w-full cursor-pointer flex-wrap items-start gap-1.5 rounded-xl border bg-slate-50 px-3 py-2 transition-colors hover:bg-white sm:gap-2 ${isDropdownOpen ? 'border-blue-500 ring-2 ring-blue-500/20' : 'border-slate-300'}`}
+                                        className={`custom-scrollbar flex max-h-40 min-h-[3.5rem] w-full cursor-pointer flex-wrap items-start gap-1.5 overflow-y-auto rounded-2xl border-2 bg-slate-50 px-4 py-3 font-medium transition-all hover:bg-white sm:gap-2 ${isDropdownOpen ? 'border-blue-500 ring-4 ring-blue-500/20' : 'border-slate-200'}`}
                                         onClick={() => setIsDropdownOpen(true)}
                                     >
                                         {selectedAttendees.length === 0 && (
-                                            <span className="ml-1 text-sm text-slate-400">
+                                            <span className="ml-1 text-sm font-normal text-slate-400">
                                                 Pilih pengurus yang hadir...
                                             </span>
                                         )}
@@ -311,7 +318,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         {selectedAttendees.map((name) => (
                                             <span
                                                 key={name}
-                                                className="inline-flex items-center gap-1 rounded-lg border border-blue-200/60 bg-blue-50 px-2 py-0.5 text-xs font-semibold text-blue-700 shadow-sm sm:px-2.5 sm:py-1 sm:text-sm"
+                                                className="inline-flex items-center gap-1 rounded-xl border-2 border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-bold text-blue-700 shadow-sm transition-all hover:border-blue-300 sm:px-3 sm:py-1 sm:text-sm"
                                             >
                                                 {name}
                                                 <button
@@ -347,24 +354,32 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                     setAttendeeSearch('');
                                                 }}
                                             ></div>
-                                            <div className="custom-scrollbar absolute z-20 mt-2 max-h-80 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg flex flex-col">
+                                            <div className="custom-scrollbar absolute z-20 mt-2 flex max-h-80 w-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
                                                 <div className="border-b border-slate-100 p-2">
                                                     <input
                                                         type="text"
                                                         value={attendeeSearch}
-                                                        onChange={(e) => setAttendeeSearch(e.target.value)}
+                                                        onChange={(e) =>
+                                                            setAttendeeSearch(
+                                                                e.target.value,
+                                                            )
+                                                        }
                                                         placeholder="Cari nama pengurus..."
                                                         className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                                                         autoFocus
                                                     />
                                                 </div>
-                                                <div className="flex items-center justify-between border-b border-slate-100 px-4 py-2 bg-slate-50/50">
+                                                <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/50 px-4 py-2">
                                                     <button
                                                         type="button"
                                                         onClick={() => {
                                                             selectAllAttendees();
-                                                            setIsDropdownOpen(false);
-                                                            setAttendeeSearch('');
+                                                            setIsDropdownOpen(
+                                                                false,
+                                                            );
+                                                            setAttendeeSearch(
+                                                                '',
+                                                            );
                                                         }}
                                                         className="text-xs font-semibold text-blue-600 hover:text-blue-700"
                                                     >
@@ -372,16 +387,20 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                     </button>
                                                     <button
                                                         type="button"
-                                                        onClick={deselectAllAttendees}
+                                                        onClick={
+                                                            deselectAllAttendees
+                                                        }
                                                         className="text-xs font-semibold text-slate-500 hover:text-slate-700"
                                                     >
                                                         Hapus Semua
                                                     </button>
                                                 </div>
-                                                <div className="overflow-y-auto max-h-60 py-1.5">
-                                                    {filteredMembers.length === 0 ? (
-                                                        <div className="px-4 py-3 text-sm text-slate-500 text-center">
-                                                            Nama tidak ditemukan.
+                                                <div className="max-h-60 overflow-y-auto py-1.5">
+                                                    {filteredMembers.length ===
+                                                    0 ? (
+                                                        <div className="px-4 py-3 text-center text-sm text-slate-500">
+                                                            Nama tidak
+                                                            ditemukan.
                                                         </div>
                                                     ) : (
                                                         filteredMembers.map(
@@ -393,7 +412,9 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
 
                                                                 return (
                                                                     <button
-                                                                        key={name}
+                                                                        key={
+                                                                            name
+                                                                        }
                                                                         type="button"
                                                                         onClick={() => {
                                                                             if (
@@ -404,7 +425,9 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                                                 );
                                                                             }
 
-                                                                            setAttendeeSearch('');
+                                                                            setAttendeeSearch(
+                                                                                '',
+                                                                            );
                                                                             setIsDropdownOpen(
                                                                                 false,
                                                                             );
@@ -446,11 +469,11 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         }
                                         rows={3}
                                         placeholder="Tuliskan hasil atau keputusan rapat..."
-                                        className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                        className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         required
                                     ></textarea>
                                     {errors.decisions && (
-                                        <div className="mt-1 text-xs text-rose-500">
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
                                             {errors.decisions}
                                         </div>
                                     )}
@@ -466,7 +489,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         }
                                         rows={2}
                                         placeholder="Siapa melakukan apa..."
-                                        className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                        className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                     ></textarea>
                                 </div>
                                 <div>
@@ -521,7 +544,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         .map((key) => (
                                             <div
                                                 key={key}
-                                                className="mt-1 text-xs text-rose-500"
+                                                className="mt-2 text-sm font-medium text-rose-500"
                                             >
                                                 {
                                                     errors[
@@ -534,7 +557,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="mt-2 w-full rounded-xl bg-slate-900 py-3 font-semibold text-white shadow-sm transition-all hover:bg-slate-800 active:scale-[0.98] disabled:opacity-70"
+                                    className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                 >
                                     {processing
                                         ? 'Menyimpan...'
@@ -553,34 +576,37 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                     {!canManageMeeting ? (
                         <div className="space-y-6">
                             {meetings.data.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm sm:p-12">
+                                <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white p-12 text-center shadow-sm sm:p-20">
                                     <UsersThree
                                         weight="duotone"
-                                        className="mb-4 h-16 w-16 text-slate-300"
+                                        className="mb-6 h-16 w-16 text-slate-200"
                                     />
-                                    <h3 className="text-base font-bold text-slate-700 sm:text-lg">
+                                    <h3 className="text-lg font-semibold text-slate-800 sm:text-xl">
                                         Belum Ada Notulensi
                                     </h3>
-                                    <p className="mt-2 max-w-sm text-sm text-slate-500">
+                                    <p className="mt-3 max-w-sm text-base text-slate-500">
                                         Belum ada catatan rapat komite yang
                                         dipublikasikan.
                                     </p>
                                 </div>
                             ) : (
-                                <div className="relative ml-3 space-y-10 border-l-2 border-slate-200 py-4 sm:ml-6">
+                                <div className="relative ml-3 space-y-12 border-l-[3px] border-slate-100 py-6 sm:ml-6">
                                     {meetings.data.map((meeting: any) => (
                                         <div
                                             key={meeting.id}
                                             className="group relative pl-6 sm:pl-10"
                                         >
                                             {/* Timeline dot */}
-                                            <div className="absolute top-1.5 -left-2.75 flex h-5 w-5 items-center justify-center rounded-full border-4 border-white bg-blue-100 shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-blue-500 sm:-left-2.75">
-                                                <div className="h-1.5 w-1.5 rounded-full bg-blue-600 group-hover:bg-white"></div>
+                                            <div className="absolute top-2 -left-[0.85rem] flex h-6 w-6 items-center justify-center rounded-full border-4 border-white bg-blue-100 shadow-sm transition-all duration-300 group-hover:scale-125 group-hover:bg-blue-500 sm:-left-[0.85rem]">
+                                                <div className="h-2 w-2 rounded-full bg-blue-600 group-hover:bg-white"></div>
                                             </div>
 
                                             {/* Date Badge */}
-                                            <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-bold tracking-wider text-slate-600 uppercase">
-                                                <CalendarBlank weight="bold" />
+                                            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-4 py-1.5 text-xs font-bold tracking-wider text-slate-600 uppercase">
+                                                <CalendarBlank
+                                                    weight="bold"
+                                                    className="h-4 w-4"
+                                                />
                                                 {meeting.date
                                                     ? new Date(
                                                           meeting.date,
@@ -596,41 +622,41 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                             </div>
 
                                             {/* Content Card */}
-                                            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-md sm:p-7">
+                                            <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] sm:p-5">
                                                 <h3 className="mb-4 text-xl font-bold text-slate-900">
                                                     {meeting.agenda}
                                                 </h3>
 
                                                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                                                    <div className="rounded-xl border border-emerald-100/50 bg-emerald-50/50 p-4">
-                                                        <div className="mb-3 flex items-center gap-2">
+                                                    <div className="rounded-[1.5rem] border-2 border-emerald-100/50 bg-emerald-50/50 p-5">
+                                                        <div className="mb-4 flex items-center gap-2">
                                                             <CheckCircle
                                                                 weight="fill"
-                                                                className="h-5 w-5 text-emerald-500"
+                                                                className="h-6 w-6 text-emerald-500"
                                                             />
-                                                            <h4 className="text-sm font-bold text-emerald-900">
+                                                            <h4 className="text-base font-bold text-emerald-900">
                                                                 Hasil Keputusan
                                                             </h4>
                                                         </div>
-                                                        <p className="text-sm leading-relaxed whitespace-pre-wrap text-slate-700">
+                                                        <p className="text-base leading-relaxed whitespace-pre-wrap text-slate-700">
                                                             {meeting.decisions}
                                                         </p>
                                                     </div>
 
                                                     <div className="space-y-4">
                                                         {meeting.follow_up && (
-                                                            <div className="rounded-xl border border-orange-100/50 bg-orange-50/50 p-4">
-                                                                <div className="mb-3 flex items-center gap-2">
+                                                            <div className="rounded-[1.5rem] border-2 border-orange-100/50 bg-orange-50/50 p-5">
+                                                                <div className="mb-4 flex items-center gap-2">
                                                                     <ListChecks
                                                                         weight="fill"
-                                                                        className="h-5 w-5 text-orange-500"
+                                                                        className="h-6 w-6 text-orange-500"
                                                                     />
-                                                                    <h4 className="text-sm font-bold text-orange-900">
+                                                                    <h4 className="text-base font-bold text-orange-900">
                                                                         Tindak
                                                                         Lanjut
                                                                     </h4>
                                                                 </div>
-                                                                <p className="text-sm leading-relaxed whitespace-pre-wrap text-slate-700">
+                                                                <p className="text-base leading-relaxed whitespace-pre-wrap text-slate-700">
                                                                     {
                                                                         meeting.follow_up
                                                                     }
@@ -756,27 +782,27 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                             )}
                         </div>
                     ) : (
-                        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                        <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
                             <div className="overflow-hidden md:overflow-x-auto">
-                                <table className="block min-w-full divide-y divide-slate-200 md:table">
+                                <table className="block min-w-full divide-y divide-slate-100 md:table">
                                     <thead className="hidden bg-slate-50 md:table-header-group">
                                         <tr>
                                             <th
                                                 scope="col"
-                                                className="px-4 py-3 text-left text-xs font-bold tracking-wider text-slate-500 uppercase sm:px-6 sm:py-4"
+                                                className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
                                             >
                                                 Tanggal & Agenda
                                             </th>
                                             <th
                                                 scope="col"
-                                                className="px-4 py-3 text-left text-xs font-bold tracking-wider text-slate-500 uppercase sm:px-6 sm:py-4"
+                                                className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
                                             >
                                                 Keputusan
                                             </th>
                                             {canManageMeeting && (
                                                 <th
                                                     scope="col"
-                                                    className="px-4 py-3 text-right text-xs font-bold tracking-wider text-slate-500 uppercase sm:px-6 sm:py-4"
+                                                    className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
                                                 >
                                                     Aksi
                                                 </th>
@@ -790,14 +816,14 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                     colSpan={
                                                         canManageMeeting ? 3 : 2
                                                     }
-                                                    className="px-6 py-12 text-center text-slate-500"
+                                                    className="px-6 py-16 text-center text-slate-500"
                                                 >
                                                     <div className="flex flex-col items-center justify-center">
                                                         <UsersThree
                                                             weight="duotone"
-                                                            className="mb-3 h-12 w-12 text-slate-300"
+                                                            className="mb-4 h-16 w-16 text-slate-200"
                                                         />
-                                                        <p>
+                                                        <p className="text-base font-medium">
                                                             Belum ada data
                                                             notulensi rapat.
                                                         </p>
@@ -913,12 +939,21 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                     <td className="mt-4 block border-t border-slate-100 px-0 pt-4 text-right align-top whitespace-nowrap md:mt-0 md:table-cell md:border-0 md:px-4 md:py-4 lg:px-6">
                                                         <div className="grid grid-cols-3 gap-3 md:flex md:justify-end md:gap-2">
                                                             <button
-                                                                onClick={() => shareToWhatsApp(meeting)}
-                                                                className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-600 transition-all hover:bg-emerald-50 hover:text-emerald-600 md:w-auto md:bg-transparent md:p-2 md:text-slate-400"
+                                                                onClick={() =>
+                                                                    shareToWhatsApp(
+                                                                        meeting,
+                                                                    )
+                                                                }
+                                                                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-600 transition-all hover:-translate-y-0.5 hover:bg-emerald-100 hover:shadow-sm md:h-10 md:w-10 md:rounded-full md:bg-transparent md:p-0 md:text-emerald-500 md:hover:-translate-y-0 md:hover:bg-emerald-50 md:hover:shadow-none"
                                                                 title="Share via WhatsApp"
                                                             >
-                                                                <WhatsappLogo weight="bold" className="h-4 w-4" />
-                                                                <span className="md:hidden">Share</span>
+                                                                <WhatsappLogo
+                                                                    weight="fill"
+                                                                    className="h-5 w-5 md:h-5 md:w-5"
+                                                                />
+                                                                <span className="md:hidden">
+                                                                    Share
+                                                                </span>
                                                             </button>
                                                             <button
                                                                 onClick={() =>
@@ -926,12 +961,12 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                                         meeting,
                                                                     )
                                                                 }
-                                                                className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-600 transition-all hover:bg-blue-50 hover:text-blue-600 md:w-auto md:bg-transparent md:p-2 md:text-slate-400"
+                                                                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-50 px-4 py-3 text-sm font-bold text-blue-600 transition-all hover:-translate-y-0.5 hover:bg-blue-100 hover:shadow-sm md:h-10 md:w-10 md:rounded-full md:bg-transparent md:p-0 md:text-blue-500 md:hover:-translate-y-0 md:hover:bg-blue-50 md:hover:shadow-none"
                                                                 title="Edit Notulensi"
                                                             >
                                                                 <PencilSimple
-                                                                    weight="bold"
-                                                                    className="h-4 w-4"
+                                                                    weight="fill"
+                                                                    className="h-5 w-5 md:h-5 md:w-5"
                                                                 />
                                                                 <span className="md:hidden">
                                                                     Edit
@@ -944,12 +979,12 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                                         meeting.agenda,
                                                                     )
                                                                 }
-                                                                className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-600 transition-all hover:bg-rose-50 hover:text-rose-600 md:w-auto md:bg-transparent md:p-2 md:text-slate-400"
+                                                                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-rose-50 px-4 py-3 text-sm font-bold text-rose-600 transition-all hover:-translate-y-0.5 hover:bg-rose-100 hover:shadow-sm md:h-10 md:w-10 md:rounded-full md:bg-transparent md:p-0 md:text-rose-500 md:hover:-translate-y-0 md:hover:bg-rose-50 md:hover:shadow-none"
                                                                 title="Hapus Notulensi"
                                                             >
                                                                 <Trash
-                                                                    weight="bold"
-                                                                    className="h-4 w-4"
+                                                                    weight="fill"
+                                                                    className="h-5 w-5 md:h-5 md:w-5"
                                                                 />
                                                                 <span className="md:hidden">
                                                                     Hapus

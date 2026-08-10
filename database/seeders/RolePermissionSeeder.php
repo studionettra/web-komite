@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
@@ -24,6 +25,15 @@ class RolePermissionSeeder extends Seeder
         $roleSekretaris = Role::firstOrCreate(['name' => 'Sekretaris']);
         $roleAnggota = Role::firstOrCreate(['name' => 'Anggota Komite']);
         $roleKorlas = Role::firstOrCreate(['name' => 'Korlas']);
+        $roleHumas = Role::firstOrCreate(['name' => 'Humas']);
+
+        // Create Permissions
+        $permissionManagePosts = Permission::firstOrCreate(['name' => 'manage_posts']);
+        $permissionManageCategories = Permission::firstOrCreate(['name' => 'manage_categories']);
+
+        // Assign Permissions to Roles
+        $roleSuperadmin->syncPermissions([$permissionManagePosts, $permissionManageCategories]);
+        $roleHumas->syncPermissions([$permissionManagePosts, $permissionManageCategories]);
 
         // Create Users
 
@@ -84,12 +94,12 @@ class RolePermissionSeeder extends Seeder
         User::updateOrCreate(['email' => 'ketua_humas@komite.com'], [
             'name' => 'Mamah Fath - A2 (Nurlaila Zahra)',
             'password' => Hash::make('password123'),
-        ])->assignRole($roleAnggota);
+        ])->syncRoles([$roleAnggota, $roleHumas]);
 
         User::updateOrCreate(['email' => 'anggota_humas@komite.com'], [
             'name' => 'Mamah Thariq - A2 (Kunairoh)',
             'password' => Hash::make('password123'),
-        ])->assignRole($roleAnggota);
+        ])->syncRoles([$roleAnggota, $roleHumas]);
 
         // Default Korlas
         User::updateOrCreate(['email' => 'korlas@komite.com'], [

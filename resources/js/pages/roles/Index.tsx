@@ -1,5 +1,5 @@
 import { Head, useForm, router } from '@inertiajs/react';
-import { Trash } from '@phosphor-icons/react';
+import { Trash, ShieldCheck } from '@phosphor-icons/react';
 import type { FormEventHandler } from 'react';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import { confirmDelete } from '../../utils/alertManager';
@@ -26,22 +26,25 @@ export default function RolesIndex({ roles }: { roles: any[] }) {
         <DashboardLayout>
             <Head title="Manajemen Role" />
 
-            <div className="mb-6 flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-800">
+            <div className="mb-8 flex items-center justify-between">
+                <h1 className="text-2xl font-semibold tracking-tight text-slate-800 sm:text-3xl">
                     Manajemen Role
                 </h1>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                 <div className="md:col-span-1">
-                    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                        <h2 className="mb-4 text-lg font-semibold text-gray-800">
+                    <div className="sticky top-6 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-5">
+                        <h2 className="mb-8 flex items-center gap-3 text-xl font-semibold text-slate-800">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                                <ShieldCheck weight="fill" className="h-6 w-6" />
+                            </div>
                             Tambah Role Baru
                         </h2>
-                        <form onSubmit={submit} className="space-y-4">
+                        <form onSubmit={submit} className="space-y-6">
                             <div>
                                 <label
-                                    className="mb-1 block text-sm font-medium text-gray-700"
+                                    className="mb-2 block text-sm font-bold text-slate-700"
                                     htmlFor="name"
                                 >
                                     Nama Role
@@ -53,11 +56,11 @@ export default function RolesIndex({ roles }: { roles: any[] }) {
                                     onChange={(e) =>
                                         setData('name', e.target.value)
                                     }
-                                    className={`w-full rounded-lg border px-4 py-2 transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none ${errors.name ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                     required
                                 />
                                 {errors.name && (
-                                    <div className="mt-1 text-xs text-red-500">
+                                    <div className="mt-2 text-sm font-medium text-rose-500">
                                         {errors.name}
                                     </div>
                                 )}
@@ -65,7 +68,7 @@ export default function RolesIndex({ roles }: { roles: any[] }) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="w-full rounded-lg bg-blue-600 py-2 font-medium text-white transition-all hover:bg-blue-700 disabled:opacity-70"
+                                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                             >
                                 {processing ? 'Menyimpan...' : 'Simpan Role'}
                             </button>
@@ -74,25 +77,25 @@ export default function RolesIndex({ roles }: { roles: any[] }) {
                 </div>
 
                 <div className="md:col-span-2">
-                    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                        <table className="min-w-full divide-y divide-slate-200">
+                    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+                        <table className="min-w-full divide-y divide-slate-100">
                             <thead className="bg-slate-50">
                                 <tr>
                                     <th
                                         scope="col"
-                                        className="px-6 py-4 text-left text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                        className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
                                     >
                                         ID
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-6 py-4 text-left text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                        className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
                                     >
                                         Nama Role
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-6 py-4 text-right text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                        className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
                                     >
                                         Aksi
                                     </th>
@@ -104,13 +107,13 @@ export default function RolesIndex({ roles }: { roles: any[] }) {
                                         key={role.id}
                                         className="transition-colors hover:bg-slate-50/80"
                                     >
-                                        <td className="px-6 py-4 text-sm whitespace-nowrap text-slate-500">
+                                        <td className="px-4 py-3 text-sm font-medium whitespace-nowrap text-slate-500 sm:px-8">
                                             {role.id}
                                         </td>
-                                        <td className="px-6 py-4 text-sm font-bold whitespace-nowrap text-slate-900">
+                                        <td className="px-4 py-3 text-sm font-bold whitespace-nowrap text-slate-900 sm:px-8">
                                             {role.name}
                                         </td>
-                                        <td className="px-6 py-4 text-right align-top whitespace-nowrap">
+                                        <td className="px-4 py-3 text-right align-top whitespace-nowrap sm:px-8">
                                             {role.name !== 'Superadmin' && (
                                                 <div className="flex justify-end">
                                                     <button
@@ -120,12 +123,12 @@ export default function RolesIndex({ roles }: { roles: any[] }) {
                                                                 role.name,
                                                             )
                                                         }
-                                                        className="rounded-xl p-2 text-slate-400 transition-all hover:bg-rose-50 hover:text-rose-600"
+                                                        className="flex items-center justify-center rounded-2xl bg-rose-50 p-2.5 text-rose-600 transition-all hover:-translate-y-0.5 hover:bg-rose-100 hover:shadow-sm"
                                                         title="Hapus Role"
                                                     >
                                                         <Trash
-                                                            weight="bold"
-                                                            className="h-4 w-4"
+                                                            weight="fill"
+                                                            className="h-5 w-5"
                                                         />
                                                     </button>
                                                 </div>

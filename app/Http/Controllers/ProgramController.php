@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Helpers\Alert;
 use App\Models\Program;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -15,24 +17,24 @@ class ProgramController extends Controller
     {
         $allPrograms = Program::with(['users', 'activities'])->get()->sortBy(function ($program) {
             $now = now()->startOfDay();
-            
-            $startDiff = $program->start_date 
-                ? abs(now()->diffInDays(\Carbon\Carbon::parse($program->start_date)->startOfDay())) 
+
+            $startDiff = $program->start_date
+                ? abs(now()->diffInDays(Carbon::parse($program->start_date)->startOfDay()))
                 : 999999;
-            
+
             $activityDiff = 999999;
             if ($program->activities->isNotEmpty()) {
                 $activityDiff = $program->activities->min(function ($activity) use ($now) {
-                    return abs($now->diffInDays(\Carbon\Carbon::parse($activity->activity_date)->startOfDay()));
+                    return abs($now->diffInDays(Carbon::parse($activity->activity_date)->startOfDay()));
                 });
             }
-            
+
             return min($startDiff, $activityDiff);
         })->values();
 
         $page = request()->get('page', 1);
         $perPage = 10;
-        $programs = new \Illuminate\Pagination\LengthAwarePaginator(
+        $programs = new LengthAwarePaginator(
             $allPrograms->forPage($page, $perPage)->values(),
             $allPrograms->count(),
             $perPage,
@@ -51,9 +53,9 @@ class ProgramController extends Controller
     public function show(Program $program)
     {
         $program->load([
-            'documents' => fn($q) => $q->whereNull('program_activity_id'),
+            'documents' => fn ($q) => $q->whereNull('program_activity_id'),
             'users',
-            'activities' => fn($q) => $q->orderBy('activity_date', 'desc'),
+            'activities' => fn ($q) => $q->orderBy('activity_date', 'desc'),
             'activities.documents',
         ]);
 
@@ -112,7 +114,7 @@ class ProgramController extends Controller
         ]);
 
         $existingImages = $request->input('existing_images', []);
-        
+
         // Remove old images not in existing_images
         $oldImages = $program->images ?? [];
         $imagesToDelete = array_diff($oldImages, $existingImages);
@@ -129,7 +131,7 @@ class ProgramController extends Controller
                 $finalImages[] = $image->store('programs', 'public');
             }
         }
-        
+
         $validated['images'] = $finalImages;
 
         $program->update($validated);

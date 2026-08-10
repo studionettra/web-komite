@@ -1,5 +1,10 @@
 import { Head, Link, useForm } from '@inertiajs/react';
-import { ArrowLeft, Check, FloppyDisk, ImageSquare as ImageIcon } from '@phosphor-icons/react';
+import {
+    ArrowLeft,
+    Check,
+    FloppyDisk,
+    ImageSquare as ImageIcon,
+} from '@phosphor-icons/react';
 import type { FormEventHandler } from 'react';
 import { useState, useRef } from 'react';
 import DashboardLayout from '../../../layouts/DashboardLayout';
@@ -8,10 +13,17 @@ export default function BannerForm({ banner }: { banner?: any }) {
     const isEditing = !!banner;
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(
-        banner?.image ? `/storage/${banner.image}` : null
+        banner?.image ? `/storage/${banner.image}` : null,
     );
 
-    const { data, setData, post, processing, errors, post: updatePost } = useForm({
+    const {
+        data,
+        setData,
+        post,
+        processing,
+        errors,
+        post: updatePost,
+    } = useForm({
         title: banner?.title || '',
         image: null as File | null,
         is_active: banner?.is_active ?? true,
@@ -33,7 +45,7 @@ export default function BannerForm({ banner }: { banner?: any }) {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        
+
         if (isEditing) {
             updatePost(`/banners/${banner.id}`);
         } else {
@@ -46,52 +58,55 @@ export default function BannerForm({ banner }: { banner?: any }) {
             <Head title={isEditing ? 'Edit Banner' : 'Tambah Banner'} />
 
             <div className="mx-auto w-full max-w-3xl space-y-6">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-5">
                     <Link
                         href="/banners"
-                        className="rounded-xl border border-slate-200 bg-white p-2.5 text-slate-600 shadow-sm transition-colors hover:bg-slate-50 hover:text-slate-900"
+                        className="rounded-2xl border-2 border-slate-100 bg-white p-3 text-slate-500 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-100 hover:bg-blue-50 hover:text-blue-600 hover:shadow-md"
                     >
-                        <ArrowLeft weight="bold" className="h-5 w-5" />
+                        <ArrowLeft weight="bold" className="h-6 w-6" />
                     </Link>
                     <div>
                         <h1 className="text-2xl font-bold tracking-tight text-slate-800">
                             {isEditing ? 'Edit Banner' : 'Tambah Banner Baru'}
                         </h1>
-                        <p className="mt-1 text-sm text-slate-500">
-                            {isEditing 
-                                ? 'Ubah informasi atau gambar banner ucapan ini.' 
+                        <p className="mt-2 text-sm font-medium text-slate-500">
+                            {isEditing
+                                ? 'Ubah informasi atau gambar banner ucapan ini.'
                                 : 'Unggah gambar banner baru untuk ditampilkan di halaman utama.'}
                         </p>
                     </div>
                 </div>
 
-                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                    <form onSubmit={submit} className="p-6 sm:p-8">
-                        <div className="space-y-6">
+                <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+                    <form onSubmit={submit} className="p-5 sm:p-10">
+                        <div className="space-y-8">
                             {/* Image Upload Area */}
                             <div>
                                 <label className="mb-2 block text-sm font-semibold text-slate-700">
-                                    Gambar Banner <span className="text-rose-500">*</span>
+                                    Gambar Banner{' '}
+                                    <span className="text-rose-500">*</span>
                                 </label>
-                                
-                                <div 
-                                    className={`relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-dashed transition-all hover:bg-slate-50 ${errors.image ? 'border-rose-400 bg-rose-50' : 'border-slate-300'} ${imagePreview ? 'h-auto min-h-64' : 'h-64'}`}
-                                    onClick={() => fileInputRef.current?.click()}
+
+                                <div
+                                    className={`relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-3xl border-2 border-dashed transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md ${errors.image ? 'border-rose-400 bg-rose-50' : 'border-slate-200 bg-slate-50/50'} ${imagePreview ? 'h-auto min-h-[16rem]' : 'h-64'}`}
+                                    onClick={() =>
+                                        fileInputRef.current?.click()
+                                    }
                                 >
-                                    <input 
+                                    <input
                                         type="file"
                                         ref={fileInputRef}
                                         onChange={handleImageChange}
                                         accept="image/jpeg,image/png,image/webp"
                                         className="hidden"
                                     />
-                                    
+
                                     {imagePreview ? (
                                         <div className="group relative w-full">
-                                            <img 
-                                                src={imagePreview} 
-                                                alt="Preview" 
-                                                className="w-full object-cover" 
+                                            <img
+                                                src={imagePreview}
+                                                alt="Preview"
+                                                className="w-full object-cover"
                                             />
                                             <div className="absolute inset-0 flex items-center justify-center bg-slate-900/40 opacity-0 transition-opacity group-hover:opacity-100">
                                                 <span className="rounded-lg bg-white/90 px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm">
@@ -102,7 +117,10 @@ export default function BannerForm({ banner }: { banner?: any }) {
                                     ) : (
                                         <div className="text-center">
                                             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                                                <ImageIcon weight="duotone" className="h-8 w-8" />
+                                                <ImageIcon
+                                                    weight="duotone"
+                                                    className="h-8 w-8"
+                                                />
                                             </div>
                                             <p className="text-sm font-semibold text-slate-700">
                                                 Klik untuk mengunggah gambar
@@ -114,77 +132,96 @@ export default function BannerForm({ banner }: { banner?: any }) {
                                     )}
                                 </div>
                                 {errors.image && (
-                                    <p className="mt-2 text-xs text-rose-500">{errors.image}</p>
+                                    <p className="mt-2 text-xs text-rose-500">
+                                        {errors.image}
+                                    </p>
                                 )}
                             </div>
 
                             {/* Title */}
                             <div>
-                                <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                <label className="mb-2 block text-sm font-semibold text-slate-700">
                                     Judul Banner (Opsional)
                                 </label>
                                 <input
                                     type="text"
                                     value={data.title}
-                                    onChange={(e) => setData('title', e.target.value)}
-                                    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                    onChange={(e) =>
+                                        setData('title', e.target.value)
+                                    }
+                                    className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 px-3 py-2 font-medium transition-all outline-none hover:bg-white focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-400/20"
                                     placeholder="Contoh: Selamat Hari Raya Idul Fitri"
                                 />
                                 {errors.title && (
-                                    <p className="mt-1 text-xs text-rose-500">{errors.title}</p>
+                                    <p className="mt-1 text-xs text-rose-500">
+                                        {errors.title}
+                                    </p>
                                 )}
                             </div>
 
                             <div className="flex flex-col gap-6 sm:flex-row">
                                 {/* Order */}
                                 <div className="flex-1">
-                                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    <label className="mb-2 block text-sm font-semibold text-slate-700">
                                         Urutan Tampil
                                     </label>
                                     <input
                                         type="number"
                                         value={data.order}
-                                        onChange={(e) => setData('order', parseInt(e.target.value))}
-                                        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                        onChange={(e) =>
+                                            setData(
+                                                'order',
+                                                parseInt(e.target.value),
+                                            )
+                                        }
+                                        className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 px-3 py-2 font-medium transition-all outline-none hover:bg-white focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-400/20"
                                         min="0"
                                     />
                                     <p className="mt-1.5 text-xs text-slate-500">
-                                        Angka lebih kecil akan tampil lebih dulu (0, 1, 2).
+                                        Angka lebih kecil akan tampil lebih dulu
+                                        (0, 1, 2).
                                     </p>
                                 </div>
 
                                 {/* Status */}
                                 <div className="flex-1">
-                                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    <label className="mb-2 block text-sm font-semibold text-slate-700">
                                         Status
                                     </label>
-                                    <label className="relative mt-2 inline-flex cursor-pointer items-center">
+                                    <label className="relative mt-2.5 inline-flex cursor-pointer items-center">
                                         <input
                                             type="checkbox"
                                             className="peer sr-only"
                                             checked={data.is_active}
-                                            onChange={(e) => setData('is_active', e.target.checked)}
+                                            onChange={(e) =>
+                                                setData(
+                                                    'is_active',
+                                                    e.target.checked,
+                                                )
+                                            }
                                         />
-                                        <div className="peer h-7 w-14 rounded-full bg-slate-200 transition-colors after:absolute after:top-[2px] after:left-[2px] after:h-6 after:w-6 after:rounded-full after:border after:border-slate-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300"></div>
+                                        <div className="peer h-7 w-14 rounded-full bg-slate-200 transition-colors peer-checked:bg-blue-600 peer-focus:ring-4 peer-focus:ring-blue-300 peer-focus:outline-none after:absolute after:top-[2px] after:left-[2px] after:h-6 after:w-6 after:rounded-full after:border after:border-slate-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
                                         <span className="ml-3 text-sm font-semibold text-slate-700">
-                                            {data.is_active ? 'Banner Aktif' : 'Banner Disembunyikan'}
+                                            {data.is_active
+                                                ? 'Banner Aktif'
+                                                : 'Banner Disembunyikan'}
                                         </span>
                                     </label>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="mt-8 flex items-center justify-end gap-3 border-t border-slate-100 pt-6">
+                        <div className="mt-10 flex items-center justify-end gap-4 border-t border-slate-100 pt-8">
                             <Link
                                 href="/banners"
-                                className="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
+                                className="rounded-2xl px-6 py-3.5 text-sm font-semibold text-slate-500 transition-all hover:bg-slate-100 hover:text-slate-800"
                             >
                                 Batal
                             </Link>
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow active:scale-[0.98] disabled:opacity-70"
+                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                             >
                                 <FloppyDisk weight="bold" className="h-5 w-5" />
                                 {processing ? 'Menyimpan...' : 'Simpan Banner'}

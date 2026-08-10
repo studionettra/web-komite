@@ -138,25 +138,27 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
 
             <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                    <h1 className="text-2xl font-semibold tracking-tight text-slate-800 sm:text-3xl">
                         Daftar Program
                     </h1>
-                    <p className="mt-1 text-slate-500">
+                    <p className="mt-2 text-base text-slate-500">
                         Daftar agenda dan pelaksanaan program komite.
                     </p>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
                 {canManageProgram && (
                     <div className="lg:col-span-1">
-                        <div className="sticky top-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                            <div className="mb-6 flex items-center justify-between">
-                                <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
-                                    <Target
-                                        weight="duotone"
-                                        className="h-5 w-5 text-blue-600"
-                                    />
+                        <div className="sticky top-6 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-5">
+                            <div className="mb-8 flex items-center justify-between">
+                                <h2 className="flex items-center gap-3 text-xl font-semibold text-slate-800">
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                                        <Target
+                                            weight="fill"
+                                            className="h-6 w-6"
+                                        />
+                                    </div>
                                     {isEditing
                                         ? 'Edit Program'
                                         : 'Tambah Program'}
@@ -171,9 +173,9 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                 )}
                             </div>
 
-                            <form onSubmit={submit} className="space-y-5">
+                            <form onSubmit={submit} className="space-y-6">
                                 <div>
-                                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    <label className="mb-2 block text-sm font-bold text-slate-700">
                                         Nama Program
                                     </label>
                                     <input
@@ -182,17 +184,17 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                         onChange={(e) =>
                                             setData('title', e.target.value)
                                         }
-                                        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                         required
                                     />
                                     {errors.title && (
-                                        <div className="mt-1 text-xs text-rose-500">
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
                                             {errors.title}
                                         </div>
                                     )}
                                 </div>
                                 <div>
-                                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    <label className="mb-2 block text-sm font-bold text-slate-700">
                                         Deskripsi Singkat
                                     </label>
                                     <textarea
@@ -204,17 +206,17 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                             )
                                         }
                                         rows={3}
-                                        className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                        className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                         required
                                     ></textarea>
                                     {errors.description && (
-                                        <div className="mt-1 text-xs text-rose-500">
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
                                             {errors.description}
                                         </div>
                                     )}
                                 </div>
                                 <div>
-                                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    <label className="mb-2 block text-sm font-bold text-slate-700">
                                         Gambar Banner (Opsional, Maks 5)
                                     </label>
                                     
@@ -251,22 +253,22 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                                 setData('images', Array.from(e.target.files));
                                             }
                                         }}
-                                        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500 file:mr-4 file:rounded-full file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-5 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20 file:mr-4 file:rounded-xl file:border-0 file:bg-blue-100 file:px-4 file:py-2.5 file:text-sm file:font-bold file:text-blue-700 hover:file:bg-blue-200"
                                     />
                                     {isEditing && (
-                                        <p className="mt-2 text-xs text-slate-500">
+                                        <p className="mt-2 text-xs font-semibold text-slate-400">
                                             * Upload gambar baru akan ditambahkan ke daftar gambar.
                                         </p>
                                     )}
                                     {errors.images && (
-                                        <div className="mt-1 text-xs text-rose-500">
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
                                             {errors.images}
                                         </div>
                                     )}
                                 </div>
                                 <div className="relative z-20 grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                        <label className="mb-2 block text-sm font-bold text-slate-700">
                                             Kategori
                                         </label>
                                         <Select
@@ -290,7 +292,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                         />
                                     </div>
                                     <div>
-                                        <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                        <label className="mb-2 block text-sm font-bold text-slate-700">
                                             Status
                                         </label>
                                         <Select
@@ -315,8 +317,8 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                         />
                                     </div>
                                 </div>
-                                <div className="border-t border-slate-100 pt-2">
-                                    <p className="mb-3 text-xs leading-relaxed font-medium text-slate-500">
+                                <div className="border-t border-slate-100 pt-6">
+                                    <p className="mb-4 rounded-xl bg-slate-50 p-4 text-xs font-semibold leading-relaxed text-slate-500">
                                         Isi tanggal di bawah jika ini adalah
                                         acara 1x jalan{' '}
                                         <span className="text-slate-400 italic">
@@ -331,7 +333,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                     </p>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                            <label className="mb-2 block text-sm font-bold text-slate-700">
                                                 Tanggal Mulai (Opsional)
                                             </label>
                                             <input
@@ -343,11 +345,11 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                                         e.target.value,
                                                     )
                                                 }
-                                                className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-slate-700 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                                className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                             />
                                         </div>
                                         <div>
-                                            <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                            <label className="mb-2 block text-sm font-bold text-slate-700">
                                                 Tanggal Selesai (Opsional)
                                             </label>
                                             <input
@@ -359,7 +361,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                                         e.target.value,
                                                     )
                                                 }
-                                                className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-slate-700 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                                className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                             />
                                         </div>
                                     </div>
@@ -368,7 +370,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="mt-2 w-full rounded-xl bg-slate-900 py-3 font-semibold text-white shadow-sm transition-all hover:bg-slate-800 active:scale-[0.98] disabled:opacity-70"
+                                    className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                 >
                                     {processing
                                         ? 'Menyimpan...'
@@ -384,26 +386,26 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                         canManageProgram ? 'lg:col-span-2' : 'lg:col-span-3'
                     }
                 >
-                    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
                         <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-slate-200">
+                            <table className="min-w-full divide-y divide-slate-100">
                                 <thead className="bg-slate-50">
                                     <tr>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 text-left text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
                                         >
                                             Program
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 text-left text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
                                         >
                                             Status & Kategori
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 text-right text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
                                         >
                                             Aksi
                                         </th>
@@ -414,14 +416,14 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                         <tr>
                                             <td
                                                 colSpan={3}
-                                                className="px-6 py-12 text-center text-slate-500"
+                                                className="px-6 py-16 text-center text-slate-500"
                                             >
                                                 <div className="flex flex-col items-center justify-center">
                                                     <Target
                                                         weight="duotone"
-                                                        className="mb-3 h-12 w-12 text-slate-300"
+                                                        className="mb-4 h-16 w-16 text-slate-200"
                                                     />
-                                                    <p>
+                                                    <p className="text-base font-medium">
                                                         Belum ada data program
                                                         kerja.
                                                     </p>
@@ -434,7 +436,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                             key={program.id}
                                             className="transition-colors hover:bg-slate-50/80"
                                         >
-                                            <td className="px-6 py-4">
+                                            <td className="px-4 py-3">
                                                 <Link
                                                     href={`/programs/${program.id}`}
                                                     className="font-bold text-slate-900 transition-colors hover:text-blue-600"
@@ -468,7 +470,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                                         </div>
                                                     )}
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-4 py-3 whitespace-nowrap">
                                                 <div className="mb-1">
                                                     {statusBadge(
                                                         program.status,
@@ -480,15 +482,15 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-4 text-right align-top whitespace-nowrap">
+                                            <td className="px-4 py-3 text-right align-top whitespace-nowrap sm:px-8">
                                                 <div className="flex justify-end gap-2">
                                                     <Link
                                                         href={`/programs/${program.id}`}
-                                                        className="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 px-3 py-2 text-xs font-bold text-blue-600 transition-all hover:bg-blue-100"
+                                                        className="inline-flex items-center gap-1.5 rounded-2xl bg-indigo-50 px-4 py-2.5 text-xs font-bold text-indigo-600 transition-all hover:-translate-y-0.5 hover:bg-indigo-100 hover:shadow-sm"
                                                         title="Detail & Laporan"
                                                     >
                                                         <FileText
-                                                            weight="bold"
+                                                            weight="fill"
                                                             className="h-4 w-4"
                                                         />
                                                         <span className="hidden sm:inline">
@@ -503,12 +505,12 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                                                         program,
                                                                     )
                                                                 }
-                                                                className="rounded-xl p-2 text-slate-400 transition-all hover:bg-blue-50 hover:text-blue-600"
+                                                                className="flex items-center justify-center rounded-2xl bg-blue-50 px-3 text-blue-600 transition-all hover:-translate-y-0.5 hover:bg-blue-100 hover:shadow-sm"
                                                                 title="Edit Program"
                                                             >
                                                                 <PencilSimple
-                                                                    weight="bold"
-                                                                    className="h-4 w-4"
+                                                                    weight="fill"
+                                                                    className="h-5 w-5"
                                                                 />
                                                             </button>
                                                             <button
@@ -518,12 +520,12 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                                                         program.title,
                                                                     )
                                                                 }
-                                                                className="rounded-xl p-2 text-slate-400 transition-all hover:bg-rose-50 hover:text-rose-600"
+                                                                className="flex items-center justify-center rounded-2xl bg-rose-50 px-3 text-rose-600 transition-all hover:-translate-y-0.5 hover:bg-rose-100 hover:shadow-sm"
                                                                 title="Hapus Program"
                                                             >
                                                                 <Trash
-                                                                    weight="bold"
-                                                                    className="h-4 w-4"
+                                                                    weight="fill"
+                                                                    className="h-5 w-5"
                                                                 />
                                                             </button>
                                                         </>
@@ -536,7 +538,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                             </table>
                         </div>
                         {programs.total > 0 && (
-                            <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-100 bg-slate-50 px-6 py-4 sm:flex-row sm:gap-0">
+                            <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-100 bg-slate-50 px-4 py-3 sm:flex-row sm:gap-0">
                                 <div className="text-xs font-medium text-slate-500">
                                     Menampilkan {programs.from || 0} - {programs.to || 0} dari total{' '}
                                     {programs.total} program

@@ -21,7 +21,7 @@ function TimeInput24({ value, onChange, required }: { value: string; onChange: (
     const [hour, minute] = (value || '00:00').split(':');
     const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
     const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
-    const baseClass = 'rounded-xl border border-slate-300 bg-slate-50 px-3 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500 appearance-none text-center';
+    const baseClass = 'rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all hover:bg-white focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20 appearance-none text-center';
 
     return (
         <div className="flex items-center gap-1.5">
@@ -110,13 +110,13 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
     const isPlanned = activity.status === 'planned';
 
     return (
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div className="flex items-start justify-between border-b border-slate-100 bg-slate-50 p-5">
+        <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+            <div className="flex flex-col items-start justify-between gap-4 border-b border-slate-100 bg-slate-50/50 p-6 sm:flex-row sm:p-5">
                 <div>
-                    <h4 className="text-lg font-bold text-slate-900">
+                    <h4 className="text-xl font-semibold text-slate-800">
                         {activity.title}
                     </h4>
-                    <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-500">
+                    <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-medium text-slate-500">
                         <div className="flex items-center gap-2">
                             <CalendarBlank
                                 weight="duotone"
@@ -139,9 +139,9 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                         </p>
                     )}
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                     <span
-                        className={`rounded-lg border px-3 py-1.5 text-xs font-semibold shadow-sm ${activity.status === 'completed' ? 'border-slate-200 bg-slate-100 text-slate-700' : activity.status === 'ongoing' ? 'border-emerald-200 bg-emerald-100 text-emerald-700' : 'border-amber-200 bg-amber-100 text-amber-700'}`}
+                        className={`rounded-full px-4 py-2 text-xs font-bold shadow-sm ${activity.status === 'completed' ? 'bg-slate-100 text-slate-700' : activity.status === 'ongoing' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}
                     >
                         {activity.status === 'completed'
                             ? 'Selesai'
@@ -150,38 +150,38 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                               : 'Akan Datang'}
                     </span>
                     {canManageProgram && (
-                        <div className="flex items-center gap-1 ml-2">
+                        <div className="ml-2 flex items-center gap-1.5">
                             <button
                                 onClick={() => onEdit(activity)}
                                 disabled={!isPlanned}
-                                className={`rounded-lg border p-2 shadow-sm transition-colors ${
+                                className={`flex items-center justify-center rounded-2xl p-2.5 transition-all hover:-translate-y-0.5 hover:shadow-sm ${
                                     isPlanned 
-                                        ? 'bg-white border-slate-200 text-slate-500 hover:text-blue-600 hover:border-blue-200' 
-                                        : 'bg-slate-100 border-slate-100 text-slate-300 cursor-not-allowed'
+                                        ? 'bg-blue-50 text-blue-600 hover:bg-blue-100' 
+                                        : 'bg-slate-50 text-slate-300 cursor-not-allowed'
                                 }`}
                                 title={isPlanned ? "Edit Sesi" : "Sesi tidak dapat diedit karena sedang/telah berlangsung"}
                             >
-                                <PencilSimple weight="bold" className="h-4 w-4" />
+                                <PencilSimple weight="fill" className="h-5 w-5" />
                             </button>
                             <button
                                 onClick={() => deleteActivity(activity.id)}
-                                className="rounded-lg border border-slate-200 bg-white p-2 text-slate-400 shadow-sm transition-colors hover:text-rose-600"
+                                className="flex items-center justify-center rounded-2xl bg-rose-50 p-2.5 text-rose-600 transition-all hover:-translate-y-0.5 hover:bg-rose-100 hover:shadow-sm"
                                 title="Hapus Sesi"
                             >
-                                <Trash weight="bold" className="h-4 w-4" />
+                                <Trash weight="fill" className="h-5 w-5" />
                             </button>
                         </div>
                     )}
                 </div>
             </div>
 
-            <div className="p-5">
-                <div className="mb-4 flex items-start justify-between">
+            <div className="p-6 sm:p-5">
+                <div className="mb-6 flex items-start justify-between">
                     <div>
-                        <h5 className="text-sm font-semibold text-slate-700">
+                        <h5 className="text-sm font-bold text-slate-700">
                             Lampiran & Dokumen ({activity.documents?.length || 0}/5)
                         </h5>
-                        <p className="mt-0.5 text-xs text-slate-500">
+                        <p className="mt-1 text-xs font-medium text-slate-500">
                             Format: JPG, PNG, PDF, DOC. Maksimal 5MB/file.
                         </p>
                     </div>
@@ -197,9 +197,9 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                             <button
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={isUploading}
-                                className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700 transition-colors hover:bg-blue-100 disabled:opacity-50"
+                                className="inline-flex items-center gap-1.5 rounded-2xl bg-indigo-50 px-4 py-2 text-sm font-bold text-indigo-700 transition-all hover:-translate-y-0.5 hover:bg-indigo-100 hover:shadow-sm disabled:translate-y-0 disabled:opacity-50"
                             >
-                                <UploadSimple weight="bold" />
+                                <UploadSimple weight="fill" className="h-4 w-4" />
                                 {isUploading ? 'Mengunggah...' : 'Unggah File'}
                             </button>
                         </div>
@@ -207,23 +207,23 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                 </div>
 
                 {errors?.file && (
-                    <div className="mb-4 text-sm font-medium text-rose-600">
+                    <div className="mb-6 rounded-2xl bg-rose-50 p-4 text-sm font-bold text-rose-600">
                         {errors.file}
                     </div>
                 )}
 
                 {activity.documents?.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50/50 py-6 text-center">
+                    <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50/50 py-10 text-center">
                         <ImageIcon
                             weight="duotone"
-                            className="mb-2 h-6 w-6 text-slate-300"
+                            className="mb-3 h-10 w-10 text-slate-300"
                         />
-                        <p className="text-xs text-slate-500">
+                        <p className="text-sm font-medium text-slate-500">
                             Belum ada lampiran di sesi ini.
                         </p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                         {activity.documents?.map((doc: any) => {
                             const isImage = ['jpg', 'jpeg', 'png'].includes(
                                 doc.file_type.toLowerCase(),
@@ -232,7 +232,7 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                             return (
                                 <div
                                     key={doc.id}
-                                    className="group relative aspect-square overflow-hidden rounded-xl border border-slate-200 bg-slate-50"
+                                    className="group relative aspect-square overflow-hidden rounded-2xl border-2 border-slate-100 bg-slate-50 transition-all hover:-translate-y-1 hover:shadow-lg"
                                 >
                                     {isImage ? (
                                         <img
@@ -244,19 +244,19 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                                         <div className="flex h-full w-full flex-col items-center justify-center p-3">
                                             <FileText
                                                 weight="duotone"
-                                                className="mb-1 h-8 w-8 text-slate-400"
+                                                className="mb-2 h-10 w-10 text-slate-400"
                                             />
-                                            <span className="text-[10px] font-medium text-slate-500 uppercase">
+                                            <span className="text-xs font-bold text-slate-500 uppercase">
                                                 {doc.file_type}
                                             </span>
                                         </div>
                                     )}
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-slate-900/60 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-slate-900/60 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
                                         <a
                                             href={`/storage/${doc.file_path}`}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="rounded-full bg-white px-3 py-1 text-xs font-bold text-slate-900 hover:bg-slate-100"
+                                            className="rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-900 transition-all hover:scale-105 hover:bg-slate-100"
                                         >
                                             Lihat
                                         </a>
@@ -265,12 +265,12 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                                                 onClick={() =>
                                                     deleteDocument(doc.id)
                                                 }
-                                                className="rounded-full bg-rose-500 p-1.5 text-white hover:bg-rose-600"
+                                                className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-500 text-white transition-all hover:scale-105 hover:bg-rose-600"
                                                 title="Hapus"
                                             >
                                                 <Trash
-                                                    weight="bold"
-                                                    className="h-3.5 w-3.5"
+                                                    weight="fill"
+                                                    className="h-5 w-5"
                                                 />
                                             </button>
                                         )}
@@ -428,24 +428,24 @@ export default function Show({ program }: any) {
             {/* Modal Create Activity */}
             {showActivityModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm">
-                    <div className="animate-in fade-in zoom-in-95 w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl duration-200">
-                        <div className="flex items-center justify-between border-b border-slate-100 p-6">
-                            <h3 className="text-lg font-bold text-slate-900">
+                    <div className="animate-in fade-in zoom-in-95 w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl duration-200">
+                        <div className="flex items-center justify-between border-b border-slate-100 p-5">
+                            <h3 className="text-2xl font-semibold text-slate-800">
                                 Buat Sesi Program
                             </h3>
                             <button
                                 onClick={() => setShowActivityModal(false)}
-                                className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                                className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-all hover:bg-slate-200 hover:text-slate-700"
                             >
                                 <X weight="bold" className="h-5 w-5" />
                             </button>
                         </div>
                         <form
                             onSubmit={submitActivity}
-                            className="space-y-4 p-6"
+                            className="space-y-6 p-5"
                         >
                             <div>
-                                <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                <label className="mb-2 block text-sm font-bold text-slate-700">
                                     Judul Sesi
                                 </label>
                                 <input
@@ -455,17 +455,17 @@ export default function Show({ program }: any) {
                                     onChange={(e) =>
                                         setActivityData('title', e.target.value)
                                     }
-                                    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                     required
                                 />
                                 {activityErrors.title && (
-                                    <div className="mt-1 text-xs text-rose-500">
+                                    <div className="mt-2 text-sm font-medium text-rose-500">
                                         {activityErrors.title}
                                     </div>
                                 )}
                             </div>
                             <div>
-                                <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                <label className="mb-2 block text-sm font-bold text-slate-700">
                                     Tanggal Pelaksanaan
                                 </label>
                                 <input
@@ -477,18 +477,18 @@ export default function Show({ program }: any) {
                                             e.target.value,
                                         )
                                     }
-                                    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                     required
                                 />
                                 {activityErrors.activity_date && (
-                                    <div className="mt-1 text-xs text-rose-500">
+                                    <div className="mt-2 text-sm font-medium text-rose-500">
                                         {activityErrors.activity_date}
                                     </div>
                                 )}
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-6">
                                 <div>
-                                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    <label className="mb-2 block text-sm font-bold text-slate-700">
                                         Jam Mulai (WIB)
                                     </label>
                                     <TimeInput24
@@ -499,13 +499,13 @@ export default function Show({ program }: any) {
                                         required
                                     />
                                     {activityErrors.start_time && (
-                                        <div className="mt-1 text-xs text-rose-500">
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
                                             {activityErrors.start_time}
                                         </div>
                                     )}
                                 </div>
                                 <div>
-                                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    <label className="mb-2 block text-sm font-bold text-slate-700">
                                         Jam Selesai (WIB)
                                     </label>
                                     <TimeInput24
@@ -516,14 +516,14 @@ export default function Show({ program }: any) {
                                         required
                                     />
                                     {activityErrors.end_time && (
-                                        <div className="mt-1 text-xs text-rose-500">
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
                                             {activityErrors.end_time}
                                         </div>
                                     )}
                                 </div>
                             </div>
                             <div>
-                                <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                <label className="mb-2 block text-sm font-bold text-slate-700">
                                     Keterangan (Opsional)
                                 </label>
                                 <textarea
@@ -534,15 +534,15 @@ export default function Show({ program }: any) {
                                             e.target.value,
                                         )
                                     }
-                                    rows={2}
-                                    className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                    rows={3}
+                                    className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                 ></textarea>
                             </div>
-                            <div className="pt-2">
+                            <div className="pt-4">
                                 <button
                                     type="submit"
                                     disabled={processingActivity}
-                                    className="w-full rounded-xl bg-slate-900 py-3 font-semibold text-white shadow-sm transition-all hover:bg-slate-800 active:scale-[0.98] disabled:opacity-70"
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                 >
                                     {processingActivity
                                         ? 'Menyimpan...'
@@ -557,24 +557,24 @@ export default function Show({ program }: any) {
             {/* Modal Edit Activity */}
             {editActivityModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm">
-                    <div className="animate-in fade-in zoom-in-95 w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-xl duration-200">
-                        <div className="flex items-center justify-between border-b border-slate-100 p-6">
-                            <h3 className="text-lg font-bold text-slate-900">
+                    <div className="animate-in fade-in zoom-in-95 w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl duration-200">
+                        <div className="flex items-center justify-between border-b border-slate-100 p-5">
+                            <h3 className="text-2xl font-semibold text-slate-800">
                                 Edit Sesi Program
                             </h3>
                             <button
                                 onClick={() => setEditActivityModal(null)}
-                                className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                                className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition-all hover:bg-slate-200 hover:text-slate-700"
                             >
                                 <X weight="bold" className="h-5 w-5" />
                             </button>
                         </div>
                         <form
                             onSubmit={submitEditActivity}
-                            className="space-y-4 p-6"
+                            className="space-y-6 p-5"
                         >
                             <div>
-                                <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                <label className="mb-2 block text-sm font-bold text-slate-700">
                                     Judul Sesi
                                 </label>
                                 <input
@@ -584,17 +584,17 @@ export default function Show({ program }: any) {
                                     onChange={(e) =>
                                         setEditData('title', e.target.value)
                                     }
-                                    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                     required
                                 />
                                 {editErrors.title && (
-                                    <div className="mt-1 text-xs text-rose-500">
+                                    <div className="mt-2 text-sm font-medium text-rose-500">
                                         {editErrors.title}
                                     </div>
                                 )}
                             </div>
                             <div>
-                                <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                <label className="mb-2 block text-sm font-bold text-slate-700">
                                     Tanggal Pelaksanaan
                                 </label>
                                 <input
@@ -603,18 +603,18 @@ export default function Show({ program }: any) {
                                     onChange={(e) =>
                                         setEditData('activity_date', e.target.value)
                                     }
-                                    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                     required
                                 />
                                 {editErrors.activity_date && (
-                                    <div className="mt-1 text-xs text-rose-500">
+                                    <div className="mt-2 text-sm font-medium text-rose-500">
                                         {editErrors.activity_date}
                                     </div>
                                 )}
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-6">
                                 <div>
-                                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    <label className="mb-2 block text-sm font-bold text-slate-700">
                                         Jam Mulai (WIB)
                                     </label>
                                     <TimeInput24
@@ -625,13 +625,13 @@ export default function Show({ program }: any) {
                                         required
                                     />
                                     {editErrors.start_time && (
-                                        <div className="mt-1 text-xs text-rose-500">
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
                                             {editErrors.start_time}
                                         </div>
                                     )}
                                 </div>
                                 <div>
-                                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    <label className="mb-2 block text-sm font-bold text-slate-700">
                                         Jam Selesai (WIB)
                                     </label>
                                     <TimeInput24
@@ -642,14 +642,14 @@ export default function Show({ program }: any) {
                                         required
                                     />
                                     {editErrors.end_time && (
-                                        <div className="mt-1 text-xs text-rose-500">
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
                                             {editErrors.end_time}
                                         </div>
                                     )}
                                 </div>
                             </div>
                             <div>
-                                <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                <label className="mb-2 block text-sm font-bold text-slate-700">
                                     Keterangan (Opsional)
                                 </label>
                                 <textarea
@@ -657,15 +657,15 @@ export default function Show({ program }: any) {
                                     onChange={(e) =>
                                         setEditData('description', e.target.value)
                                     }
-                                    rows={2}
-                                    className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                    rows={3}
+                                    className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                 ></textarea>
                             </div>
-                            <div className="pt-2">
+                            <div className="pt-4">
                                 <button
                                     type="submit"
                                     disabled={processingEdit}
-                                    className="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white shadow-sm transition-all hover:bg-blue-700 active:scale-[0.98] disabled:opacity-70"
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                 >
                                     {processingEdit
                                         ? 'Menyimpan...'
@@ -681,26 +681,26 @@ export default function Show({ program }: any) {
                 {/* Top Nav */}
                 <Link
                     href="/programs"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition-colors hover:text-slate-900"
+                    className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 transition-colors hover:text-slate-800"
                 >
-                    <ArrowLeft weight="bold" />
+                    <ArrowLeft weight="bold" className="h-4 w-4" />
                     Kembali ke Daftar Program
                 </Link>
 
                 {/* Header Card */}
-                <div className="flex flex-col items-start justify-between gap-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10 md:flex-row">
-                    <div className="max-w-2xl space-y-4">
+                <div className="flex flex-col items-start justify-between gap-5 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:p-12 md:flex-row">
+                    <div className="max-w-2xl space-y-6">
                         <div className="flex flex-wrap items-center gap-3">
                             <span
-                                className={`rounded-full border px-3 py-1 text-xs font-semibold ${getStatusColor(program.status)}`}
+                                className={`rounded-full px-4 py-1.5 text-xs font-bold ${getStatusColor(program.status)}`}
                             >
                                 {getStatusText(program.status)}
                             </span>
-                            <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+                            <span className="rounded-full bg-blue-100 px-4 py-1.5 text-xs font-bold text-blue-800">
                                 {getFrequencyText(program.frequency)}
                             </span>
                         </div>
-                        <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">
+                        <h1 className="text-2xl font-bold text-slate-800 sm:text-5xl">
                             {program.title}
                         </h1>
                         <p className="text-lg leading-relaxed text-slate-600">
@@ -708,9 +708,9 @@ export default function Show({ program }: any) {
                         </p>
 
                         <div className="flex flex-wrap items-center gap-6 pt-2">
-                            <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
+                            <div className="flex items-center gap-2 text-sm font-bold text-slate-600">
                                 <CalendarBlank
-                                    weight="duotone"
+                                    weight="fill"
                                     className="h-5 w-5 text-slate-400"
                                 />
                                 {formatDate(program.start_date)} —{' '}
@@ -720,17 +720,17 @@ export default function Show({ program }: any) {
 
                         {/* Panitia Assignment */}
                         {program.users && program.users.length > 0 && (
-                            <div className="mt-4 border-t border-slate-100 pt-4">
-                                <div className="mb-2 text-sm font-semibold text-slate-700">
+                            <div className="mt-6 border-t border-slate-100 pt-6">
+                                <div className="mb-3 text-sm font-bold text-slate-700">
                                     Tim Panitia:
                                 </div>
                                 <div className="flex flex-wrap gap-2">
                                     {program.users.map((u: any) => (
                                         <div
                                             key={u.id}
-                                            className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold ${u.id === auth?.user?.id ? 'border border-blue-200 bg-blue-100 text-blue-800' : 'border border-slate-200 bg-slate-100 text-slate-700'}`}
+                                            className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold ${u.id === auth?.user?.id ? 'bg-indigo-100 text-indigo-800' : 'bg-slate-100 text-slate-700'}`}
                                         >
-                                            <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white text-[10px] text-slate-600 shadow-sm">
+                                            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white text-[10px] shadow-sm">
                                                 {u.name.charAt(0).toUpperCase()}
                                             </div>
                                             {u.id === auth?.user?.id
@@ -748,32 +748,32 @@ export default function Show({ program }: any) {
                 <div>
                     <div className="space-y-6">
                         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-                            <h3 className="text-lg font-bold text-slate-900">
+                            <h3 className="text-2xl font-semibold text-slate-800">
                                 Laporan Program
                             </h3>
                             {canManageProgram && (
                                 <button
                                     onClick={() => setShowActivityModal(true)}
-                                    className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-slate-800"
+                                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                 >
-                                    <Plus weight="bold" />
+                                    <Plus weight="bold" className="h-4 w-4" />
                                     Sesi Baru
                                 </button>
                             )}
                         </div>
 
                         {program.activities?.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white py-16 text-center shadow-sm">
-                                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-slate-100 bg-slate-50">
+                            <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-white py-20 text-center shadow-sm">
+                                <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600">
                                     <FileText
-                                        weight="duotone"
-                                        className="h-8 w-8 text-slate-400"
+                                        weight="fill"
+                                        className="h-10 w-10"
                                     />
                                 </div>
-                                <h4 className="text-lg font-bold text-slate-900">
+                                <h4 className="text-2xl font-semibold text-slate-800">
                                     Belum ada sesi program
                                 </h4>
-                                <p className="mt-1 max-w-sm text-sm text-slate-500">
+                                <p className="mt-2 max-w-sm text-base font-medium text-slate-500">
                                     Buat sesi untuk mengelompokkan laporan per
                                     bulan atau per pelaksanaan program.
                                 </p>
@@ -782,11 +782,11 @@ export default function Show({ program }: any) {
                                         onClick={() =>
                                             setShowActivityModal(true)
                                         }
-                                        className="mt-6 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700"
+                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                     >
                                         <Plus
                                             weight="bold"
-                                            className="h-4 w-4"
+                                            className="h-5 w-5"
                                         />
                                         Buat Sesi Pertama
                                     </button>

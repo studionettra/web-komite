@@ -43,6 +43,7 @@ class DocumentController extends Controller
 
         if ($query->count() >= 5) {
             Alert::error('Batas Maksimal', 'Anda hanya dapat mengunggah maksimal 5 file/dokumen.');
+
             return back();
         }
 

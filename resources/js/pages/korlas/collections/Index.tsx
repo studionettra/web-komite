@@ -1,6 +1,11 @@
 import { Head, useForm } from '@inertiajs/react';
 import DashboardLayout from '../../../layouts/DashboardLayout';
-import { ArrowUpRight, Table as TableIcon, Gear, X } from '@phosphor-icons/react';
+import {
+    ArrowUpRight,
+    Table as TableIcon,
+    Gear,
+    X,
+} from '@phosphor-icons/react';
 import { useState } from 'react';
 
 export default function KorlasCollectionsIndex({
@@ -25,10 +30,11 @@ export default function KorlasCollectionsIndex({
 
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
-    const { data, setData, put, processing, errors, reset, clearErrors } = useForm({
-        google_sheet_status: sheetStatus,
-        google_sheet_link: sheetUrl || '',
-    });
+    const { data, setData, put, processing, errors, reset, clearErrors } =
+        useForm({
+            google_sheet_status: sheetStatus,
+            google_sheet_link: sheetUrl || '',
+        });
 
     const openSettingsModal = () => {
         clearErrors();
@@ -69,9 +75,12 @@ export default function KorlasCollectionsIndex({
                     {classroom && (
                         <button
                             onClick={openSettingsModal}
-                            className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition-all hover:bg-slate-50 sm:px-4"
+                            className="inline-flex items-center gap-2 rounded-2xl border-2 border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 shadow-sm transition-all hover:-translate-y-1 hover:border-slate-300 hover:bg-slate-50 hover:shadow-md"
                         >
-                            <Gear weight="bold" />
+                            <Gear
+                                weight="fill"
+                                className="h-5 w-5 text-slate-500"
+                            />
                             <span>Atur Laporan</span>
                         </button>
                     )}
@@ -80,59 +89,75 @@ export default function KorlasCollectionsIndex({
                             href={sheetUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-emerald-700 sm:px-4"
+                            className="inline-flex items-center gap-2 rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-1 hover:bg-emerald-600 hover:shadow-md"
                         >
-                            <span>Buka Untuk Mengedit</span>
-                            <ArrowUpRight weight="bold" />
+                            <span>Buka Google Sheet</span>
+                            <ArrowUpRight weight="bold" className="h-5 w-5" />
                         </a>
                     )}
                 </div>
             </div>
 
             {!classroom ? (
-                <div className="flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
+                <div className="flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-100 bg-white p-12 shadow-sm sm:p-20">
                     <TableIcon
-                        className="mb-4 h-12 w-12 text-slate-300"
-                        weight="light"
+                        className="mb-6 h-16 w-16 text-slate-200"
+                        weight="duotone"
                     />
-                    <h3 className="mb-2 text-base font-medium text-slate-700 sm:text-lg">
-                        Tidak Ada Kelas
+                    <h3 className="mb-3 text-lg font-semibold text-slate-800 sm:text-xl">
+                        Belum Ada Kelas Aktif
                     </h3>
-                    <p className="max-w-sm text-center text-sm text-slate-500">
-                        Akun kamu belum ditugaskan sebagai koordinator untuk
-                        kelas mana pun. Hubungi admin.
+                    <p className="max-w-md text-center text-base text-slate-500">
+                        Akun Anda belum ditugaskan sebagai koordinator untuk
+                        kelas mana pun. Silakan hubungi admin sekolah.
                     </p>
                 </div>
             ) : (
-                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
                     {sheetStatus === 'preparing' ? (
-                        <div className="flex flex-col items-center justify-center p-8 sm:p-12">
-                            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-50">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 256 256" className="text-amber-500">
-                                    <path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z" opacity="0.2"></path>
+                        <div className="flex flex-col items-center justify-center p-12 sm:p-20">
+                            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-amber-50">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="40"
+                                    height="40"
+                                    fill="currentColor"
+                                    viewBox="0 0 256 256"
+                                    className="text-amber-500"
+                                >
+                                    <path
+                                        d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"
+                                        opacity="0.2"
+                                    ></path>
                                     <path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"></path>
                                 </svg>
                             </div>
-                            <h3 className="mb-2 text-base font-medium text-slate-700 sm:text-lg">
+                            <h3 className="mb-3 text-lg font-semibold text-slate-800 sm:text-xl">
                                 Laporan Sedang Disiapkan
                             </h3>
-                            <p className="max-w-sm text-center text-sm text-slate-500">
-                                Status laporan kas kelas <strong>{classroom.name}</strong> disetel sebagai "Sedang Disiapkan". Anda bisa menyusunnya terlebih dahulu.
+                            <p className="max-w-md text-center text-base text-slate-500">
+                                Status laporan kas kelas{' '}
+                                <strong>{classroom.name}</strong> saat ini
+                                disetel sebagai "Sedang Disiapkan". Anda bisa
+                                menyusun dan merapikan datanya terlebih dahulu
+                                sebelum membagikannya.
                             </p>
                         </div>
                     ) : !sheetUrl || sheetStatus === 'hidden' ? (
-                        <div className="flex flex-col items-center justify-center p-8 sm:p-12">
+                        <div className="flex flex-col items-center justify-center p-12 sm:p-20">
                             <TableIcon
-                                className="mb-4 h-12 w-12 text-slate-300"
-                                weight="light"
+                                className="mb-6 h-16 w-16 text-slate-200"
+                                weight="duotone"
                             />
-                            <h3 className="mb-2 text-base font-medium text-slate-700 sm:text-lg">
-                                Google Sheet Belum Terhubung / Disembunyikan
+                            <h3 className="mb-3 text-lg font-semibold text-slate-800 sm:text-xl">
+                                Laporan Disembunyikan
                             </h3>
-                            <p className="max-w-sm text-center text-sm text-slate-500">
-                                Link Google Sheet untuk kelas{' '}
-                                <strong>{classroom.name}</strong> belum diatur atau disembunyikan.
-                                Silakan hubungi admin untuk mengubah pengaturannya.
+                            <p className="max-w-md text-center text-base text-slate-500">
+                                Laporan kas untuk kelas{' '}
+                                <strong>{classroom.name}</strong> belum diatur
+                                atau sengaja disembunyikan. Anda dapat
+                                mengaturnya kembali melalui tombol "Atur
+                                Laporan" di atas.
                             </p>
                         </div>
                     ) : (
@@ -151,134 +176,188 @@ export default function KorlasCollectionsIndex({
             {/* Modal Pengaturan Laporan */}
             {isSettingsModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0">
-                    <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onClick={() => setIsSettingsModalOpen(false)}></div>
-                    <div className="relative w-full max-w-lg transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8">
-                        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
-                            <h3 className="text-lg font-semibold text-slate-900">
+                    <div
+                        className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
+                        onClick={() => setIsSettingsModalOpen(false)}
+                    ></div>
+                    <div className="relative w-full max-w-xl transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
+                        <div className="flex items-center justify-between border-b border-slate-100 px-8 py-6">
+                            <h3 className="text-xl font-semibold text-slate-900">
                                 Pengaturan Laporan Kas
                             </h3>
                             <button
                                 onClick={() => setIsSettingsModalOpen(false)}
-                                className="rounded-xl p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-500"
+                                className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-600"
                             >
                                 <X weight="bold" className="h-5 w-5" />
                             </button>
                         </div>
                         <form onSubmit={submitSettings}>
-                            <div className="px-6 py-4">
-                                <div className="mb-4">
-                                    <label className="mb-2 block text-sm font-semibold text-slate-700">
-                                        Status Laporan
+                            <div className="px-8 py-6">
+                                <div className="mb-6">
+                                    <label className="mb-3 block text-sm font-bold text-slate-700">
+                                        Visibilitas Laporan
                                     </label>
-                                    <div className="space-y-2">
+                                    <div className="space-y-3">
                                         <label
-                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'active' ? 'border-blue-500 bg-blue-50/50 ring-1 ring-blue-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                            className={`flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all ${data.google_sheet_status === 'active' ? 'border-blue-500 bg-blue-50/50' : 'border-slate-100 hover:border-slate-300'}`}
                                         >
                                             <div className="flex w-full items-center justify-between">
                                                 <div className="flex flex-col gap-1">
-                                                    <div className="flex items-center gap-2">
+                                                    <div className="flex items-center gap-3">
                                                         <input
                                                             type="radio"
                                                             value="active"
-                                                            checked={data.google_sheet_status === 'active'}
-                                                            onChange={(e) => setData('google_sheet_status', e.target.value as any)}
-                                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                                            checked={
+                                                                data.google_sheet_status ===
+                                                                'active'
+                                                            }
+                                                            onChange={(e) =>
+                                                                setData(
+                                                                    'google_sheet_status',
+                                                                    e.target
+                                                                        .value as any,
+                                                                )
+                                                            }
+                                                            className="h-5 w-5 text-blue-600 focus:ring-blue-500"
                                                         />
-                                                        <span className="text-sm font-medium text-slate-900">
-                                                            Tampilkan Laporan
+                                                        <span className="text-base font-bold text-slate-900">
+                                                            Aktif & Terlihat
                                                         </span>
                                                     </div>
-                                                    <span className="pl-6 text-xs text-slate-500">Laporan akan langsung dapat dilihat oleh wali murid yang mengakses kelas ini.</span>
+                                                    <span className="pl-8 text-sm text-slate-500">
+                                                        Wali murid dapat
+                                                        langsung melihat laporan
+                                                        di halaman mereka.
+                                                    </span>
                                                 </div>
                                             </div>
                                         </label>
                                         <label
-                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'preparing' ? 'border-amber-500 bg-amber-50/50 ring-1 ring-amber-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                            className={`flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all ${data.google_sheet_status === 'preparing' ? 'border-amber-500 bg-amber-50/50' : 'border-slate-100 hover:border-slate-300'}`}
                                         >
                                             <div className="flex w-full items-center justify-between">
                                                 <div className="flex flex-col gap-1">
-                                                    <div className="flex items-center gap-2">
+                                                    <div className="flex items-center gap-3">
                                                         <input
                                                             type="radio"
                                                             value="preparing"
-                                                            checked={data.google_sheet_status === 'preparing'}
-                                                            onChange={(e) => setData('google_sheet_status', e.target.value as any)}
-                                                            className="h-4 w-4 text-amber-600 focus:ring-amber-500"
+                                                            checked={
+                                                                data.google_sheet_status ===
+                                                                'preparing'
+                                                            }
+                                                            onChange={(e) =>
+                                                                setData(
+                                                                    'google_sheet_status',
+                                                                    e.target
+                                                                        .value as any,
+                                                                )
+                                                            }
+                                                            className="h-5 w-5 text-amber-600 focus:ring-amber-500"
                                                         />
-                                                        <span className="text-sm font-medium text-slate-900">
-                                                            Sedang Disiapkan
+                                                        <span className="text-base font-bold text-slate-900">
+                                                            Sedang Disusun
                                                         </span>
                                                     </div>
-                                                    <span className="pl-6 text-xs text-slate-500">Menampilkan pesan ramah bahwa Anda sedang aktif menyusun laporan ini.</span>
+                                                    <span className="pl-8 text-sm text-slate-500">
+                                                        Hanya Anda yang dapat
+                                                        melihat laporan. Wali
+                                                        murid melihat notifikasi
+                                                        "Sedang Disiapkan".
+                                                    </span>
                                                 </div>
                                             </div>
                                         </label>
                                         <label
-                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'hidden' ? 'border-slate-500 bg-slate-50 ring-1 ring-slate-500' : 'border-slate-200 hover:border-slate-300'}`}
+                                            className={`flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all ${data.google_sheet_status === 'hidden' ? 'border-slate-400 bg-slate-50' : 'border-slate-100 hover:border-slate-300'}`}
                                         >
                                             <div className="flex w-full items-center justify-between">
                                                 <div className="flex flex-col gap-1">
-                                                    <div className="flex items-center gap-2">
+                                                    <div className="flex items-center gap-3">
                                                         <input
                                                             type="radio"
                                                             value="hidden"
-                                                            checked={data.google_sheet_status === 'hidden'}
-                                                            onChange={(e) => setData('google_sheet_status', e.target.value as any)}
-                                                            className="h-4 w-4 text-slate-600 focus:ring-slate-500"
+                                                            checked={
+                                                                data.google_sheet_status ===
+                                                                'hidden'
+                                                            }
+                                                            onChange={(e) =>
+                                                                setData(
+                                                                    'google_sheet_status',
+                                                                    e.target
+                                                                        .value as any,
+                                                                )
+                                                            }
+                                                            className="h-5 w-5 text-slate-600 focus:ring-slate-500"
                                                         />
-                                                        <span className="text-sm font-medium text-slate-900">
-                                                            Sembunyikan
+                                                        <span className="text-base font-bold text-slate-900">
+                                                            Sembunyikan Total
                                                         </span>
                                                     </div>
-                                                    <span className="pl-6 text-xs text-slate-500">Fitur laporan dinonaktifkan sementara (muncul pesan bahwa laporan belum terhubung).</span>
+                                                    <span className="pl-8 text-sm text-slate-500">
+                                                        Laporan disembunyikan
+                                                        sepenuhnya dari akses
+                                                        wali murid.
+                                                    </span>
                                                 </div>
                                             </div>
                                         </label>
                                     </div>
                                     {errors.google_sheet_status && (
-                                        <div className="mt-1 text-xs text-red-500">
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
                                             {errors.google_sheet_status}
                                         </div>
                                     )}
                                 </div>
 
                                 {data.google_sheet_status === 'active' && (
-                                    <div>
-                                        <label className="mb-1 block text-sm font-medium text-slate-700">
-                                            Link Google Sheet
+                                    <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                                        <label className="mb-2 block text-sm font-bold text-slate-700">
+                                            Link Google Sheet (Akses Publik /
+                                            Anyone with link)
                                         </label>
                                         <input
                                             type="url"
                                             value={data.google_sheet_link}
                                             onChange={(e) =>
-                                                setData('google_sheet_link', e.target.value)
+                                                setData(
+                                                    'google_sheet_link',
+                                                    e.target.value,
+                                                )
                                             }
-                                            className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                            className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                             placeholder="https://docs.google.com/spreadsheets/d/..."
-                                            required={data.google_sheet_status === 'active'}
+                                            required={
+                                                data.google_sheet_status ===
+                                                'active'
+                                            }
                                         />
                                         {errors.google_sheet_link && (
-                                            <div className="mt-1 text-xs text-red-500">
+                                            <div className="mt-2 text-sm font-medium text-rose-500">
                                                 {errors.google_sheet_link}
                                             </div>
                                         )}
                                     </div>
                                 )}
                             </div>
-                            <div className="bg-slate-50 px-6 py-4 sm:flex sm:flex-row-reverse">
+                            <div className="flex flex-col-reverse gap-3 bg-slate-50 px-8 py-6 sm:flex-row sm:justify-end">
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setIsSettingsModalOpen(false)
+                                    }
+                                    className="inline-flex w-full justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-bold text-slate-700 shadow-sm ring-1 ring-slate-300 transition-all ring-inset hover:bg-slate-50 sm:w-auto"
+                                >
+                                    Batal
+                                </button>
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="inline-flex w-full justify-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-70 sm:ml-3 sm:w-auto"
+                                    className="sm:w-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                 >
-                                    {processing ? 'Menyimpan...' : 'Simpan Pengaturan'}
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => setIsSettingsModalOpen(false)}
-                                    className="mt-3 inline-flex w-full justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 sm:mt-0 sm:w-auto"
-                                >
-                                    Batal
+                                    {processing
+                                        ? 'Menyimpan...'
+                                        : 'Simpan Pengaturan'}
                                 </button>
                             </div>
                         </form>

@@ -62,9 +62,12 @@ export default function ClassroomsIndex({
     };
 
     const deleteClassroom = (id: number, name: string) => {
-        confirmDelete(`Hapus kelas ${name}? Data siswa dan setoran terkait juga akan terhapus.`, () => {
-            router.delete(`/admin/classrooms/${id}`);
-        });
+        confirmDelete(
+            `Hapus kelas ${name}? Data siswa dan setoran terkait juga akan terhapus.`,
+            () => {
+                router.delete(`/admin/classrooms/${id}`);
+            },
+        );
     };
 
     return (
@@ -72,19 +75,17 @@ export default function ClassroomsIndex({
             <Head title="Manajemen Kelas" />
 
             <div className="mb-6 flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-slate-800">
+                <h1 className="text-2xl font-bold tracking-tight text-slate-800">
                     Manajemen Kelas
                 </h1>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
                 <div className="lg:col-span-1">
-                    <div className="sticky top-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                        <div className="mb-4 flex items-center justify-between">
-                            <h2 className="text-lg font-semibold text-slate-800">
-                                {isEditing
-                                    ? 'Edit Kelas'
-                                    : 'Tambah Kelas'}
+                    <div className="sticky top-6 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+                        <div className="mb-6 flex items-center justify-between border-b border-slate-100 pb-5">
+                            <h2 className="text-xl font-semibold text-slate-800">
+                                {isEditing ? 'Edit Kelas' : 'Tambah Kelas'}
                             </h2>
                             {isEditing && (
                                 <button
@@ -98,7 +99,7 @@ export default function ClassroomsIndex({
 
                         <form onSubmit={submit} className="space-y-4">
                             <div>
-                                <label className="mb-1 block text-sm font-medium text-slate-700">
+                                <label className="mb-2 block text-sm font-semibold text-slate-700">
                                     Nama Kelas
                                 </label>
                                 <input
@@ -107,7 +108,7 @@ export default function ClassroomsIndex({
                                     onChange={(e) =>
                                         setData('name', e.target.value)
                                     }
-                                    className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                    className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 px-3 py-2 font-medium transition-all outline-none hover:bg-white focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-400/20"
                                     required
                                     placeholder="Contoh: A1"
                                 />
@@ -119,79 +120,116 @@ export default function ClassroomsIndex({
                             </div>
 
                             <div>
-                                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                                <label className="mb-3 block text-sm font-semibold text-slate-700">
                                     Status Laporan Kas Kelas
                                 </label>
-                                <div className="mb-4 space-y-2">
-                                        <label
-                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'active' ? 'border-blue-500 bg-blue-50/50 ring-1 ring-blue-500' : 'border-slate-200 hover:border-slate-300'}`}
-                                        >
-                                            <div className="flex w-full items-center justify-between">
-                                                <div className="flex flex-col gap-1">
-                                                    <div className="flex items-center gap-2">
-                                                        <input
-                                                            type="radio"
-                                                            name="google_sheet_status"
-                                                            value="active"
-                                                            checked={data.google_sheet_status === 'active'}
-                                                            onChange={(e) => setData('google_sheet_status', e.target.value)}
-                                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500"
-                                                        />
-                                                        <span className="text-sm font-medium text-slate-900">
-                                                            Tampilkan Laporan
-                                                        </span>
-                                                    </div>
-                                                    <span className="pl-6 text-xs text-slate-500">Laporan langsung dapat dilihat oleh publik/wali murid yang mengakses kelas ini.</span>
+                                <div className="mb-5 space-y-3">
+                                    <label
+                                        className={`group flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${data.google_sheet_status === 'active' ? 'border-blue-400 bg-blue-50 shadow-sm' : 'border-slate-100 bg-white hover:border-blue-200'}`}
+                                    >
+                                        <div className="flex w-full items-center justify-between">
+                                            <div className="flex flex-col gap-2">
+                                                <div className="flex items-center gap-3">
+                                                    <input
+                                                        type="radio"
+                                                        name="google_sheet_status"
+                                                        value="active"
+                                                        checked={
+                                                            data.google_sheet_status ===
+                                                            'active'
+                                                        }
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                'google_sheet_status',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className="h-5 w-5 text-blue-600 focus:ring-blue-500"
+                                                    />
+                                                    <span className="text-sm font-semibold text-slate-800 transition-colors group-hover:text-blue-600">
+                                                        Tampilkan Laporan
+                                                    </span>
                                                 </div>
+                                                <span className="pl-8 text-xs font-medium text-slate-500">
+                                                    Laporan langsung dapat
+                                                    dilihat oleh publik/wali
+                                                    murid yang mengakses kelas
+                                                    ini.
+                                                </span>
                                             </div>
-                                        </label>
-                                        <label
-                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'preparing' ? 'border-amber-500 bg-amber-50/50 ring-1 ring-amber-500' : 'border-slate-200 hover:border-slate-300'}`}
-                                        >
-                                            <div className="flex w-full items-center justify-between">
-                                                <div className="flex flex-col gap-1">
-                                                    <div className="flex items-center gap-2">
-                                                        <input
-                                                            type="radio"
-                                                            name="google_sheet_status"
-                                                            value="preparing"
-                                                            checked={data.google_sheet_status === 'preparing'}
-                                                            onChange={(e) => setData('google_sheet_status', e.target.value)}
-                                                            className="h-4 w-4 text-amber-600 focus:ring-amber-500"
-                                                        />
-                                                        <span className="text-sm font-medium text-slate-900">
-                                                            Sedang Disiapkan
-                                                        </span>
-                                                    </div>
-                                                    <span className="pl-6 text-xs text-slate-500">Menampilkan pesan bahwa laporan ini sedang disusun, tidak bisa dilihat publik.</span>
+                                        </div>
+                                    </label>
+                                    <label
+                                        className={`group flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${data.google_sheet_status === 'preparing' ? 'border-amber-400 bg-amber-50 shadow-sm' : 'border-slate-100 bg-white hover:border-amber-200'}`}
+                                    >
+                                        <div className="flex w-full items-center justify-between">
+                                            <div className="flex flex-col gap-2">
+                                                <div className="flex items-center gap-3">
+                                                    <input
+                                                        type="radio"
+                                                        name="google_sheet_status"
+                                                        value="preparing"
+                                                        checked={
+                                                            data.google_sheet_status ===
+                                                            'preparing'
+                                                        }
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                'google_sheet_status',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className="h-5 w-5 text-amber-500 focus:ring-amber-400"
+                                                    />
+                                                    <span className="text-sm font-semibold text-slate-800 transition-colors group-hover:text-amber-500">
+                                                        Sedang Disiapkan
+                                                    </span>
                                                 </div>
+                                                <span className="pl-8 text-xs font-medium text-slate-500">
+                                                    Menampilkan pesan bahwa
+                                                    laporan ini sedang disusun,
+                                                    tidak bisa dilihat publik.
+                                                </span>
                                             </div>
-                                        </label>
-                                        <label
-                                            className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 transition-all ${data.google_sheet_status === 'hidden' ? 'border-slate-500 bg-slate-50 ring-1 ring-slate-500' : 'border-slate-200 hover:border-slate-300'}`}
-                                        >
-                                            <div className="flex w-full items-center justify-between">
-                                                <div className="flex flex-col gap-1">
-                                                    <div className="flex items-center gap-2">
-                                                        <input
-                                                            type="radio"
-                                                            name="google_sheet_status"
-                                                            value="hidden"
-                                                            checked={data.google_sheet_status === 'hidden'}
-                                                            onChange={(e) => setData('google_sheet_status', e.target.value)}
-                                                            className="h-4 w-4 text-slate-600 focus:ring-slate-500"
-                                                        />
-                                                        <span className="text-sm font-medium text-slate-900">
-                                                            Sembunyikan
-                                                        </span>
-                                                    </div>
-                                                    <span className="pl-6 text-xs text-slate-500">Fitur dinonaktifkan / offline (muncul pesan bahwa laporan belum terhubung).</span>
+                                        </div>
+                                    </label>
+                                    <label
+                                        className={`group flex cursor-pointer items-center justify-between rounded-2xl border-2 p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${data.google_sheet_status === 'hidden' ? 'border-slate-400 bg-slate-50 shadow-sm' : 'border-slate-100 bg-white hover:border-slate-300'}`}
+                                    >
+                                        <div className="flex w-full items-center justify-between">
+                                            <div className="flex flex-col gap-2">
+                                                <div className="flex items-center gap-3">
+                                                    <input
+                                                        type="radio"
+                                                        name="google_sheet_status"
+                                                        value="hidden"
+                                                        checked={
+                                                            data.google_sheet_status ===
+                                                            'hidden'
+                                                        }
+                                                        onChange={(e) =>
+                                                            setData(
+                                                                'google_sheet_status',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className="h-5 w-5 text-slate-600 focus:ring-slate-500"
+                                                    />
+                                                    <span className="text-sm font-semibold text-slate-800 transition-colors group-hover:text-slate-600">
+                                                        Sembunyikan
+                                                    </span>
                                                 </div>
+                                                <span className="pl-8 text-xs font-medium text-slate-500">
+                                                    Fitur dinonaktifkan /
+                                                    offline (muncul pesan bahwa
+                                                    laporan belum terhubung).
+                                                </span>
                                             </div>
-                                        </label>
+                                        </div>
+                                    </label>
                                 </div>
                                 {errors.google_sheet_status && (
-                                    <div className="mb-2 text-xs text-red-500">
+                                    <div className="mb-2 text-xs text-rose-500">
                                         {errors.google_sheet_status}
                                     </div>
                                 )}
@@ -199,18 +237,24 @@ export default function ClassroomsIndex({
 
                             {data.google_sheet_status === 'active' && (
                                 <div>
-                                    <label className="mb-1 block text-sm font-medium text-slate-700">
+                                    <label className="mb-2 block text-sm font-semibold text-slate-700">
                                         Link Google Sheet
                                     </label>
                                     <input
                                         type="url"
                                         value={data.google_sheet_link}
                                         onChange={(e) =>
-                                            setData('google_sheet_link', e.target.value)
+                                            setData(
+                                                'google_sheet_link',
+                                                e.target.value,
+                                            )
                                         }
-                                        className="w-full rounded-lg border border-slate-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                        className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 px-3 py-2 font-medium transition-all outline-none hover:bg-white focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-400/20"
                                         placeholder="https://docs.google.com/spreadsheets/d/..."
-                                        required={data.google_sheet_status === 'active'}
+                                        required={
+                                            data.google_sheet_status ===
+                                            'active'
+                                        }
                                     />
                                     {errors.google_sheet_link && (
                                         <div className="mt-1 text-xs text-red-500">
@@ -219,9 +263,9 @@ export default function ClassroomsIndex({
                                     )}
                                 </div>
                             )}
-                            
+
                             <div className="relative z-20">
-                                <label className="mb-1 block text-sm font-medium text-slate-700">
+                                <label className="mb-2 block text-sm font-semibold text-slate-700">
                                     Koordinator Kelas (Korlas)
                                 </label>
                                 <Select
@@ -230,7 +274,10 @@ export default function ClassroomsIndex({
                                         setData('korlas_id', val as string)
                                     }
                                     options={[
-                                        { value: '', label: 'Kosong / Belum Ada' },
+                                        {
+                                            value: '',
+                                            label: 'Kosong / Belum Ada',
+                                        },
                                         ...korlasUsers.map((r) => ({
                                             value: String(r.id),
                                             label: r.name,
@@ -247,37 +294,35 @@ export default function ClassroomsIndex({
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="mt-4 w-full rounded-lg bg-blue-600 py-2 font-medium text-white transition-all hover:bg-blue-700 disabled:opacity-70"
+                                className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                             >
-                                {processing
-                                    ? 'Menyimpan...'
-                                    : 'Simpan Kelas'}
+                                {processing ? 'Menyimpan...' : 'Simpan Kelas'}
                             </button>
                         </form>
                     </div>
                 </div>
 
                 <div className="lg:col-span-2">
-                    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
                         <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-slate-200">
-                                <thead className="bg-slate-50">
+                            <table className="min-w-full divide-y divide-slate-100">
+                                <thead className="bg-slate-50/50">
                                     <tr>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 text-left text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
                                         >
                                             Nama Kelas
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 text-left text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
                                         >
                                             Koordinator Kelas
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 text-right text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase"
                                         >
                                             Aksi
                                         </th>
@@ -286,7 +331,10 @@ export default function ClassroomsIndex({
                                 <tbody className="divide-y divide-slate-100 bg-white">
                                     {classrooms.length === 0 ? (
                                         <tr>
-                                            <td colSpan={3} className="px-6 py-8 text-center text-sm text-slate-500">
+                                            <td
+                                                colSpan={3}
+                                                className="px-6 py-8 text-center text-sm text-slate-500"
+                                            >
                                                 Belum ada data kelas.
                                             </td>
                                         </tr>
@@ -294,37 +342,51 @@ export default function ClassroomsIndex({
                                         classrooms.map((classroom: any) => (
                                             <tr
                                                 key={classroom.id}
-                                                className="transition-colors hover:bg-slate-50/80"
+                                                className="transition-all duration-200 hover:bg-blue-50/30"
                                             >
-                                                <td className="px-6 py-4 text-sm font-bold whitespace-nowrap text-slate-900">
+                                                <td className="px-4 py-3 text-sm font-semibold whitespace-nowrap text-slate-800">
                                                     {classroom.name}
                                                 </td>
-                                                <td className="px-6 py-4 text-sm whitespace-nowrap text-slate-500">
+                                                <td className="px-4 py-3 text-sm whitespace-nowrap text-slate-500">
                                                     {classroom.korlas ? (
-                                                        <span className="inline-flex rounded-full bg-blue-100 px-2 text-xs leading-5 font-semibold text-blue-800">
-                                                            {classroom.korlas.name}
+                                                        <span className="inline-flex rounded-full bg-blue-50 px-3 py-0.5 text-xs font-bold text-blue-600 ring-1 ring-blue-500/10 ring-inset">
+                                                            {
+                                                                classroom.korlas
+                                                                    .name
+                                                            }
                                                         </span>
                                                     ) : (
-                                                        <span className="text-slate-400 italic">Belum Ada Korlas</span>
+                                                        <span className="font-medium text-slate-400 italic">
+                                                            Belum Ada Korlas
+                                                        </span>
                                                     )}
                                                     {classroom.google_sheet_link && (
-                                                        <a href={classroom.google_sheet_link} target="_blank" rel="noreferrer" className="ml-2 inline-flex rounded-full bg-emerald-100 px-2 text-xs leading-5 font-semibold text-emerald-800 hover:bg-emerald-200">
+                                                        <a
+                                                            href={
+                                                                classroom.google_sheet_link
+                                                            }
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                            className="ml-2 inline-flex rounded-full bg-emerald-50 px-3 py-0.5 text-xs font-bold text-emerald-600 ring-1 ring-emerald-500/10 transition-colors ring-inset hover:bg-emerald-100"
+                                                        >
                                                             Link Sheet
                                                         </a>
                                                     )}
                                                 </td>
-                                                <td className="px-6 py-4 text-right align-top whitespace-nowrap">
+                                                <td className="px-4 py-3 text-right align-top whitespace-nowrap">
                                                     <div className="flex justify-end gap-2">
                                                         <button
                                                             onClick={() =>
-                                                                openEdit(classroom)
+                                                                openEdit(
+                                                                    classroom,
+                                                                )
                                                             }
-                                                            className="rounded-xl p-2 text-slate-400 transition-all hover:bg-blue-50 hover:text-blue-600"
+                                                            className="rounded-xl p-2.5 text-slate-400 transition-all hover:bg-amber-100 hover:text-amber-600 hover:shadow-sm"
                                                             title="Edit Kelas"
                                                         >
                                                             <PencilSimple
                                                                 weight="bold"
-                                                                className="h-4 w-4"
+                                                                className="h-5 w-5"
                                                             />
                                                         </button>
                                                         <button
@@ -334,12 +396,12 @@ export default function ClassroomsIndex({
                                                                     classroom.name,
                                                                 )
                                                             }
-                                                            className="rounded-xl p-2 text-slate-400 transition-all hover:bg-rose-50 hover:text-rose-600"
+                                                            className="rounded-xl p-2.5 text-slate-400 transition-all hover:bg-rose-100 hover:text-rose-600 hover:shadow-sm"
                                                             title="Hapus Kelas"
                                                         >
                                                             <Trash
                                                                 weight="bold"
-                                                                className="h-4 w-4"
+                                                                className="h-5 w-5"
                                                             />
                                                         </button>
                                                     </div>
@@ -350,7 +412,7 @@ export default function ClassroomsIndex({
                                 </tbody>
                             </table>
                         </div>
-                        <div className="border-t border-slate-100 bg-slate-50 px-6 py-4 text-xs font-medium text-slate-500">
+                        <div className="border-t border-slate-100 bg-slate-50/50 px-4 py-3 text-xs font-semibold text-slate-500">
                             Total {classrooms.length} Kelas
                         </div>
                     </div>
