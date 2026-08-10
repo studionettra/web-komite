@@ -253,49 +253,64 @@ export default function Programs({ programs }: any) {
 
     return (
         <PublicLayout>
-            <Head title="Program Kerja - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu" />
+            <Head>
+                <title>Program Kerja - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu</title>
+                <meta name="description" content="Informasi lengkap mengenai program kerja, kegiatan, dan agenda Komite KBIT-TKIT Al-Ikhlash Pasar Minggu." />
+            </Head>
 
             <section className="relative z-0 overflow-hidden border-b-[6px] border-dashed border-sky-200 bg-sky-50 pt-28 pb-20 text-center sm:pt-32 sm:pb-32">
-                {/* Animated Background Icons */}
+                {/* Decorative Blobs */}
+                <div className="absolute top-0 right-0 h-[40vh] w-[40vh] translate-x-1/3 -translate-y-1/2 rounded-full bg-blue-300/20 mix-blend-multiply blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 h-[50vh] w-[50vh] -translate-x-1/3 translate-y-1/3 rounded-full bg-sky-300/20 mix-blend-multiply blur-3xl"></div>
+
+                {/* Animated Background Icons in Bubbles */}
                 <div
-                    className={`absolute top-4 -left-4 -z-10 origin-bottom-right text-blue-400 transition-all delay-100 duration-1000 ease-out md:top-10 md:left-[10%] ${isLoaded ? '-translate-x-[20%] translate-y-[20%] scale-100 rotate-[-15deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                    className={`absolute top-10 -left-4 -z-10 origin-bottom-right transition-all delay-100 duration-1000 ease-out md:top-20 md:left-[10%] ${isLoaded ? 'translate-x-0 translate-y-0 scale-100 rotate-[-15deg] opacity-80' : 'translate-x-[-20%] translate-y-[20%] scale-50 rotate-0 opacity-0'}`}
                 >
-                    <CheckCircle
-                        weight="duotone"
-                        className="h-16 w-16 cursor-default drop-shadow-sm transition-transform hover:scale-110 md:h-28 md:w-28"
-                    />
+                    <div className="flex h-20 w-20 items-center justify-center rounded-[1.5rem] bg-blue-100 shadow-lg shadow-blue-200/50 md:h-28 md:w-28 md:rounded-[2rem]">
+                        <CheckCircle
+                            weight="duotone"
+                            className="h-10 w-10 text-blue-500 transition-transform hover:scale-110 md:h-14 md:w-14"
+                        />
+                    </div>
                 </div>
                 <div
-                    className={`absolute -right-4 bottom-4 -z-10 origin-top-left text-pink-400 transition-all delay-300 duration-1000 ease-out md:right-[15%] md:bottom-10 ${isLoaded ? 'translate-x-[20%] -translate-y-[20%] scale-100 rotate-[25deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                    className={`absolute -right-4 bottom-10 -z-10 origin-top-left transition-all delay-300 duration-1000 ease-out md:right-[12%] md:bottom-20 ${isLoaded ? 'translate-x-0 translate-y-0 scale-100 rotate-[20deg] opacity-80' : 'translate-x-[20%] translate-y-[-20%] scale-50 rotate-0 opacity-0'}`}
                 >
-                    <ListChecks
-                        weight="duotone"
-                        className="h-16 w-16 cursor-default drop-shadow-sm transition-transform hover:scale-110 md:h-24 md:w-24"
-                    />
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-pink-100 shadow-lg shadow-pink-200/50 md:h-24 md:w-24">
+                        <ListChecks
+                            weight="duotone"
+                            className="h-8 w-8 text-pink-500 transition-transform hover:scale-110 md:h-12 md:w-12"
+                        />
+                    </div>
                 </div>
                 <div
-                    className={`absolute top-12 -right-2 -z-10 origin-bottom-left text-yellow-400 transition-all delay-500 duration-1000 ease-out md:top-20 md:right-[10%] ${isLoaded ? '-translate-x-[20%] -translate-y-[10%] scale-100 rotate-[10deg] opacity-70' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                    className={`absolute top-20 -right-2 -z-10 origin-bottom-left transition-all delay-500 duration-1000 ease-out md:top-24 md:right-[15%] ${isLoaded ? 'translate-x-0 translate-y-0 scale-100 rotate-[15deg] opacity-90' : 'translate-x-[20%] translate-y-[-10%] scale-50 rotate-0 opacity-0'}`}
                 >
-                    <Star
-                        weight="duotone"
-                        className="h-16 w-16 cursor-default drop-shadow-sm transition-transform hover:scale-110 md:h-20 md:w-20"
-                    />
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-100 shadow-lg shadow-yellow-200/50 md:h-20 md:w-20">
+                        <Star
+                            weight="duotone"
+                            className="h-8 w-8 text-yellow-500 transition-transform hover:scale-110 md:h-10 md:w-10"
+                        />
+                    </div>
                 </div>
                 <div
-                    className={`absolute bottom-12 -left-2 -z-10 origin-top-right text-emerald-400 transition-all delay-700 duration-1000 ease-out md:bottom-20 md:left-[15%] ${isLoaded ? 'translate-x-[30%] -translate-y-[30%] scale-100 rotate-[-20deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                    className={`absolute bottom-20 -left-2 -z-10 origin-top-right transition-all delay-700 duration-1000 ease-out md:bottom-24 md:left-[15%] ${isLoaded ? 'translate-x-0 translate-y-0 scale-100 rotate-[-10deg] opacity-80' : 'translate-x-[-30%] translate-y-[30%] scale-50 rotate-0 opacity-0'}`}
                 >
-                    <CalendarPlus
-                        weight="duotone"
-                        className="h-16 w-16 cursor-default drop-shadow-sm transition-transform hover:scale-110 md:h-24 md:w-24"
-                    />
+                    <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-emerald-100 shadow-lg shadow-emerald-200/50 md:h-24 md:w-24 md:rounded-[2rem]">
+                        <CalendarPlus
+                            weight="duotone"
+                            className="h-8 w-8 text-emerald-500 transition-transform hover:scale-110 md:h-12 md:w-12"
+                        />
+                    </div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-4xl px-4">
-                    <div className="inline-block rounded-2xl border border-white bg-white/60 p-5 shadow-sm backdrop-blur-md sm:rounded-3xl sm:p-8">
-                        <h1 className="mb-4 text-2xl font-extrabold tracking-tight text-slate-800 sm:mb-6 sm:text-4xl md:text-5xl">
+                <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+                    <div className="inline-block rounded-[2.5rem] border border-white/60 bg-white/70 p-6 shadow-xl shadow-sky-900/5 backdrop-blur-xl sm:p-10">
+                        <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-800 sm:mb-6 sm:text-5xl">
                             Daftar Program
                         </h1>
-                        <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-lg">
+                        <p className="mx-auto max-w-2xl text-sm leading-relaxed font-medium text-slate-600 sm:text-lg">
                             Seluruh inisiatif dan program Komite KBIT-TKIT
                             Al-Ikhlash Pasar Minggu disusun untuk mendukung
                             perkembangan peserta didik secara optimal.
@@ -304,100 +319,134 @@ export default function Programs({ programs }: any) {
                 </div>
             </section>
 
-            <section className="-mt-10 py-12 sm:py-20">
-                <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                    <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-xl shadow-slate-200/50 sm:rounded-3xl sm:p-8">
-                        {programs.length === 0 ? (
-                            <div className="py-20 text-center text-slate-500">
-                                Belum ada data program kerja.
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-1 gap-4 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-                                {programs.map((program: any) => (
-                                    <div
-                                        key={program.id}
-                                        onClick={() => openProgram(program)}
-                                        className="group flex cursor-pointer flex-col overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-100 hover:shadow-xl sm:rounded-2xl"
-                                    >
-                                        {/* Image Header */}
-                                        <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
-                                            {program.images && program.images.length > 0 ? (
-                                                <img 
-                                                    src={`/storage/${program.images[0]}`} 
-                                                    alt={program.title}
-                                                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            <section className="relative overflow-hidden bg-slate-50/60 py-16 sm:py-24">
+                {/* Playful Background Elements */}
+                <div className="absolute top-1/4 -right-32 -z-10 h-[500px] w-[500px] rounded-full bg-blue-100/40 mix-blend-multiply blur-3xl"></div>
+                <div className="absolute bottom-0 -left-32 -z-10 h-[600px] w-[600px] rounded-full bg-sky-200/30 mix-blend-multiply blur-3xl"></div>
+                <div className="absolute top-3/4 right-1/4 -z-10 h-[400px] w-[400px] rounded-full bg-indigo-100/30 mix-blend-multiply blur-3xl"></div>
+
+                <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                    {programs.length === 0 ? (
+                        <div className="py-20 text-center text-slate-500">
+                            Belum ada data program kerja.
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-3">
+                            {programs.map((program: any) => (
+                                <div
+                                    key={program.id}
+                                    onClick={() => openProgram(program)}
+                                    className="group relative flex cursor-pointer flex-col rounded-3xl border border-slate-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-900/5 sm:p-5"
+                                >
+                                    {/* Image Header with inset */}
+                                    <div className="relative mb-5 aspect-video w-full overflow-hidden rounded-2xl bg-slate-100">
+                                        {program.images &&
+                                        program.images.length > 0 ? (
+                                            <img
+                                                src={`/storage/${program.images[0]}`}
+                                                alt={program.title}
+                                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            />
+                                        ) : (
+                                            <div className="flex h-full w-full items-center justify-center bg-blue-50/50 text-blue-200 transition-transform duration-500 group-hover:scale-105">
+                                                <CalendarBlank
+                                                    weight="duotone"
+                                                    className="h-16 w-16"
                                                 />
+                                            </div>
+                                        )}
+                                        {/* Floating Badge inside image */}
+                                        <div className="absolute top-3 left-3">
+                                            <span
+                                                className={`inline-flex items-center rounded-full px-3 py-1 text-[10px] font-bold tracking-wider uppercase shadow-sm backdrop-blur-md ${
+                                                    program.frequency ===
+                                                    'monthly'
+                                                        ? 'bg-emerald-500/90 text-white'
+                                                        : program.frequency ===
+                                                            'holiday'
+                                                          ? 'bg-rose-500/90 text-white'
+                                                          : 'bg-amber-500/90 text-white'
+                                                }`}
+                                            >
+                                                {program.frequency === 'monthly'
+                                                    ? 'Bulanan'
+                                                    : program.frequency ===
+                                                        'holiday'
+                                                      ? 'PHBI'
+                                                      : 'Insidental'}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* Card Content */}
+                                    <div className="flex flex-1 flex-col px-2">
+                                        <div className="mb-3 flex items-center justify-between">
+                                            <span className="text-sm font-bold text-slate-400">
+                                                {getRelevantDate(program)
+                                                    ? new Date(
+                                                          getRelevantDate(
+                                                              program,
+                                                          ),
+                                                      ).toLocaleDateString(
+                                                          'id-ID',
+                                                          {
+                                                              month: 'long',
+                                                              year: 'numeric',
+                                                          },
+                                                      )
+                                                    : '-'}
+                                            </span>
+
+                                            {/* Status Dot indicator */}
+                                            {program.status === 'ongoing' ? (
+                                                <span className="flex items-center gap-1.5 text-[10px] font-bold tracking-wide text-emerald-600 uppercase">
+                                                    <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-500"></div>
+                                                    Berlangsung
+                                                </span>
+                                            ) : program.status === 'planned' ? (
+                                                <span className="flex items-center gap-1.5 text-[10px] font-bold tracking-wide text-amber-500 uppercase">
+                                                    <div className="h-2 w-2 rounded-full bg-amber-400"></div>
+                                                    Akan Datang
+                                                </span>
                                             ) : (
-                                                <div className="flex h-full w-full items-center justify-center bg-blue-50/50 text-blue-200 transition-transform duration-500 group-hover:scale-105">
-                                                    <CalendarBlank weight="duotone" className="h-16 w-16" />
-                                                </div>
+                                                <span className="flex items-center gap-1.5 text-[10px] font-bold tracking-wide text-slate-400 uppercase">
+                                                    <div className="h-2 w-2 rounded-full bg-slate-300"></div>
+                                                    Selesai
+                                                </span>
                                             )}
                                         </div>
 
-                                        {/* Card Content */}
-                                        <div className="flex flex-1 flex-col p-4 sm:p-6 transition-colors group-hover:bg-blue-50/30">
-                                            <div className="mb-4 flex items-start justify-between">
-                                                <span className="rounded-md bg-slate-100 px-3 py-1 text-xs font-bold tracking-wider text-slate-600 uppercase transition-colors group-hover:bg-blue-100 group-hover:text-blue-700">
-                                                    {program.frequency === 'monthly'
-                                                        ? 'Bulanan'
-                                                        : program.frequency ===
-                                                            'holiday'
-                                                          ? 'PHBI'
-                                                          : 'Insidental'}
-                                                </span>
-                                                <span className="text-sm font-medium text-slate-400">
-                                                    {getRelevantDate(program)
-                                                        ? new Date(
-                                                              getRelevantDate(program),
-                                                          ).toLocaleDateString(
-                                                              'id-ID',
-                                                              {
-                                                                  month: 'long',
-                                                                  year: 'numeric',
-                                                              },
-                                                          )
-                                                        : '-'}
-                                                </span>
-                                            </div>
-                                            <h3 className="mb-2 text-base leading-snug font-bold text-slate-900 transition-colors group-hover:text-blue-700 sm:mb-3 sm:text-xl">
-                                                {program.title}
-                                            </h3>
-                                            <p className="mb-6 line-clamp-3 flex-1 text-sm leading-relaxed text-slate-600">
+                                        <h3 className="mb-2 text-xl leading-snug font-bold text-slate-900 transition-colors group-hover:text-blue-600">
+                                            {program.title}
+                                        </h3>
+
+                                        <p className="mb-4 flex-1 text-sm leading-relaxed text-slate-500">
                                             {program.description}
                                         </p>
 
-                                        <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-4">
-                                            <span className="flex items-center gap-2 text-sm font-medium text-slate-500">
-                                                Status:
-                                                {program.status ===
-                                                'ongoing' ? (
-                                                    <span className="flex items-center gap-1 text-green-600">
-                                                        <div className="h-2 w-2 rounded-full bg-green-500"></div>{' '}
-                                                        Berlangsung
-                                                    </span>
-                                                ) : program.status ===
-                                                  'planned' ? (
-                                                    <span className="flex items-center gap-1 text-orange-500">
-                                                        <div className="h-2 w-2 rounded-full bg-orange-400"></div>{' '}
-                                                        Akan Datang
-                                                    </span>
-                                                ) : (
-                                                    <span className="flex items-center gap-1 text-slate-500">
-                                                        <div className="h-2 w-2 rounded-full bg-slate-400"></div>{' '}
-                                                        Selesai
-                                                    </span>
-                                                )}
+                                        <div className="mt-auto flex justify-end">
+                                            <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-3 py-1.5 text-[11px] font-bold text-slate-600 shadow-sm transition-colors group-hover:bg-blue-600 group-hover:text-white group-hover:shadow-md">
+                                                Lihat Detail
+                                                <svg
+                                                    className="h-3 w-3"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke="currentColor"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2.5}
+                                                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                                                    />
+                                                </svg>
                                             </span>
-                                            <span className="text-sm font-bold text-blue-600 opacity-0 transition-opacity group-hover:opacity-100">
-                                                Lihat Detail &rarr;
-                                            </span>
-                                        </div>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </section>
 

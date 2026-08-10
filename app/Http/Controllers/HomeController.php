@@ -67,11 +67,14 @@ class HomeController extends Controller
 
         $banners = Banner::where('is_active', true)->orderBy('order', 'asc')->orderBy('created_at', 'desc')->get();
 
+        $recentPosts = \App\Models\Post::where('is_published', true)->orderBy('published_at', 'desc')->take(3)->get();
+
         return Inertia::render('public/Home', [
             'heroProgram' => $heroProgram,
             'activePrograms' => $activePrograms,
             'upcomingSessions' => $upcomingSessions,
             'banners' => $banners,
+            'recentPosts' => $recentPosts,
         ]);
     }
 

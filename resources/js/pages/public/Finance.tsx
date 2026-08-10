@@ -55,49 +55,63 @@ export default function Finance({
 
     return (
         <PublicLayout>
-            <Head title="Transparansi Keuangan - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu" />
+            <Head title="Transparansi Keuangan - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu">
+                <meta name="robots" content="noindex, nofollow" />
+            </Head>
 
             <section className="relative z-0 overflow-hidden border-b-[6px] border-dashed border-sky-200 bg-sky-50 pt-28 pb-20 text-center sm:pt-32 sm:pb-32">
-                {/* Animated Background Icons */}
+                {/* Decorative Blobs */}
+                <div className="absolute top-0 right-0 h-[40vh] w-[40vh] translate-x-1/3 -translate-y-1/2 rounded-full bg-emerald-300/20 mix-blend-multiply blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 h-[50vh] w-[50vh] -translate-x-1/3 translate-y-1/3 rounded-full bg-blue-300/20 mix-blend-multiply blur-3xl"></div>
+
+                {/* Animated Background Icons in Bubbles */}
                 <div
-                    className={`absolute top-4 -left-4 -z-10 origin-bottom-right text-emerald-400 transition-all delay-100 duration-1000 ease-out md:top-10 md:left-[10%] ${isLoaded ? '-translate-x-[20%] translate-y-[20%] scale-100 rotate-[-15deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                    className={`absolute top-10 -left-4 -z-10 origin-bottom-right transition-all delay-100 duration-1000 ease-out md:top-20 md:left-[10%] ${isLoaded ? 'translate-x-0 translate-y-0 scale-100 rotate-[-15deg] opacity-80' : 'translate-x-[-20%] translate-y-[20%] scale-50 rotate-0 opacity-0'}`}
                 >
-                    <Wallet
-                        weight="duotone"
-                        className="h-16 w-16 cursor-default drop-shadow-sm transition-transform hover:scale-110 md:h-28 md:w-28"
-                    />
+                    <div className="flex h-20 w-20 items-center justify-center rounded-[1.5rem] bg-emerald-100 shadow-lg shadow-emerald-200/50 md:h-28 md:w-28 md:rounded-[2rem]">
+                        <Wallet
+                            weight="duotone"
+                            className="h-10 w-10 text-emerald-500 transition-transform hover:scale-110 md:h-14 md:w-14"
+                        />
+                    </div>
                 </div>
                 <div
-                    className={`absolute -right-4 bottom-4 -z-10 origin-top-left text-pink-400 transition-all delay-300 duration-1000 ease-out md:right-[15%] md:bottom-10 ${isLoaded ? 'translate-x-[20%] -translate-y-[20%] scale-100 rotate-[25deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                    className={`absolute -right-4 bottom-10 -z-10 origin-top-left transition-all delay-300 duration-1000 ease-out md:right-[12%] md:bottom-20 ${isLoaded ? 'translate-x-0 translate-y-0 scale-100 rotate-[20deg] opacity-80' : 'translate-x-[20%] translate-y-[-20%] scale-50 rotate-0 opacity-0'}`}
                 >
-                    <Money
-                        weight="duotone"
-                        className="h-16 w-16 cursor-default drop-shadow-sm transition-transform hover:scale-110 md:h-24 md:w-24"
-                    />
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-pink-100 shadow-lg shadow-pink-200/50 md:h-24 md:w-24">
+                        <Money
+                            weight="duotone"
+                            className="h-8 w-8 text-pink-500 transition-transform hover:scale-110 md:h-12 md:w-12"
+                        />
+                    </div>
                 </div>
                 <div
-                    className={`absolute top-12 -right-2 -z-10 origin-bottom-left text-yellow-400 transition-all delay-500 duration-1000 ease-out md:top-20 md:right-[10%] ${isLoaded ? '-translate-x-[20%] -translate-y-[10%] scale-100 rotate-[10deg] opacity-70' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                    className={`absolute top-20 -right-2 -z-10 origin-bottom-left transition-all delay-500 duration-1000 ease-out md:top-24 md:right-[15%] ${isLoaded ? 'translate-x-0 translate-y-0 scale-100 rotate-[15deg] opacity-90' : 'translate-x-[20%] translate-y-[-10%] scale-50 rotate-0 opacity-0'}`}
                 >
-                    <Coin
-                        weight="duotone"
-                        className="h-16 w-16 cursor-default drop-shadow-sm transition-transform hover:scale-110 md:h-20 md:w-20"
-                    />
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-100 shadow-lg shadow-yellow-200/50 md:h-20 md:w-20">
+                        <Coin
+                            weight="duotone"
+                            className="h-8 w-8 text-yellow-500 transition-transform hover:scale-110 md:h-10 md:w-10"
+                        />
+                    </div>
                 </div>
                 <div
-                    className={`absolute bottom-12 -left-2 -z-10 origin-top-right text-blue-400 transition-all delay-700 duration-1000 ease-out md:bottom-20 md:left-[15%] ${isLoaded ? 'translate-x-[30%] -translate-y-[30%] scale-100 rotate-[-20deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                    className={`absolute bottom-20 -left-2 -z-10 origin-top-right transition-all delay-700 duration-1000 ease-out md:bottom-24 md:left-[15%] ${isLoaded ? 'translate-x-0 translate-y-0 scale-100 rotate-[-10deg] opacity-80' : 'translate-x-[-30%] translate-y-[30%] scale-50 rotate-0 opacity-0'}`}
                 >
-                    <ChartLineUp
-                        weight="duotone"
-                        className="h-16 w-16 cursor-default drop-shadow-sm transition-transform hover:scale-110 md:h-24 md:w-24"
-                    />
+                    <div className="flex h-16 w-16 items-center justify-center rounded-[1.5rem] bg-sky-100 shadow-lg shadow-sky-200/50 md:h-24 md:w-24 md:rounded-[2rem]">
+                        <ChartLineUp
+                            weight="duotone"
+                            className="h-8 w-8 text-sky-500 transition-transform hover:scale-110 md:h-12 md:w-12"
+                        />
+                    </div>
                 </div>
 
                 <div className="relative z-10 mx-auto max-w-4xl px-4">
-                    <div className="inline-block rounded-2xl border border-white bg-white/60 p-5 shadow-sm backdrop-blur-md sm:rounded-3xl sm:p-8">
-                        <h1 className="mb-4 text-2xl font-extrabold tracking-tight text-slate-800 sm:mb-6 sm:text-4xl md:text-5xl">
+                    <div className="inline-block rounded-[2.5rem] border border-white/60 bg-white/70 p-6 shadow-xl shadow-sky-900/5 backdrop-blur-xl sm:p-10">
+                        <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-800 sm:mb-6 sm:text-5xl">
                             Transparansi Keuangan
                         </h1>
-                        <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-lg">
+                        <p className="mx-auto max-w-2xl text-sm leading-relaxed font-medium text-slate-600 sm:text-lg">
                             Laporan kas Komite yang dilaporkan secara jujur,
                             akuntabel, dan real-time kepada seluruh wali murid.
                         </p>
@@ -109,67 +123,71 @@ export default function Finance({
                 <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                     {/* Tab Navigation if classroom data is present */}
                     {classroomName && (
-                        <div className="mb-6 flex gap-3 overflow-x-auto border-b border-slate-200 sm:mb-8 sm:gap-6">
-                            <button
-                                onClick={() => setActiveTab('classroom')}
-                                className={`whitespace-nowrap px-2 pb-3 text-xs font-bold tracking-wide uppercase transition-all sm:pb-4 sm:text-sm ${activeTab === 'classroom' ? 'border-b-2 border-emerald-600 text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
-                            >
-                                Laporan Kas Kelas ({classroomName})
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('global')}
-                                className={`whitespace-nowrap px-2 pb-3 text-xs font-bold tracking-wide uppercase transition-all sm:pb-4 sm:text-sm ${activeTab === 'global' ? 'border-b-2 border-emerald-600 text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
-                            >
-                                Laporan Kas Keseluruhan
-                            </button>
+                        <div className="mb-8 flex justify-center sm:mb-12">
+                            <div className="inline-flex items-center gap-2 rounded-2xl bg-slate-100 p-1.5 shadow-inner">
+                                <button
+                                    onClick={() => setActiveTab('classroom')}
+                                    className={`relative flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-bold transition-all sm:px-8 sm:py-3 ${activeTab === 'classroom' ? 'bg-white text-emerald-600 shadow-sm ring-1 ring-black/5' : 'text-slate-500 hover:text-slate-700'}`}
+                                >
+                                    Kas Kelas ({classroomName})
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('global')}
+                                    className={`relative flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-bold transition-all sm:px-8 sm:py-3 ${activeTab === 'global' ? 'bg-white text-emerald-600 shadow-sm ring-1 ring-black/5' : 'text-slate-500 hover:text-slate-700'}`}
+                                >
+                                    Kas Keseluruhan
+                                </button>
+                            </div>
                         </div>
                     )}
 
-                    <div className="mb-4 flex flex-col justify-between gap-3 sm:mb-6 sm:flex-row sm:items-center sm:gap-4">
-                        <h2 className="text-lg font-bold text-slate-800 sm:text-2xl">
+                    <div className="mb-6 flex flex-col justify-between gap-3 text-center sm:mb-8">
+                        <h2 className="text-2xl font-extrabold text-slate-800 sm:text-3xl">
                             {activeTab === 'classroom'
                                 ? `Catatan Keuangan Kelas ${classroomName}`
                                 : 'Catatan Keuangan Keseluruhan'}
                         </h2>
                     </div>
 
-                    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl shadow-slate-200/50 sm:rounded-3xl">
+                    <div className="overflow-hidden rounded-[2.5rem] border border-white/60 bg-white shadow-2xl shadow-slate-200/50 sm:p-2">
                         {currentStatus === 'preparing' ? (
-                            <div className="flex flex-col items-center justify-center p-12 text-slate-500">
-                                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-50">
+                            <div className="flex flex-col items-center justify-center rounded-[2rem] bg-amber-50 p-16 text-center text-slate-500">
+                                <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-amber-100 shadow-inner">
                                     <FileText
-                                        className="h-8 w-8 text-amber-500"
+                                        className="h-10 w-10 animate-pulse text-amber-500"
                                         weight="duotone"
                                     />
                                 </div>
-                                <h3 className="mb-2 text-lg font-medium text-slate-700">
+                                <h3 className="mb-3 text-xl font-bold text-slate-800">
                                     Laporan Sedang Disiapkan
                                 </h3>
-                                <p className="text-center text-sm">
-                                    {isClassroomTab 
+                                <p className="max-w-md text-sm leading-relaxed font-medium">
+                                    {isClassroomTab
                                         ? 'Koordinator Kelas sedang menyusun laporan keuangan saat ini. Silakan kembali lagi nanti.'
                                         : 'Bendahara kami sedang menyusun laporan keuangan saat ini. Silakan kembali lagi nanti.'}
                                 </p>
                             </div>
                         ) : !currentUrl || currentStatus === 'hidden' ? (
-                            <div className="flex flex-col items-center justify-center p-12 text-slate-500">
-                                <TableIcon
-                                    className="mb-4 h-12 w-12 text-slate-300"
-                                    weight="light"
-                                />
-                                <h3 className="mb-2 text-lg font-medium text-slate-700">
+                            <div className="flex flex-col items-center justify-center rounded-[2rem] bg-slate-50 p-16 text-center text-slate-500">
+                                <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-slate-100 shadow-inner">
+                                    <TableIcon
+                                        className="h-10 w-10 text-slate-400"
+                                        weight="duotone"
+                                    />
+                                </div>
+                                <h3 className="mb-3 text-xl font-bold text-slate-800">
                                     Laporan Belum Tersedia
                                 </h3>
-                                <p className="text-center text-sm">
+                                <p className="max-w-md text-sm leading-relaxed font-medium">
                                     Pengurus belum menautkan dokumen laporan
                                     keuangan.
                                 </p>
                             </div>
                         ) : (
-                            <div className="flex flex-col bg-white">
+                            <div className="flex flex-col overflow-hidden rounded-[2rem] bg-slate-50">
                                 <iframe
                                     src={getEmbedUrl(currentUrl)}
-                                    className="h-[700px] w-full border-0"
+                                    className="h-[750px] w-full border-0 bg-white"
                                     title="Data Keuangan"
                                     allowFullScreen
                                 ></iframe>
