@@ -1,2 +1,5 @@
 User-agent: *
-Disallow:
+Disallow: /kalender-akademik
+Disallow: /keuangan
+
+Sitemap: /sitemap.xml
