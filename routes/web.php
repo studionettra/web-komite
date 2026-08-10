@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\AcademicCalendarController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClassroomController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\AdminAcademicMonthController;
 use App\Http\Controllers\AdminAcademicYearController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\HomeController;
@@ -15,18 +18,23 @@ use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgramActivityController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\Public\PostController as PublicPostController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\BannerController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\SitemapController;
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/pengurus', [HomeController::class, 'organization'])->name('public.organization');
 Route::get('/keuangan', [HomeController::class, 'finance'])->name('public.finance');
 Route::post('/keuangan/verify', [HomeController::class, 'verifyFinanceAccess'])->name('public.finance.verify');
 Route::get('/program', [HomeController::class, 'programs'])->name('public.programs');
+Route::get('/kabar', [PublicPostController::class, 'index'])->name('public.posts.index');
+Route::get('/kabar/{slug}', [PublicPostController::class, 'show'])->name('public.posts.show');
 Route::get('/kalender-akademik', [AcademicCalendarController::class, 'index'])->name('public.academic-calendar');
 Route::post('/kalender-akademik/verify', [AcademicCalendarController::class, 'verifyAccess'])->name('public.academic-calendar.verify');
 Route::get('/kebijakan-privasi', [HomeController::class, 'privacyPolicy'])->name('public.privacy-policy');
@@ -91,6 +99,13 @@ Route::middleware(['auth', 'prevent-back-history'])->group(function () {
     });
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+
+    // Superadmin | Humas restricted routes
+    Route::middleware(['role:Superadmin|Humas'])->prefix('admin')->name('admin.')->group(function () {
+        Route::resource('categories', CategoryController::class)->except(['create', 'show', 'edit']);
+        Route::post('posts/upload-image', [AdminPostController::class, 'uploadImage'])->name('posts.upload-image');
+        Route::resource('posts', AdminPostController::class)->except(['show']);
+    });
 
     Route::middleware(['role:Superadmin|Bendahara'])->group(function () {
         // Settings

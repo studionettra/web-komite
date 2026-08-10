@@ -8,10 +8,12 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -50,6 +52,24 @@ return Application::configure(basePath: dirname(__DIR__))
 
             // Redirect back with a fallback to dashboard if no previous URL exists
             return back(302, [], route('dashboard'));
+        });
+
+        $exceptions->render(function (HttpExceptionInterface $e, Request $request) {
+            $status = $e->getStatusCode();
+
+            // Allow 404, 403, and 503 to be rendered in local for testing the design.
+            // But keep 500 default in local so developers can see the stack trace.
+            if (app()->environment('local') && $status === 500) {
+                return null; // Let Laravel handle it (shows Whoops)
+            }
+
+            if (in_array($status, [500, 503, 404, 403]) && ! $request->expectsJson()) {
+                return Inertia::render('errors/Error', ['status' => $status])
+                    ->toResponse($request)
+                    ->setStatusCode($status);
+            }
+
+            return null;
         });
 
         $exceptions->shouldRenderJsonWhen(
