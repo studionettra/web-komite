@@ -18,6 +18,7 @@ import {
     PaperPlaneTilt,
     Star,
     Sun,
+    Newspaper,
 } from '@phosphor-icons/react';
 import { Toaster } from 'react-hot-toast';
 import appLogo from '../../images/logo/logo-komite-alikhlash-jatipadang.png';
@@ -32,31 +33,34 @@ export default function PublicLayout({
     const footerRef = useRef(null);
     const isLoaded = useInView(footerRef, { once: true, amount: 0.2 });
 
-    const navLinkClass = (path: string) =>
-        `transition-colors font-medium ${url === path ? 'text-blue-600' : 'text-slate-600 hover:text-blue-600'}`;
+    const navLinkClass = (path: string) => {
+        const isActive = path === '/' ? url === '/' : url.startsWith(path);
+        return `relative px-4 py-2 font-bold text-sm transition-all duration-300 rounded-full ${isActive ? 'bg-blue-100/50 text-blue-600 shadow-sm' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}`;
+    };
 
     return (
         <div className="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-900 selection:bg-blue-200 selection:text-blue-900">
             <Toaster position="top-right" />
             <FlashMessage />
 
-            {/* Navbar */}
-            <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/90 backdrop-blur-md transition-all duration-300">
-                <div className="mx-auto flex h-16 max-w-6xl items-center justify-center px-4 sm:px-6 md:justify-between lg:px-8">
-                    <div className="flex items-center gap-3">
+            {/* Navbar (Floating Pill on Desktop) */}
+            <div className="fixed top-4 z-50 w-full">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <header className="flex h-16 w-full items-center justify-between rounded-full border border-white/60 bg-white/70 px-4 shadow-xl shadow-sky-900/5 backdrop-blur-xl transition-all duration-300 sm:px-6">
+                    <div className="flex w-full items-center justify-center md:w-auto md:justify-start">
                         <Link
                             href="/"
                             className="group flex items-center gap-2.5 sm:gap-3"
                         >
-                            <div className="flex h-9 w-9 shrink-0 items-center justify-center transition-transform duration-300 group-hover:scale-105 sm:h-10 sm:w-10">
+                            <div className="flex h-9 w-9 shrink-0 items-center justify-center transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10">
                                 <img
                                     src={appLogo}
                                     alt="Logo Komite"
-                                    className="h-full w-full object-contain"
+                                    className="h-full w-full object-contain drop-shadow-sm"
                                 />
                             </div>
                             <div className="flex flex-col justify-center">
-                                <span className="mb-1 text-[8.5px] leading-none font-bold tracking-widest text-slate-500 uppercase sm:text-[10px]">
+                                <span className="mb-0.5 text-[8.5px] leading-none font-bold tracking-widest text-slate-500 uppercase sm:text-[10px]">
                                     Komite KBIT-TKIT
                                 </span>
                                 <span className="bg-linear-to-r from-slate-900 to-slate-700 bg-clip-text text-[11px] leading-none font-extrabold whitespace-nowrap text-transparent transition-all duration-300 group-hover:to-blue-600 sm:text-sm">
@@ -66,41 +70,42 @@ export default function PublicLayout({
                         </Link>
                     </div>
 
-                    <nav className="hidden items-center gap-8 text-sm md:flex">
-                        <Link href="/" className={navLinkClass('/')}>
-                            Beranda
-                        </Link>
-                        <Link
-                            href="/pengurus"
-                            className={navLinkClass('/pengurus')}
-                        >
-                            Pengurus
-                        </Link>
-                        <Link
-                            href="/program"
-                            className={navLinkClass('/program')}
-                        >
-                            Program
-                        </Link>
-                        <Link
-                            href="/keuangan"
-                            className={navLinkClass('/keuangan')}
-                        >
-                            Keuangan
-                        </Link>
-                    </nav>
+                    <div className="hidden items-center gap-6 md:flex">
+                        <nav className="flex items-center gap-2">
+                            <Link href="/" className={navLinkClass('/')}>
+                                Beranda
+                            </Link>
+                            <Link
+                                href="/pengurus"
+                                className={navLinkClass('/pengurus')}
+                            >
+                                Pengurus
+                            </Link>
+                            <Link
+                                href="/program"
+                                className={navLinkClass('/program')}
+                            >
+                                Program
+                            </Link>
+                            <Link
+                                href="/kabar"
+                                className={navLinkClass('/kabar')}
+                            >
+                                Kabar
+                            </Link>
+                        </nav>
 
-                    <div className="hidden items-center gap-4 md:flex">
                         <Link
                             href="/login"
-                            className="flex items-center justify-center rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-px hover:bg-blue-700 hover:shadow-md hover:shadow-blue-200 active:scale-95"
+                            className="flex items-center justify-center rounded-full bg-blue-600 px-6 py-2 text-sm font-bold text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all hover:-translate-y-px hover:bg-blue-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] active:scale-95"
                             title="Login Pengurus"
                         >
                             Login
                         </Link>
                     </div>
+                </header>
                 </div>
-            </header>
+            </div>
 
             {/* Main Content */}
             <main className="flex-1 pb-16 md:pb-0">{children}</main>
@@ -113,64 +118,78 @@ export default function PublicLayout({
                 >
                     {/* Animated Background Icons */}
                     <div
-                        className={`absolute top-4 left-10 -z-10 origin-bottom-right text-yellow-400 transition-all delay-100 duration-1000 ease-out ${isLoaded ? '-translate-x-[20%] translate-y-[20%] scale-100 rotate-[-15deg] opacity-70' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                        className={`absolute top-[5%] left-[5%] -z-10 origin-bottom-right transition-all delay-100 duration-1000 ease-out ${isLoaded ? '-translate-x-[20%] translate-y-[20%] scale-100 rotate-[-15deg] opacity-80' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
                     >
-                        <Sun
-                            weight="duotone"
-                            className="h-28 w-28 cursor-default drop-shadow-sm transition-transform hover:scale-110"
-                        />
+                        <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] bg-yellow-100 shadow-lg shadow-yellow-200/50 sm:h-32 sm:w-32 sm:rounded-[2.5rem]">
+                            <Sun
+                                weight="duotone"
+                                className="h-12 w-12 text-yellow-500 transition-transform hover:scale-110 sm:h-16 sm:w-16"
+                            />
+                        </div>
                     </div>
                     <div
-                        className={`absolute top-10 right-[15%] -z-10 origin-bottom-left text-sky-400 transition-all delay-300 duration-1000 ease-out ${isLoaded ? '-translate-x-[50%] -translate-y-[20%] scale-100 rotate-[10deg] opacity-70' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                        className={`absolute top-[15%] right-[10%] -z-10 origin-bottom-left transition-all delay-300 duration-1000 ease-out ${isLoaded ? '-translate-x-[50%] -translate-y-[20%] scale-100 rotate-[10deg] opacity-80' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
                     >
-                        <PaperPlaneTilt
-                            weight="duotone"
-                            className="h-24 w-24 cursor-default drop-shadow-sm transition-transform hover:scale-110"
-                        />
+                        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-sky-100 shadow-lg shadow-sky-200/50 sm:h-28 sm:w-28">
+                            <PaperPlaneTilt
+                                weight="duotone"
+                                className="h-10 w-10 text-sky-500 transition-transform hover:scale-110 sm:h-14 sm:w-14"
+                            />
+                        </div>
                     </div>
                     <div
-                        className={`absolute bottom-20 left-[20%] -z-10 origin-top-left text-emerald-400 transition-all delay-500 duration-1000 ease-out ${isLoaded ? 'translate-x-[50%] -translate-y-[20%] scale-100 rotate-[25deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                        className={`absolute bottom-[2%] left-[10%] md:bottom-[10%] md:left-[25%] -z-10 origin-top-left transition-all delay-500 duration-1000 ease-out ${isLoaded ? 'translate-x-[50%] -translate-y-[20%] scale-100 rotate-[25deg] opacity-80' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
                     >
-                        <Smiley
-                            weight="duotone"
-                            className="h-32 w-32 cursor-default drop-shadow-sm transition-transform hover:scale-110"
-                        />
+                        <div className="flex h-28 w-28 items-center justify-center rounded-[2.5rem] bg-emerald-100 shadow-lg shadow-emerald-200/50 sm:h-36 sm:w-36 sm:rounded-[3rem]">
+                            <Smiley
+                                weight="duotone"
+                                className="h-14 w-14 text-emerald-500 transition-transform hover:scale-110 sm:h-20 sm:w-20"
+                            />
+                        </div>
                     </div>
                     <div
-                        className={`absolute right-10 bottom-10 -z-10 origin-top-right text-pink-400 transition-all delay-700 duration-1000 ease-out ${isLoaded ? '-translate-x-[30%] -translate-y-[30%] scale-100 rotate-[-20deg] opacity-70' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                        className={`absolute bottom-[8%] right-[10%] md:bottom-[15%] md:right-[5%] -z-10 origin-top-right transition-all delay-700 duration-1000 ease-out ${isLoaded ? '-translate-x-[30%] -translate-y-[30%] scale-100 rotate-[-20deg] opacity-80' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
                     >
-                        <Backpack
-                            weight="duotone"
-                            className="h-28 w-28 cursor-default drop-shadow-sm transition-transform hover:scale-110"
-                        />
+                        <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] bg-pink-100 shadow-lg shadow-pink-200/50 sm:h-32 sm:w-32 sm:rounded-[2.5rem]">
+                            <Backpack
+                                weight="duotone"
+                                className="h-12 w-12 text-pink-500 transition-transform hover:scale-110 sm:h-16 sm:w-16"
+                            />
+                        </div>
                     </div>
                     <div
-                        className={`absolute top-1/2 right-[5%] -z-10 origin-center text-yellow-500 transition-all delay-[900ms] duration-1000 ease-out ${isLoaded ? 'translate-x-[10%] -translate-y-[50%] scale-100 rotate-[45deg] opacity-80' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                        className={`absolute top-[50%] right-[25%] -z-10 origin-center transition-all delay-[900ms] duration-1000 ease-out ${isLoaded ? 'translate-x-[10%] -translate-y-[50%] scale-100 rotate-[45deg] opacity-90' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
                     >
-                        <Star
-                            weight="duotone"
-                            className="h-20 w-20 cursor-default drop-shadow-sm transition-transform hover:scale-110"
-                        />
+                        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-yellow-100 shadow-lg shadow-yellow-200/50 sm:h-24 sm:w-24">
+                            <Star
+                                weight="duotone"
+                                className="h-8 w-8 text-yellow-500 transition-transform hover:scale-110 sm:h-12 sm:w-12"
+                            />
+                        </div>
                     </div>
                     <div
-                        className={`absolute bottom-4 left-4 -z-10 origin-center text-purple-400 transition-all delay-[1100ms] duration-1000 ease-out ${isLoaded ? 'translate-x-[20%] -translate-y-[20%] scale-100 rotate-[-15deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                        className={`absolute bottom-[30%] left-[5%] -z-10 origin-center transition-all delay-[1100ms] duration-1000 ease-out ${isLoaded ? 'translate-x-[20%] -translate-y-[20%] scale-100 rotate-[-15deg] opacity-80' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
                     >
-                        <Pencil
-                            weight="duotone"
-                            className="h-24 w-24 cursor-default drop-shadow-sm transition-transform hover:scale-110"
-                        />
+                        <div className="flex h-20 w-20 items-center justify-center rounded-[1.5rem] bg-purple-100 shadow-lg shadow-purple-200/50 sm:h-28 sm:w-28 sm:rounded-[2rem]">
+                            <Pencil
+                                weight="duotone"
+                                className="h-10 w-10 text-purple-500 transition-transform hover:scale-110 sm:h-14 sm:w-14"
+                            />
+                        </div>
                     </div>
                     <div
-                        className={`absolute top-1/3 left-4 -z-10 origin-center text-blue-400 transition-all delay-[1300ms] duration-1000 ease-out ${isLoaded ? 'translate-x-[30%] translate-y-[10%] scale-100 rotate-[15deg] opacity-60' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                        className={`absolute top-[40%] left-[15%] -z-10 origin-center transition-all delay-[1300ms] duration-1000 ease-out ${isLoaded ? 'translate-x-[30%] translate-y-[10%] scale-100 rotate-[15deg] opacity-80' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
                     >
-                        <Book
-                            weight="duotone"
-                            className="h-20 w-20 cursor-default drop-shadow-sm transition-transform hover:scale-110"
-                        />
+                        <div className="flex h-16 w-16 items-center justify-center rounded-3xl bg-blue-100 shadow-lg shadow-blue-200/50 sm:h-24 sm:w-24">
+                            <Book
+                                weight="duotone"
+                                className="h-8 w-8 text-blue-500 transition-transform hover:scale-110 sm:h-12 sm:w-12"
+                            />
+                        </div>
                     </div>
 
-                    <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                        <div className="mb-12 grid grid-cols-1 gap-8 rounded-[2rem] border border-white bg-white/70 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] backdrop-blur-xl md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+                    <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className="mb-12 grid grid-cols-1 gap-8 rounded-[2.5rem] border border-white/60 bg-white/70 p-8 shadow-xl shadow-sky-900/5 backdrop-blur-xl md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
                             {/* Column 1: Visi Misi */}
                             <div className="space-y-4">
                                 <p className="mt-8 text-justify text-sm leading-relaxed text-slate-600">
@@ -289,13 +308,19 @@ export default function PublicLayout({
                                 &copy; {new Date().getFullYear()} Hak Cipta
                                 Dilindungi.
                             </span>
-                            
+
                             <div className="order-1 flex items-center justify-center gap-4 font-bold sm:order-2 sm:w-1/3">
-                                <Link href="/kebijakan-privasi" className="text-slate-600 hover:text-blue-600 transition-colors">
+                                <Link
+                                    href="/kebijakan-privasi"
+                                    className="text-slate-600 transition-colors hover:text-blue-600"
+                                >
                                     Kebijakan Privasi
                                 </Link>
                                 <span className="text-slate-300">|</span>
-                                <Link href="/syarat-dan-ketentuan" className="text-slate-600 hover:text-blue-600 transition-colors">
+                                <Link
+                                    href="/syarat-dan-ketentuan"
+                                    className="text-slate-600 transition-colors hover:text-blue-600"
+                                >
                                     Syarat &amp; Ketentuan
                                 </Link>
                             </div>
@@ -320,79 +345,82 @@ export default function PublicLayout({
             <div
                 className="pointer-events-none fixed bottom-0 left-0 z-50 w-full px-4 md:hidden"
                 style={{
-                    paddingBottom:
-                        'calc(1.25rem + env(safe-area-inset-bottom))',
+                    paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))',
                 }}
             >
-                <nav className="pointer-events-auto overflow-hidden rounded-[1.25rem] border border-white/60 bg-white/75 shadow-2xl shadow-slate-300/40 backdrop-blur-xl">
-                    <div className="flex h-17 items-center justify-around px-1">
+                <nav className="pointer-events-auto overflow-hidden rounded-[1.75rem] border border-white/80 bg-white/80 p-1.5 shadow-xl shadow-sky-900/15 backdrop-blur-xl">
+                    <div className="flex items-center justify-between px-1">
                         <Link
                             href="/"
-                            className={`flex h-full w-full flex-col items-center justify-center space-y-1 ${url === '/' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+                            className={`flex flex-col items-center justify-center rounded-2xl py-1.5 transition-all duration-300 ${url === '/' ? 'w-16 bg-blue-50 text-blue-600' : 'w-14 text-slate-400 hover:bg-slate-50 hover:text-slate-600'}`}
                         >
                             <House
-                                size={24}
-                                weight={url === '/' ? 'fill' : 'regular'}
+                                size={22}
+                                weight={url === '/' ? 'duotone' : 'regular'}
                             />
-                            <span className="text-[10px] font-medium">
+                            <span className="mt-0.5 text-[9px] font-bold">
                                 Beranda
                             </span>
                         </Link>
                         <Link
                             href="/pengurus"
-                            className={`flex h-full w-full flex-col items-center justify-center space-y-1 ${url === '/pengurus' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+                            className={`flex flex-col items-center justify-center rounded-2xl py-1.5 transition-all duration-300 ${url.startsWith('/pengurus') ? 'w-16 bg-blue-50 text-blue-600' : 'w-14 text-slate-400 hover:bg-slate-50 hover:text-slate-600'}`}
                         >
                             <Users
-                                size={24}
+                                size={22}
                                 weight={
-                                    url === '/pengurus' ? 'fill' : 'regular'
+                                    url.startsWith('/pengurus')
+                                        ? 'duotone'
+                                        : 'regular'
                                 }
                             />
-                            <span className="text-[10px] font-medium">
+                            <span className="mt-0.5 text-[9px] font-bold">
                                 Pengurus
                             </span>
                         </Link>
                         <Link
                             href="/program"
-                            className={`flex h-full w-full flex-col items-center justify-center space-y-1 ${url.startsWith('/program') ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+                            className={`flex flex-col items-center justify-center rounded-2xl py-1.5 transition-all duration-300 ${url.startsWith('/program') ? 'w-16 bg-blue-50 text-blue-600' : 'w-14 text-slate-400 hover:bg-slate-50 hover:text-slate-600'}`}
                         >
                             <Briefcase
-                                size={24}
+                                size={22}
                                 weight={
                                     url.startsWith('/program')
-                                        ? 'fill'
+                                        ? 'duotone'
                                         : 'regular'
                                 }
                             />
-                            <span className="text-[10px] font-medium">
+                            <span className="mt-0.5 text-[9px] font-bold">
                                 Program
                             </span>
                         </Link>
                         <Link
-                            href="/keuangan"
-                            className={`flex h-full w-full flex-col items-center justify-center space-y-1 ${url.startsWith('/keuangan') ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+                            href="/kabar"
+                            className={`flex flex-col items-center justify-center rounded-2xl py-1.5 transition-all duration-300 ${url.startsWith('/kabar') ? 'w-16 bg-blue-50 text-blue-600' : 'w-14 text-slate-400 hover:bg-slate-50 hover:text-slate-600'}`}
                         >
-                            <Wallet
-                                size={24}
+                            <Newspaper
+                                size={22}
                                 weight={
-                                    url.startsWith('/keuangan')
-                                        ? 'fill'
+                                    url.startsWith('/kabar')
+                                        ? 'duotone'
                                         : 'regular'
                                 }
                             />
-                            <span className="text-[10px] font-medium">
-                                Keuangan
+                            <span className="mt-0.5 text-[9px] font-bold">
+                                Kabar
                             </span>
                         </Link>
                         <Link
                             href="/login"
-                            className={`flex h-full w-full flex-col items-center justify-center space-y-1 ${url === '/login' ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+                            className={`flex flex-col items-center justify-center rounded-2xl py-1.5 transition-all duration-300 ${url === '/login' ? 'w-16 bg-blue-50 text-blue-600' : 'w-14 text-slate-400 hover:bg-slate-50 hover:text-slate-600'}`}
                         >
                             <SignIn
-                                size={24}
-                                weight={url === '/login' ? 'fill' : 'regular'}
+                                size={22}
+                                weight={
+                                    url === '/login' ? 'duotone' : 'regular'
+                                }
                             />
-                            <span className="text-[10px] font-medium">
+                            <span className="mt-0.5 text-[9px] font-bold">
                                 Login
                             </span>
                         </Link>
