@@ -72,27 +72,24 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
         <DashboardLayout>
             <Head title="Kelola Kalender Akademik" />
 
-            <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight text-slate-900">
                         Kalender Akademik
                     </h1>
-                    <p className="mt-1 text-slate-500">
+                    <p className="mt-1 text-sm text-slate-500">
                         Kelola tahun ajaran dan bulan untuk kalender pendidikan.
                     </p>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
                 {canManage && (
-                    <div className="lg:col-span-1">
-                        <div className="sticky top-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                            <div className="mb-6 flex items-center justify-between">
-                                <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
-                                    <CalendarBlank
-                                        weight="duotone"
-                                        className="h-5 w-5 text-blue-600"
-                                    />
+                    <div className="lg:col-span-4 xl:col-span-3">
+                        <div className="sticky top-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                            <div className="mb-5 flex items-center justify-between border-b border-slate-100 pb-4">
+                                <h2 className="flex items-center gap-2 text-base font-semibold text-slate-900">
+                                    <CalendarBlank weight="bold" className="h-5 w-5 text-blue-600" />
                                     {isEditing
                                         ? 'Edit Tahun Ajaran'
                                         : 'Tambah Tahun Ajaran'}
@@ -100,16 +97,16 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
                                 {isEditing && (
                                     <button
                                         onClick={openCreate}
-                                        className="text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700"
+                                        className="text-xs font-medium text-blue-600 hover:text-blue-700 hover:underline"
                                     >
                                         Batal
                                     </button>
                                 )}
                             </div>
 
-                            <form onSubmit={submit} className="space-y-5">
+                            <form onSubmit={submit} className="space-y-4">
                                 <div>
-                                    <label className="mb-1.5 block text-sm font-semibold text-slate-700">
+                                    <label className="mb-1.5 block text-xs font-semibold text-slate-700">
                                         Tahun Ajaran (Contoh: 2026/2027)
                                     </label>
                                     <input
@@ -118,17 +115,17 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
                                         onChange={(e) =>
                                             setData('name', e.target.value)
                                         }
-                                        className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 transition-colors hover:bg-white focus:ring-2 focus:ring-blue-500"
+                                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                                         required
                                         placeholder="2026/2027"
                                     />
                                     {errors.name && (
-                                        <div className="mt-1 text-xs text-rose-500">
+                                        <div className="mt-1.5 text-xs font-medium text-rose-500">
                                             {errors.name}
                                         </div>
                                     )}
                                 </div>
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 transition-colors hover:border-slate-300">
                                     <input
                                         type="checkbox"
                                         id="is_active"
@@ -139,17 +136,17 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
                                                 e.target.checked,
                                             )
                                         }
-                                        className="h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                                        className="h-5 w-5 cursor-pointer rounded-md border-slate-300 text-blue-600 transition-colors focus:ring-blue-500"
                                     />
                                     <label
                                         htmlFor="is_active"
-                                        className="text-sm font-semibold text-slate-700"
+                                        className="cursor-pointer text-xs font-semibold text-slate-700 select-none"
                                     >
-                                        Tahun Ajaran Aktif (Ditampilkan Publik)
+                                        Aktifkan untuk Publik
                                     </label>
                                 </div>
                                 {errors.is_active && (
-                                    <div className="mt-1 text-xs text-rose-500">
+                                    <div className="mt-1.5 text-xs font-medium text-rose-500">
                                         {errors.is_active}
                                     </div>
                                 )}
@@ -157,7 +154,7 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="mt-2 w-full rounded-xl bg-slate-900 py-3 font-semibold text-white shadow-sm transition-all hover:bg-slate-800 active:scale-[0.98] disabled:opacity-70"
+                                    className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                 >
                                     {processing ? 'Menyimpan...' : 'Simpan'}
                                 </button>
@@ -166,7 +163,7 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
                     </div>
                 )}
 
-                <div className={canManage ? 'lg:col-span-2' : 'lg:col-span-3'}>
+                <div className={canManage ? 'lg:col-span-8 xl:col-span-9' : 'lg:col-span-12'}>
                     <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y divide-slate-200">
@@ -174,25 +171,25 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
                                     <tr>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 text-left text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-left text-[11px] font-bold tracking-wider text-slate-500 uppercase"
                                         >
                                             Tahun Ajaran
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 text-center text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-center text-[11px] font-bold tracking-wider text-slate-500 uppercase"
                                         >
                                             Status
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 text-center text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-center text-[11px] font-bold tracking-wider text-slate-500 uppercase"
                                         >
-                                            Jumlah Bulan
+                                            Bulan
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 text-right text-xs font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-right text-[11px] font-bold tracking-wider text-slate-500 uppercase"
                                         >
                                             Aksi
                                         </th>
@@ -203,87 +200,66 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
                                         <tr>
                                             <td
                                                 colSpan={4}
-                                                className="px-6 py-12 text-center text-slate-500"
+                                                className="px-4 py-8 text-center text-sm text-slate-500"
                                             >
-                                                <div className="flex flex-col items-center justify-center">
-                                                    <CalendarBlank
-                                                        weight="duotone"
-                                                        className="mb-3 h-12 w-12 text-slate-300"
-                                                    />
-                                                    <p>
-                                                        Belum ada data tahun
-                                                        ajaran.
-                                                    </p>
-                                                </div>
+                                                Belum ada data tahun ajaran.
                                             </td>
                                         </tr>
                                     )}
                                     {years.map((year: any) => (
                                         <tr
                                             key={year.id}
-                                            className="transition-colors hover:bg-slate-50/80"
+                                            className="transition-colors hover:bg-slate-50/50"
                                         >
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-4 py-3 whitespace-nowrap">
                                                 <Link
                                                     href={`/academic-calendar/${year.id}`}
-                                                    className="font-bold text-slate-900 transition-colors hover:text-blue-600"
+                                                    className="text-sm font-semibold text-slate-900 transition-colors hover:text-blue-600 hover:underline"
                                                 >
                                                     {year.name}
                                                 </Link>
                                             </td>
-                                            <td className="px-6 py-4 text-center whitespace-nowrap">
+                                            <td className="px-4 py-3 text-center whitespace-nowrap">
                                                 {year.is_active ? (
-                                                    <span className="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-800">
+                                                    <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-600/20 ring-inset">
                                                         Aktif
                                                     </span>
                                                 ) : (
-                                                    <span className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-800">
+                                                    <span className="inline-flex items-center rounded-md bg-slate-50 px-2 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-500/20 ring-inset">
                                                         Tidak Aktif
                                                     </span>
                                                 )}
                                             </td>
-                                            <td className="px-6 py-4 text-center text-sm whitespace-nowrap text-slate-600">
+                                            <td className="px-4 py-3 text-center text-sm text-slate-600 whitespace-nowrap">
                                                 {year.months_count} Bulan
                                             </td>
-                                            <td className="px-6 py-4 text-right whitespace-nowrap">
-                                                <div className="flex justify-end gap-2">
+                                            <td className="px-4 py-3 text-right whitespace-nowrap">
+                                                <div className="flex justify-end gap-1.5">
                                                     <Link
                                                         href={`/academic-calendar/${year.id}`}
-                                                        className="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 px-3 py-2 text-xs font-bold text-blue-600 transition-all hover:bg-blue-100"
+                                                        className="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-2.5 py-1.5 text-xs font-semibold text-blue-700 transition-colors hover:bg-blue-100"
                                                     >
-                                                        Kelola{' '}
-                                                        <CaretRight weight="bold" />
+                                                        Kelola
                                                     </Link>
                                                     {canManage && (
                                                         <>
                                                             <button
                                                                 onClick={() =>
-                                                                    openEdit(
-                                                                        year,
-                                                                    )
+                                                                    openEdit(year)
                                                                 }
-                                                                className="rounded-xl p-2 text-slate-400 transition-all hover:bg-blue-50 hover:text-blue-600"
+                                                                className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-blue-600"
                                                                 title="Edit Tahun Ajaran"
                                                             >
-                                                                <PencilSimple
-                                                                    weight="bold"
-                                                                    className="h-4 w-4"
-                                                                />
+                                                                <PencilSimple weight="bold" className="h-4 w-4" />
                                                             </button>
                                                             <button
                                                                 onClick={() =>
-                                                                    deleteYear(
-                                                                        year.id,
-                                                                        year.name,
-                                                                    )
+                                                                    deleteYear(year.id, year.name)
                                                                 }
-                                                                className="rounded-xl p-2 text-slate-400 transition-all hover:bg-rose-50 hover:text-rose-600"
+                                                                className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-rose-600"
                                                                 title="Hapus Tahun Ajaran"
                                                             >
-                                                                <Trash
-                                                                    weight="bold"
-                                                                    className="h-4 w-4"
-                                                                />
+                                                                <Trash weight="bold" className="h-4 w-4" />
                                                             </button>
                                                         </>
                                                     )}

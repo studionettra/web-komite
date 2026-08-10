@@ -12,6 +12,7 @@ class AcademicLearningProgram extends Model
         'week_string',
         'topic',
         'date_string',
+        'start_day',
         'sub_topic',
         'description',
     ];

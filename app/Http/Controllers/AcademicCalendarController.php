@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Alert;
 use App\Models\AcademicYear;
+use App\Models\Classroom;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -11,14 +14,21 @@ class AcademicCalendarController extends Controller
     public function index(Request $request)
     {
         if (! $request->session()->get('verified_parent')) {
-            $classrooms = \App\Models\Classroom::orderBy('name', 'asc')->get();
+            $classrooms = Classroom::orderBy('name', 'asc')->get();
 
             return Inertia::render('public/AcademicCalendarGate', [
                 'classrooms' => $classrooms,
             ]);
         }
 
-        $query = AcademicYear::with(['months.activities', 'months.learningPrograms']);
+        $query = AcademicYear::with([
+            'months.activities' => function ($query) {
+                $query->orderBy('start_day', 'asc');
+            },
+            'months.learningPrograms' => function ($query) {
+                $query->orderBy('start_day', 'asc');
+            },
+        ]);
 
         if ($request->has('year_id')) {
             $year = $query->findOrFail($request->year_id);
@@ -50,7 +60,7 @@ class AcademicCalendarController extends Controller
             'agreed.accepted' => 'Anda harus mencentang persetujuan syarat dan ketentuan terlebih dahulu.',
         ]);
 
-        $classroomName = \App\Models\Classroom::where('id', $request->classroom_id)->value('name') ?? 'Unknown';
+        $classroomName = Classroom::where('id', $request->classroom_id)->value('name') ?? 'Unknown';
 
         $inputName = strtolower(trim($request->student_name));
         $inputName = preg_replace('/\s+/', ' ', $inputName);
@@ -59,7 +69,7 @@ class AcademicCalendarController extends Controller
         $firstWord = explode(' ', $inputName)[0];
 
         // Lakukan pre-filter di level database (MySQL) agar memori tidak penuh
-        $potentialStudents = \App\Models\Student::where('is_active', true)
+        $potentialStudents = Student::where('is_active', true)
             ->where('classroom_id', $request->classroom_id)
             ->where('name', 'LIKE', "%{$firstWord}%")
             ->get();
@@ -74,7 +84,7 @@ class AcademicCalendarController extends Controller
         if ($matchedStudent) {
             $request->session()->put('verified_parent', true);
             $request->session()->put('verified_parent_classroom_id', $matchedStudent->classroom_id);
-            \App\Helpers\Alert::success('Akses Diberikan', 'Selamat datang, Wali dari '.$matchedStudent->name);
+            Alert::success('Akses Diberikan', 'Selamat datang, Wali dari '.$matchedStudent->name);
 
             activity('academic_access')
                 ->withProperties([
@@ -91,7 +101,7 @@ class AcademicCalendarController extends Controller
             return redirect()->route('public.academic-calendar');
         }
 
-        \App\Helpers\Alert::error('Akses Ditolak', 'Nama siswa tidak ditemukan. Pastikan ejaan sesuai dengan data sekolah.');
+        Alert::error('Akses Ditolak', 'Nama siswa tidak ditemukan. Pastikan ejaan sesuai dengan data sekolah.');
 
         activity('academic_access')
             ->withProperties([

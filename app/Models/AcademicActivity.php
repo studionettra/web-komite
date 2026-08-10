@@ -10,6 +10,7 @@ class AcademicActivity extends Model
     protected $fillable = [
         'academic_month_id',
         'date_string',
+        'start_day',
         'name',
         'description',
         'is_committee_program',

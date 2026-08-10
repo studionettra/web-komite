@@ -68,9 +68,15 @@ class AcademicCalendarSeeder extends Seeder
                     $kegiatan = trim($cols[2]);
                     $keterangan = trim($cols[3]);
 
+                    $startDay = null;
+                    if (preg_match('/\d+/', $tanggal, $matches)) {
+                        $startDay = intval($matches[0]);
+                    }
+
                     AcademicActivity::create([
                         'academic_month_id' => $month->id,
                         'date_string' => $tanggal,
+                        'start_day' => $startDay,
                         'name' => $kegiatan,
                         'description' => $keterangan,
                         'is_committee_program' => false,
@@ -94,11 +100,17 @@ class AcademicCalendarSeeder extends Seeder
                         $subTopik = trim($cols[4]);
                         $keterangan = trim($cols[5]);
 
+                        $startDay = null;
+                        if (preg_match('/\d+/', $tanggal, $matches)) {
+                            $startDay = intval($matches[0]);
+                        }
+
                         AcademicLearningProgram::create([
                             'academic_month_id' => $month->id,
                             'week_string' => $minggu,
                             'topic' => $topik,
                             'date_string' => $tanggal,
+                            'start_day' => $startDay,
                             'sub_topic' => $subTopik,
                             'description' => $keterangan,
                         ]);

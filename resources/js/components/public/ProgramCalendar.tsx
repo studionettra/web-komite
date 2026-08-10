@@ -143,7 +143,7 @@ export default function ProgramCalendar({
                 <button
                     key={`day-${i}`}
                     onClick={() => setSelectedDate(dateObj)}
-                    className={`relative flex aspect-square w-full flex-col items-center justify-center rounded-xl text-sm font-medium transition-all duration-200 ${isSelected ? 'bg-blue-600 text-white shadow-md shadow-blue-200' : 'text-slate-700 hover:bg-slate-100'} ${isToday && !isSelected ? 'bg-blue-50/50 font-bold text-blue-600' : ''} `}
+                    className={`relative flex aspect-square w-full flex-col items-center justify-center rounded-full text-sm font-medium transition-all duration-200 ${isSelected ? 'scale-105 bg-blue-500 text-white shadow-lg shadow-blue-500/30' : 'text-slate-700 hover:bg-slate-100'} ${isToday && !isSelected ? 'bg-blue-50 font-bold text-blue-600' : ''} `}
                 >
                     <span>{i}</span>
                     {hasEvent && (
@@ -151,7 +151,7 @@ export default function ProgramCalendar({
                             {dayEvents.slice(0, 3).map((_, idx) => (
                                 <div
                                     key={idx}
-                                    className={`h-1.5 w-1.5 rounded-full ${isSelected ? 'bg-white' : 'bg-emerald-500'}`}
+                                    className={`h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5 ${isSelected ? 'bg-white' : 'bg-emerald-400'}`}
                                 ></div>
                             ))}
                         </div>
@@ -160,7 +160,7 @@ export default function ProgramCalendar({
             );
         }
 
-        return <div className="grid grid-cols-7 gap-1">{days}</div>;
+        return <div className="grid grid-cols-7 gap-2">{days}</div>;
     };
 
     const selectedEvents = selectedDate
@@ -187,21 +187,25 @@ export default function ProgramCalendar({
     ];
 
     return (
-        <section className="relative border-t border-slate-100 bg-white py-24">
-            <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <section className="relative overflow-hidden border-t-[6px] border-dashed border-sky-100 bg-sky-50/40 py-20 sm:py-28">
+            {/* Playful Background Blobs */}
+            <div className="absolute top-0 right-0 -z-10 h-[50vh] w-[50vh] translate-x-1/4 -translate-y-1/4 rounded-full bg-emerald-300/10 mix-blend-multiply blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 -z-10 h-[60vh] w-[60vh] -translate-x-1/4 translate-y-1/4 rounded-full bg-blue-300/10 mix-blend-multiply blur-3xl"></div>
+
+            <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="mb-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
                     <div className="max-w-2xl">
-                        <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+                        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl">
                             Jadwal Terdekat
                         </h2>
-                        <p className="mt-3 text-lg leading-relaxed text-slate-600">
+                        <p className="mt-3 text-lg leading-relaxed font-medium text-slate-600">
                             Pantau agenda dan sesi kegiatan komite secara
                             interaktif melalui kalender program kami.
                         </p>
                     </div>
                     <Link
                         href="/program"
-                        className="inline-flex rounded-xl border border-slate-200 bg-white px-6 py-3.5 font-semibold whitespace-nowrap text-slate-700 shadow-sm transition-all hover:-translate-y-px hover:border-slate-300 hover:bg-slate-50"
+                        className="inline-flex rounded-full border border-slate-200/60 bg-white/80 px-6 py-3.5 font-bold whitespace-nowrap text-slate-700 shadow-sm backdrop-blur-md transition-all hover:-translate-y-1 hover:bg-white hover:shadow-md hover:shadow-slate-200/50"
                     >
                         Lihat Semua Program
                     </Link>
@@ -209,24 +213,24 @@ export default function ProgramCalendar({
 
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
                     {/* Left Col: Calendar */}
-                    <div className="h-fit rounded-4xl border border-slate-200 bg-slate-50 p-6 shadow-sm sm:p-8 lg:col-span-5">
+                    <div className="h-fit rounded-[2.5rem] border border-white/60 bg-white/80 p-6 shadow-[0_12px_40px_rgba(0,0,0,0.06)] backdrop-blur-xl sm:p-8 lg:col-span-5">
                         <div className="mb-8 flex items-center justify-between px-2">
-                            <h3 className="text-xl font-bold tracking-tight text-slate-900">
+                            <h3 className="text-xl font-extrabold tracking-tight text-slate-900">
                                 {monthNames[currentDate.getMonth()]}{' '}
                                 {currentDate.getFullYear()}
                             </h3>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-3">
                                 <button
                                     onClick={prevMonth}
-                                    className="rounded-xl border border-slate-200 bg-white p-2 text-slate-700 shadow-sm transition-colors hover:bg-slate-100"
+                                    className="rounded-2xl border border-slate-100 bg-white p-3 text-slate-700 shadow-[0_4px_15px_rgba(0,0,0,0.03)] transition-all hover:-translate-y-1 hover:bg-slate-50 hover:shadow-md"
                                 >
-                                    <CaretLeft weight="bold" />
+                                    <CaretLeft weight="fill" />
                                 </button>
                                 <button
                                     onClick={nextMonth}
-                                    className="rounded-xl border border-slate-200 bg-white p-2 text-slate-700 shadow-sm transition-colors hover:bg-slate-100"
+                                    className="rounded-2xl border border-slate-100 bg-white p-3 text-slate-700 shadow-[0_4px_15px_rgba(0,0,0,0.03)] transition-all hover:-translate-y-1 hover:bg-slate-50 hover:shadow-md"
                                 >
-                                    <CaretRight weight="bold" />
+                                    <CaretRight weight="fill" />
                                 </button>
                             </div>
                         </div>
@@ -235,15 +239,15 @@ export default function ProgramCalendar({
 
                     {/* Right Col: Event Details */}
                     <div className="flex h-full flex-col lg:col-span-7">
-                        <div className="mb-8 flex items-center gap-4 border-b border-slate-200 pb-5">
-                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
+                        <div className="mb-8 flex items-center gap-4 border-b border-slate-200/50 pb-5">
+                            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.5rem] bg-blue-100 text-blue-500 shadow-inner">
                                 <CalendarBlank
-                                    weight="duotone"
-                                    className="h-6 w-6"
+                                    weight="fill"
+                                    className="h-8 w-8"
                                 />
                             </div>
                             <div>
-                                <h4 className="text-xl font-bold tracking-tight text-slate-900">
+                                <h4 className="text-2xl font-extrabold tracking-tight text-slate-900">
                                     {selectedDate
                                         ? selectedDate.toLocaleDateString(
                                               'id-ID',
@@ -256,41 +260,45 @@ export default function ProgramCalendar({
                                           )
                                         : 'Pilih Tanggal'}
                                 </h4>
-                                <p className="mt-1 text-sm font-medium text-slate-500">
+                                <p className="mt-1 text-sm font-semibold text-slate-500">
                                     {selectedEvents.length} kegiatan dijadwalkan
                                 </p>
                             </div>
                         </div>
 
-                        <div className="flex-1 space-y-4">
+                        <div className="flex-1 space-y-6 rounded-[2.5rem] bg-white/40 p-3 backdrop-blur-sm sm:p-5">
                             {selectedEvents.length === 0 ? (
-                                <div className="flex h-full min-h-75 flex-col items-center justify-center rounded-4xl border border-dashed border-slate-200 bg-slate-50 p-8 text-center">
-                                    <CalendarBlank
-                                        weight="duotone"
-                                        className="mb-4 h-12 w-12 text-slate-300"
-                                    />
-                                    <p className="text-lg font-medium text-slate-500">
-                                        Tidak ada kegiatan di tanggal ini.
+                                <div className="flex h-full min-h-[300px] flex-col items-center justify-center rounded-[2.5rem] border-2 border-dashed border-slate-200 bg-white p-8 text-center shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+                                    <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-[2rem] bg-slate-50 text-slate-300">
+                                        <CalendarBlank
+                                            weight="fill"
+                                            className="h-10 w-10"
+                                        />
+                                    </div>
+                                    <p className="text-xl font-extrabold text-slate-600">
+                                        Kosong Melompong!
                                     </p>
-                                    <p className="mt-2 text-sm text-slate-400">
-                                        Pilih tanggal dengan indikator titik
-                                        untuk melihat jadwal.
+                                    <p className="mt-2 text-base font-medium text-slate-400">
+                                        Belum ada jadwal kegiatan pada hari ini.
                                     </p>
                                 </div>
                             ) : (
                                 selectedEvents.map((evt, idx) => (
                                     <div
                                         key={idx}
-                                        className="group flex flex-col gap-6 rounded-4xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:border-blue-200 hover:shadow-lg sm:flex-row sm:p-8"
+                                        className="group flex flex-col gap-6 rounded-[2.5rem] border border-white bg-white/80 p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] sm:flex-row sm:p-8"
                                     >
                                         <div className="flex-1">
-                                            <div className="mb-4 flex items-center gap-3">
-                                                <span className="rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-bold tracking-wider text-slate-700 uppercase">
+                                            <div className="mb-4 flex flex-wrap items-center gap-3">
+                                                <span className="rounded-full bg-indigo-50 px-3.5 py-1.5 text-xs font-bold tracking-wide text-indigo-600 uppercase">
                                                     {evt.type}
                                                 </span>
                                                 {evt.startTime && (
-                                                    <span className="flex items-center gap-1.5 text-sm font-bold text-emerald-600">
-                                                        <Clock weight="fill" />
+                                                    <span className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-600">
+                                                        <Clock
+                                                            weight="fill"
+                                                            className="h-3.5 w-3.5"
+                                                        />
                                                         {evt.startTime.substring(
                                                             0,
                                                             5,
@@ -302,10 +310,10 @@ export default function ProgramCalendar({
                                                     </span>
                                                 )}
                                             </div>
-                                            <h3 className="mb-3 text-2xl leading-snug font-bold text-slate-900 transition-colors group-hover:text-blue-600">
+                                            <h3 className="mb-3 text-2xl leading-snug font-extrabold text-slate-800 transition-colors group-hover:text-blue-600">
                                                 {evt.title}
                                             </h3>
-                                            <p className="mb-6 line-clamp-2 text-base leading-relaxed text-slate-600">
+                                            <p className="mb-6 line-clamp-2 text-base leading-relaxed text-slate-500">
                                                 {evt.description ||
                                                     'Tidak ada deskripsi rinci untuk kegiatan ini.'}
                                             </p>
@@ -313,9 +321,9 @@ export default function ProgramCalendar({
                                         <div className="flex items-center justify-start border-t border-slate-100 pt-6 sm:w-auto sm:justify-end sm:border-t-0 sm:border-l sm:pt-0 sm:pl-8">
                                             <Link
                                                 href={`/program?id=${evt.programId}`}
-                                                className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-6 py-3.5 font-semibold whitespace-nowrap text-white shadow-sm transition-all hover:-translate-y-px hover:bg-slate-800"
+                                                className="inline-flex w-full items-center justify-center rounded-[1.5rem] bg-blue-600 px-8 py-4 font-extrabold whitespace-nowrap text-white shadow-[0_6px_15px_rgba(37,99,235,0.25)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-blue-700 hover:shadow-[0_10px_25px_rgba(37,99,235,0.35)] active:scale-95 sm:w-auto"
                                             >
-                                                Lihat Program
+                                                Lihat Detail
                                             </Link>
                                         </div>
                                     </div>
@@ -328,10 +336,15 @@ export default function ProgramCalendar({
                 <div className="mx-auto mt-12 flex justify-center border-t border-slate-100 pt-8">
                     <Link
                         href="/kalender-akademik"
-                        className="inline-flex items-center gap-2 rounded-xl bg-blue-50 px-6 py-3.5 font-semibold text-blue-700 transition-all hover:bg-blue-100"
+                        className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-blue-200 bg-white px-5 py-4 text-xs font-extrabold tracking-wide text-blue-600 shadow-[0_8px_25px_rgba(59,130,246,0.15)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-blue-400 hover:bg-blue-50 hover:shadow-[0_12px_30px_rgba(59,130,246,0.25)] active:scale-95 sm:gap-3 sm:px-8 sm:py-4 sm:text-base"
                     >
-                        <CalendarBlank weight="bold" className="h-5 w-5" />
-                        Lihat Seluruh Kalender Akademik
+                        <CalendarBlank
+                            weight="bold"
+                            className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-12 sm:h-6 sm:w-6"
+                        />
+                        <span className="text-center whitespace-nowrap">
+                            Lihat Seluruh Kalender Akademik
+                        </span>
                     </Link>
                 </div>
             </div>
