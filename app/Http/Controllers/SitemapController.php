@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Response;
 
 class SitemapController extends Controller
 {
-    public function index()
+    public function index(): \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
     {
         $baseUrl = config('app.url');
 
@@ -18,7 +17,7 @@ class SitemapController extends Controller
             '/program',
             '/kabar',
             '/kebijakan-privasi',
-            '/syarat-dan-ketentuan'
+            '/syarat-dan-ketentuan',
         ];
 
         // Dynamic posts routes
@@ -29,7 +28,7 @@ class SitemapController extends Controller
 
         foreach ($urls as $url) {
             $xml .= '<url>';
-            $xml .= '<loc>' . $baseUrl . $url . '</loc>';
+            $xml .= '<loc>'.$baseUrl.$url.'</loc>';
             $xml .= '<changefreq>weekly</changefreq>';
             $xml .= '<priority>0.8</priority>';
             $xml .= '</url>';
@@ -37,8 +36,8 @@ class SitemapController extends Controller
 
         foreach ($posts as $post) {
             $xml .= '<url>';
-            $xml .= '<loc>' . $baseUrl . '/kabar/' . $post->slug . '</loc>';
-            $xml .= '<lastmod>' . $post->updated_at->toAtomString() . '</lastmod>';
+            $xml .= '<loc>'.$baseUrl.'/kabar/'.$post->slug.'</loc>';
+            $xml .= '<lastmod>'.$post->updated_at->toAtomString().'</lastmod>';
             $xml .= '<changefreq>monthly</changefreq>';
             $xml .= '<priority>0.9</priority>';
             $xml .= '</url>';
@@ -47,7 +46,7 @@ class SitemapController extends Controller
         $xml .= '</urlset>';
 
         return response($xml, 200, [
-            'Content-Type' => 'application/xml'
+            'Content-Type' => 'application/xml',
         ]);
     }
 }

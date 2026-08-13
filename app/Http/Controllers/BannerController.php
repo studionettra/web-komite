@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Alert;
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -43,6 +44,8 @@ class BannerController extends Controller
 
         Banner::create($data);
 
+        Cache::forget('home.banners');
+
         Alert::success('Berhasil', 'Banner berhasil ditambahkan');
 
         return redirect()->route('banners.index');
@@ -77,6 +80,8 @@ class BannerController extends Controller
 
         $banner->update($data);
 
+        Cache::forget('home.banners');
+
         Alert::success('Berhasil', 'Banner berhasil diperbarui');
 
         return redirect()->route('banners.index');
@@ -89,6 +94,8 @@ class BannerController extends Controller
         }
 
         $banner->delete();
+
+        Cache::forget('home.banners');
 
         Alert::success('Berhasil', 'Banner berhasil dihapus');
 

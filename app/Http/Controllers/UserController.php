@@ -24,7 +24,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -52,7 +52,7 @@ class UserController extends Controller
         return back();
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -82,7 +82,7 @@ class UserController extends Controller
         return back();
     }
 
-    public function destroy(User $user)
+    public function destroy(User $user): \Illuminate\Http\RedirectResponse
     {
         if ($user->hasRole('Superadmin') && User::role('Superadmin')->count() === 1) {
             Alert::error('Gagal', 'Tidak dapat menghapus satu-satunya Superadmin.');

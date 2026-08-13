@@ -80,7 +80,7 @@ class SettingController extends Controller
     /**
      * Ekstrak ID dari URL Google Spreadsheet
      */
-    private function extractSpreadsheetId($url)
+    private function extractSpreadsheetId($url): ?string
     {
         // Contoh URL: https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
         $pattern = '/\/d\/([a-zA-Z0-9-_]+)/';

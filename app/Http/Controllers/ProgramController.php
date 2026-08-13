@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Alert;
 use App\Models\Program;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -15,32 +13,16 @@ class ProgramController extends Controller
 {
     public function index()
     {
-        $allPrograms = Program::with(['users', 'activities'])->get()->sortBy(function ($program) {
-            $now = now()->startOfDay();
-
-            $startDiff = $program->start_date
-                ? abs(now()->diffInDays(Carbon::parse($program->start_date)->startOfDay()))
-                : 999999;
-
-            $activityDiff = 999999;
-            if ($program->activities->isNotEmpty()) {
-                $activityDiff = $program->activities->min(function ($activity) use ($now) {
-                    return abs($now->diffInDays(Carbon::parse($activity->activity_date)->startOfDay()));
-                });
-            }
-
-            return min($startDiff, $activityDiff);
-        })->values();
-
-        $page = request()->get('page', 1);
-        $perPage = 10;
-        $programs = new LengthAwarePaginator(
-            $allPrograms->forPage($page, $perPage)->values(),
-            $allPrograms->count(),
-            $perPage,
-            $page,
-            ['path' => request()->url(), 'query' => request()->query()]
-        );
+        $programs = Program::with(['users', 'activities'])
+            ->selectRaw('programs.*, LEAST(
+                COALESCE(ABS(DATEDIFF(programs.start_date, CURDATE())), 999999),
+                COALESCE((SELECT MIN(ABS(DATEDIFF(activity_date, CURDATE()))) 
+                          FROM program_activities 
+                          WHERE program_activities.program_id = programs.id), 999999)
+            ) as days_diff')
+            ->orderBy('days_diff', 'asc')
+            ->paginate(10)
+            ->withQueryString();
 
         $members = User::select('id', 'name')->get();
 
@@ -64,7 +46,7 @@ class ProgramController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -97,7 +79,7 @@ class ProgramController extends Controller
         return back();
     }
 
-    public function update(Request $request, Program $program)
+    public function update(Request $request, Program $program): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -144,7 +126,7 @@ class ProgramController extends Controller
         return back();
     }
 
-    public function destroy(Program $program)
+    public function destroy(Program $program): \Illuminate\Http\RedirectResponse
     {
 
         if ($program->documents()->exists()) {

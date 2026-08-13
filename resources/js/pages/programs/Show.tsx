@@ -110,7 +110,7 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
     const isPlanned = activity.status === 'planned';
 
     return (
-        <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="flex flex-col items-start justify-between gap-4 border-b border-slate-100 bg-slate-50/50 p-6 sm:flex-row sm:p-5">
                 <div>
                     <h4 className="text-xl font-semibold text-slate-800">
@@ -161,14 +161,14 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                                 }`}
                                 title={isPlanned ? "Edit Sesi" : "Sesi tidak dapat diedit karena sedang/telah berlangsung"}
                             >
-                                <PencilSimple weight="fill" className="h-5 w-5" />
+                                <PencilSimple weight="fill" className="h-4 w-4" />
                             </button>
                             <button
                                 onClick={() => deleteActivity(activity.id)}
-                                className="flex items-center justify-center rounded-2xl bg-rose-50 p-2.5 text-rose-600 transition-all hover:-translate-y-0.5 hover:bg-rose-100 hover:shadow-sm"
+                                className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-rose-600"
                                 title="Hapus Sesi"
                             >
-                                <Trash weight="fill" className="h-5 w-5" />
+                                <Trash weight="fill" className="h-4 w-4" />
                             </button>
                         </div>
                     )}
@@ -238,6 +238,8 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                                         <img
                                             src={`/storage/${doc.file_path}`}
                                             alt="Dokumentasi"
+                                            loading="lazy"
+                                            decoding="async"
                                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                                         />
                                     ) : (
@@ -268,10 +270,7 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                                                 className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-500 text-white transition-all hover:scale-105 hover:bg-rose-600"
                                                 title="Hapus"
                                             >
-                                                <Trash
-                                                    weight="fill"
-                                                    className="h-5 w-5"
-                                                />
+                                                <Trash weight="fill" className="h-4 w-4" />
                                             </button>
                                         )}
                                     </div>
@@ -445,7 +444,7 @@ export default function Show({ program }: any) {
                             className="space-y-6 p-5"
                         >
                             <div>
-                                <label className="mb-2 block text-sm font-bold text-slate-700">
+                                <label className="mb-2 block text-sm font-medium text-slate-700">
                                     Judul Sesi
                                 </label>
                                 <input
@@ -465,7 +464,7 @@ export default function Show({ program }: any) {
                                 )}
                             </div>
                             <div>
-                                <label className="mb-2 block text-sm font-bold text-slate-700">
+                                <label className="mb-2 block text-sm font-medium text-slate-700">
                                     Tanggal Pelaksanaan
                                 </label>
                                 <input
@@ -488,7 +487,7 @@ export default function Show({ program }: any) {
                             </div>
                             <div className="grid grid-cols-2 gap-6">
                                 <div>
-                                    <label className="mb-2 block text-sm font-bold text-slate-700">
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
                                         Jam Mulai (WIB)
                                     </label>
                                     <TimeInput24
@@ -505,7 +504,7 @@ export default function Show({ program }: any) {
                                     )}
                                 </div>
                                 <div>
-                                    <label className="mb-2 block text-sm font-bold text-slate-700">
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
                                         Jam Selesai (WIB)
                                     </label>
                                     <TimeInput24
@@ -523,7 +522,7 @@ export default function Show({ program }: any) {
                                 </div>
                             </div>
                             <div>
-                                <label className="mb-2 block text-sm font-bold text-slate-700">
+                                <label className="mb-2 block text-sm font-medium text-slate-700">
                                     Keterangan (Opsional)
                                 </label>
                                 <textarea
@@ -542,7 +541,7 @@ export default function Show({ program }: any) {
                                 <button
                                     type="submit"
                                     disabled={processingActivity}
-                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                 >
                                     {processingActivity
                                         ? 'Menyimpan...'
@@ -574,7 +573,7 @@ export default function Show({ program }: any) {
                             className="space-y-6 p-5"
                         >
                             <div>
-                                <label className="mb-2 block text-sm font-bold text-slate-700">
+                                <label className="mb-2 block text-sm font-medium text-slate-700">
                                     Judul Sesi
                                 </label>
                                 <input
@@ -594,7 +593,7 @@ export default function Show({ program }: any) {
                                 )}
                             </div>
                             <div>
-                                <label className="mb-2 block text-sm font-bold text-slate-700">
+                                <label className="mb-2 block text-sm font-medium text-slate-700">
                                     Tanggal Pelaksanaan
                                 </label>
                                 <input
@@ -614,7 +613,7 @@ export default function Show({ program }: any) {
                             </div>
                             <div className="grid grid-cols-2 gap-6">
                                 <div>
-                                    <label className="mb-2 block text-sm font-bold text-slate-700">
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
                                         Jam Mulai (WIB)
                                     </label>
                                     <TimeInput24
@@ -631,7 +630,7 @@ export default function Show({ program }: any) {
                                     )}
                                 </div>
                                 <div>
-                                    <label className="mb-2 block text-sm font-bold text-slate-700">
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
                                         Jam Selesai (WIB)
                                     </label>
                                     <TimeInput24
@@ -649,7 +648,7 @@ export default function Show({ program }: any) {
                                 </div>
                             </div>
                             <div>
-                                <label className="mb-2 block text-sm font-bold text-slate-700">
+                                <label className="mb-2 block text-sm font-medium text-slate-700">
                                     Keterangan (Opsional)
                                 </label>
                                 <textarea
@@ -665,7 +664,7 @@ export default function Show({ program }: any) {
                                 <button
                                     type="submit"
                                     disabled={processingEdit}
-                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                 >
                                     {processingEdit
                                         ? 'Menyimpan...'
@@ -700,7 +699,7 @@ export default function Show({ program }: any) {
                                 {getFrequencyText(program.frequency)}
                             </span>
                         </div>
-                        <h1 className="text-2xl font-bold text-slate-800 sm:text-5xl">
+                        <h1 className="text-xl font-semibold text-slate-800 sm:text-5xl">
                             {program.title}
                         </h1>
                         <p className="text-lg leading-relaxed text-slate-600">

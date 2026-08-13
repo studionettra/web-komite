@@ -41,12 +41,12 @@ export default function Edit({
 
     const submitProfile: FormEventHandler = (e) => {
         e.preventDefault();
-        patchProfile(route('profile.update'));
+        patchProfile('/profile');
     };
 
     const submitPassword: FormEventHandler = (e) => {
         e.preventDefault();
-        patchPassword(route('profile.update'), {
+        patchPassword('/profile', {
             preserveScroll: true,
             onSuccess: () => resetPassword(),
         });
@@ -57,10 +57,10 @@ export default function Edit({
             <Head title="Profil Saya" />
 
             <div className="mb-8">
-                <h1 className="text-2xl font-semibold text-slate-800 sm:text-3xl">
+                <h1 className="text-xl font-semibold tracking-tight text-slate-800">
                     Profil Saya
                 </h1>
-                <p className="mt-2 text-base text-slate-500">
+                <p className="mt-1 text-sm text-slate-500">
                     Kelola informasi profil dan keamanan akun Anda.
                 </p>
             </div>
@@ -84,7 +84,7 @@ export default function Edit({
 
                     <form onSubmit={submitProfile} className="space-y-6">
                         <div>
-                            <label className="mb-2 block text-sm font-bold text-slate-700">
+                            <label className="mb-2 block text-sm font-medium text-slate-700">
                                 Nama Lengkap
                             </label>
                             <input
@@ -104,7 +104,7 @@ export default function Edit({
                         </div>
 
                         <div>
-                            <label className="mb-2 block text-sm font-bold text-slate-700">
+                            <label className="mb-2 block text-sm font-medium text-slate-700">
                                 Alamat Email
                             </label>
                             <input
@@ -170,7 +170,7 @@ export default function Edit({
 
                     <form onSubmit={submitPassword} className="space-y-6">
                         <div>
-                            <label className="mb-2 block text-sm font-bold text-slate-700">
+                            <label className="mb-2 block text-sm font-medium text-slate-700">
                                 Password Saat Ini
                             </label>
                             <input
@@ -193,7 +193,7 @@ export default function Edit({
                         </div>
 
                         <div>
-                            <label className="mb-2 block text-sm font-bold text-slate-700">
+                            <label className="mb-2 block text-sm font-medium text-slate-700">
                                 Password Baru
                             </label>
                             <input
@@ -213,7 +213,7 @@ export default function Edit({
                         </div>
 
                         <div>
-                            <label className="mb-2 block text-sm font-bold text-slate-700">
+                            <label className="mb-2 block text-sm font-medium text-slate-700">
                                 Konfirmasi Password Baru
                             </label>
                             <input

@@ -16,11 +16,12 @@ import {
     Tag,
 } from '@phosphor-icons/react';
 import type { ReactNode } from 'react';
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { Toaster } from 'react-hot-toast';
 import appLogo from '../../images/logo/logo-komite-alikhlash-jatipadang.png';
 import FlashMessage from '../components/FlashMessage';
-import GlobalAlertModal from '../components/GlobalAlertModal';
+
+const GlobalAlertModal = lazy(() => import('../components/GlobalAlertModal'));
 
 const NavLink = ({
     href,
@@ -74,7 +75,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <div className="flex min-h-screen flex-col bg-slate-50 font-sans antialiased md:flex-row">
             <Toaster position="top-right" />
             <FlashMessage />
-            <GlobalAlertModal />
+            <Suspense fallback={null}>
+                <GlobalAlertModal />
+            </Suspense>
 
             {/* Mobile Overlay */}
             {isSidebarOpen && (

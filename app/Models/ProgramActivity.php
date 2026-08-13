@@ -61,11 +61,11 @@ class ProgramActivity extends Model
 
     protected static function booted(): void
     {
-        static::saved(function (ProgramActivity $activity) {
+        static::saved(function (ProgramActivity $activity): void {
             $activity->program->syncFromActivities();
         });
 
-        static::deleted(function (ProgramActivity $activity) {
+        static::deleted(function (ProgramActivity $activity): void {
             $activity->program->syncFromActivities();
         });
     }

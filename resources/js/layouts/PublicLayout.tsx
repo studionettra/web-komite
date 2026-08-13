@@ -1,11 +1,9 @@
 import { Link, usePage } from '@inertiajs/react';
-import { useRef } from 'react';
-import { useInView } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
 import {
     House,
     Users,
     Briefcase,
-    Wallet,
     SignIn,
     MapPin,
     EnvelopeSimple,
@@ -31,7 +29,25 @@ export default function PublicLayout({
 }) {
     const { url } = usePage();
     const footerRef = useRef(null);
-    const isLoaded = useInView(footerRef, { once: true, amount: 0.2 });
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsLoaded(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.2 }
+        );
+
+        if (footerRef.current) {
+            observer.observe(footerRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
 
     const navLinkClass = (path: string) => {
         const isActive = path === '/' ? url === '/' : url.startsWith(path);
@@ -70,7 +86,7 @@ export default function PublicLayout({
                         </Link>
                     </div>
 
-                    <div className="hidden items-center gap-6 md:flex">
+                    <div className="hidden items-center gap-2 md:flex">
                         <nav className="flex items-center gap-2">
                             <Link href="/" className={navLinkClass('/')}>
                                 Beranda
@@ -94,14 +110,6 @@ export default function PublicLayout({
                                 Kabar
                             </Link>
                         </nav>
-
-                        <Link
-                            href="/login"
-                            className="flex items-center justify-center rounded-full bg-blue-600 px-6 py-2 text-sm font-bold text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all hover:-translate-y-px hover:bg-blue-500 hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] active:scale-95"
-                            title="Login Pengurus"
-                        >
-                            Login
-                        </Link>
                     </div>
                 </header>
                 </div>
@@ -303,39 +311,46 @@ export default function PublicLayout({
                             </div>
                         </div>
 
-                        <div className="relative z-10 flex flex-col items-center justify-between gap-4 border-t-2 border-sky-100 pt-6 text-center text-sm font-medium text-slate-500 sm:flex-row">
-                            <span className="order-2 sm:order-1 sm:w-1/3 sm:text-left">
-                                &copy; {new Date().getFullYear()} Hak Cipta
-                                Dilindungi.
-                            </span>
-
-                            <div className="order-1 flex items-center justify-center gap-4 font-bold sm:order-2 sm:w-1/3">
+                        <div className="relative z-10 border-t-2 border-sky-100 pt-6">
+                            <div className="flex flex-col items-center justify-center gap-3 text-center text-sm text-slate-500 sm:flex-row sm:gap-5">
                                 <Link
                                     href="/kebijakan-privasi"
-                                    className="text-slate-600 transition-colors hover:text-blue-600"
+                                    className="font-semibold text-slate-600 transition-colors hover:text-blue-600"
                                 >
                                     Kebijakan Privasi
                                 </Link>
-                                <span className="text-slate-300">|</span>
+                                <span className="hidden text-slate-300 sm:inline">&middot;</span>
                                 <Link
                                     href="/syarat-dan-ketentuan"
-                                    className="text-slate-600 transition-colors hover:text-blue-600"
+                                    className="font-semibold text-slate-600 transition-colors hover:text-blue-600"
                                 >
                                     Syarat &amp; Ketentuan
                                 </Link>
-                            </div>
-
-                            <span className="order-3 sm:w-1/3 sm:text-right">
-                                Powered by{' '}
-                                <a
-                                    href="https://www.instagram.com/studionettra"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="font-bold text-sky-600 transition-colors hover:text-blue-600"
+                                <span className="hidden text-slate-300 sm:inline">&middot;</span>
+                                <Link
+                                    href="/login"
+                                    className="inline-flex items-center gap-1.5 text-slate-400 transition-colors hover:text-blue-600"
                                 >
-                                    Studio Nettra
-                                </a>
-                            </span>
+                                    <SignIn weight="regular" className="h-3.5 w-3.5" />
+                                    Login Pengurus
+                                </Link>
+                            </div>
+                            <div className="mt-4 flex flex-col items-center justify-between gap-2 text-xs text-slate-400 sm:flex-row">
+                                <span>
+                                    &copy; {new Date().getFullYear()} Komite TKIT Al-Ikhlash. Hak Cipta Dilindungi.
+                                </span>
+                                <span>
+                                    Powered by{' '}
+                                    <a
+                                        href="https://www.instagram.com/studionettra"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="font-semibold text-sky-500 transition-colors hover:text-blue-600"
+                                    >
+                                        Studio Nettra
+                                    </a>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </footer>
@@ -410,20 +425,7 @@ export default function PublicLayout({
                                 Kabar
                             </span>
                         </Link>
-                        <Link
-                            href="/login"
-                            className={`flex flex-col items-center justify-center rounded-2xl py-1.5 transition-all duration-300 ${url === '/login' ? 'w-16 bg-blue-50 text-blue-600' : 'w-14 text-slate-400 hover:bg-slate-50 hover:text-slate-600'}`}
-                        >
-                            <SignIn
-                                size={22}
-                                weight={
-                                    url === '/login' ? 'duotone' : 'regular'
-                                }
-                            />
-                            <span className="mt-0.5 text-[9px] font-bold">
-                                Login
-                            </span>
-                        </Link>
+
                     </div>
                 </nav>
             </div>

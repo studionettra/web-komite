@@ -11,7 +11,7 @@ class GoogleSheetService
      * Fetch data from a public Google Sheet URL.
      * The sheet must be set to "Anyone with the link can view".
      */
-    public static function fetchPublicSheetData(?string $sheetUrl)
+    public static function fetchPublicSheetData(?string $sheetUrl): array
     {
         if (empty($sheetUrl)) {
             return [];

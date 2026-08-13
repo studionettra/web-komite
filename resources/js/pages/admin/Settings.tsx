@@ -19,9 +19,9 @@ export default function Settings({ settings }: any) {
         <DashboardLayout>
             <Head title="Pengaturan Aplikasi" />
 
-            <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-800">
+                    <h1 className="text-xl font-semibold tracking-tight text-slate-800">
                         Pengaturan Aplikasi
                     </h1>
                     <p className="mt-2 text-sm font-medium text-slate-500">
@@ -31,7 +31,7 @@ export default function Settings({ settings }: any) {
             </div>
 
             <div className="mx-auto max-w-3xl">
-                <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                     <div className="border-b border-slate-100 bg-slate-50/50 px-8 py-6">
                         <div className="flex items-center gap-4">
                             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 shadow-inner">
@@ -67,7 +67,7 @@ export default function Settings({ settings }: any) {
 
                         <form onSubmit={submit} className="space-y-6">
                             <div>
-                                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                                <label className="mb-2 block text-sm font-medium text-slate-700">
                                     Status Pelaporan
                                 </label>
                                 <div className="mb-4 grid gap-4 sm:grid-cols-3">
@@ -147,7 +147,7 @@ export default function Settings({ settings }: any) {
 
                             {data.google_spreadsheet_status === 'active' && (
                                 <div>
-                                    <label className="mb-2 block text-sm font-semibold text-slate-700">
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
                                         Tautan (Link) Google Sheet
                                     </label>
                                     <div className="relative mt-2">

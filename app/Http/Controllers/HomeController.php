@@ -10,7 +10,9 @@ use App\Models\Program;
 use App\Models\ProgramActivity;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\RateLimiter;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -19,6 +21,25 @@ class HomeController extends Controller
     {
         $today = now()->setTimezone('Asia/Jakarta')->format('Y-m-d');
 
+        $heroProgram = $this->resolveHeroProgram($today);
+
+        $banners = Cache::remember('home.banners', 600, function () {
+            return Banner::where('is_active', true)->orderBy('order', 'asc')->orderBy('created_at', 'desc')->get();
+        });
+
+        return Inertia::render('public/Home', [
+            'heroProgram' => $heroProgram,
+            'banners' => $banners,
+            'activePrograms' => Inertia::defer(fn () => $this->getActivePrograms($today, $heroProgram)),
+            'upcomingSessions' => Inertia::defer(fn () => $this->getUpcomingSessions($today)),
+            'recentPosts' => Inertia::defer(fn () => Cache::remember('home.recentPosts', 300, function () {
+                return Post::where('is_published', true)->orderBy('published_at', 'desc')->take(3)->get();
+            })),
+        ]);
+    }
+
+    private function resolveHeroProgram(string $today): ?Program
+    {
         $upcomingSessions = ProgramActivity::with('program')
             ->where('activity_date', '>=', $today)
             ->where('status', '!=', 'cancelled')
@@ -42,7 +63,7 @@ class HomeController extends Controller
         if (! $heroProgram) {
             $heroProgram = Program::with('activities')
                 ->where('start_date', '<=', $today)
-                ->where(function ($q) use ($today) {
+                ->where(function ($q) use ($today): void {
                     $q->where('end_date', '>=', $today)
                         ->orWhereNull('end_date');
                 })->first();
@@ -52,31 +73,35 @@ class HomeController extends Controller
             $heroProgram = Program::with('activities')->orderBy('start_date', 'desc')->first();
         }
 
-        $activeProgramsQuery = Program::with('activities')
+        return $heroProgram;
+    }
+
+    private function getActivePrograms(string $today, ?Program $heroProgram)
+    {
+        $query = Program::with('activities')
             ->whereNotNull('start_date')
-            ->where(function ($q) use ($today) {
+            ->where(function ($q) use ($today): void {
                 $q->where('end_date', '>=', $today)
                     ->orWhereNull('end_date');
             })
             ->orderBy('start_date', 'asc');
 
         if ($heroProgram) {
-            $activeProgramsQuery->where('id', '!=', $heroProgram->id);
+            $query->where('id', '!=', $heroProgram->id);
         }
 
-        $activePrograms = $activeProgramsQuery->get();
+        return $query->get();
+    }
 
-        $banners = Banner::where('is_active', true)->orderBy('order', 'asc')->orderBy('created_at', 'desc')->get();
-
-        $recentPosts = Post::where('is_published', true)->orderBy('published_at', 'desc')->take(3)->get();
-
-        return Inertia::render('public/Home', [
-            'heroProgram' => $heroProgram,
-            'activePrograms' => $activePrograms,
-            'upcomingSessions' => $upcomingSessions,
-            'banners' => $banners,
-            'recentPosts' => $recentPosts,
-        ]);
+    private function getUpcomingSessions(string $today)
+    {
+        return ProgramActivity::with('program')
+            ->where('activity_date', '>=', $today)
+            ->where('status', '!=', 'cancelled')
+            ->orderBy('activity_date', 'asc')
+            ->orderBy('start_time', 'asc')
+            ->limit(3)
+            ->get();
     }
 
     public function organization()
@@ -129,6 +154,15 @@ class HomeController extends Controller
 
     public function verifyFinanceAccess(Request $request)
     {
+        $key = 'verify-finance-'.$request->ip();
+
+        if (RateLimiter::tooManyAttempts($key, 5)) {
+            $seconds = RateLimiter::availableIn($key);
+            Alert::error('Terlalu Banyak Percobaan', "Mohon tunggu $seconds detik sebelum mencoba lagi.");
+
+            return back();
+        }
+
         $request->validate([
             'student_name' => 'required|string|min:3',
             'classroom_id' => 'required|exists:classrooms,id',
@@ -155,13 +189,14 @@ class HomeController extends Controller
             ->get();
 
         // Pengecekan ketat (regex spasi dan case-insensitive) di level PHP untuk sisa kandidat
-        $matchedStudent = $potentialStudents->first(function ($student) use ($inputName) {
+        $matchedStudent = $potentialStudents->first(function ($student) use ($inputName): bool {
             $dbName = strtolower(trim(preg_replace('/\s+/', ' ', $student->name)));
 
             return $dbName === $inputName;
         });
 
         if ($matchedStudent) {
+            RateLimiter::clear($key);
             $request->session()->put('verified_finance_parent', true);
             $request->session()->put('verified_finance_classroom_id', $matchedStudent->classroom_id);
             Alert::success('Akses Diberikan', 'Selamat datang, Wali dari '.$matchedStudent->name);
@@ -181,6 +216,7 @@ class HomeController extends Controller
             return redirect()->route('public.finance');
         }
 
+        RateLimiter::hit($key, 180);
         Alert::error('Akses Ditolak', 'Nama siswa tidak ditemukan. Pastikan ejaan sesuai dengan data sekolah.');
 
         activity('finance_access')

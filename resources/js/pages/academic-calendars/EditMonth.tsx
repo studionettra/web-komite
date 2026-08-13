@@ -178,7 +178,7 @@ export default function AcademicCalendarsEditMonth({
                         <CaretLeft weight="bold" className="h-4 w-4" />
                     </Link>
                     <div>
-                        <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                        <h1 className="text-xl font-semibold tracking-tight text-slate-800">
                             Agenda: {month.name} {month.year}
                         </h1>
                         <p className="mt-0.5 text-sm text-slate-500">
@@ -492,7 +492,7 @@ export default function AcademicCalendarsEditMonth({
                     <button
                         type="submit"
                         disabled={processing}
-                        className="sm:w-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
+                        className="sm:w-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                     >
                         <FloppyDisk weight="bold" className="h-4 w-4" />
                         {processing ? 'Menyimpan...' : 'Simpan Semua Perubahan'}

@@ -58,9 +58,9 @@ export default function KorlasCollectionsIndex({
         <DashboardLayout>
             <Head title="Data Kas Kelas" />
 
-            <div className="mb-4 flex flex-col justify-between gap-3 sm:mb-6 sm:flex-row sm:items-center sm:gap-4">
+            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 className="text-xl font-bold text-slate-800 sm:text-2xl">
+                    <h1 className="text-xl font-semibold tracking-tight text-slate-800">
                         Data Kas Kelas
                     </h1>
                     {classroom && (
@@ -113,7 +113,7 @@ export default function KorlasCollectionsIndex({
                     </p>
                 </div>
             ) : (
-                <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                     {sheetStatus === 'preparing' ? (
                         <div className="flex flex-col items-center justify-center p-12 sm:p-20">
                             <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-amber-50">
@@ -182,7 +182,7 @@ export default function KorlasCollectionsIndex({
                     ></div>
                     <div className="relative w-full max-w-xl transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
                         <div className="flex items-center justify-between border-b border-slate-100 px-8 py-6">
-                            <h3 className="text-xl font-semibold text-slate-900">
+                            <h3 className="text-lg font-semibold text-slate-900">
                                 Pengaturan Laporan Kas
                             </h3>
                             <button
@@ -195,7 +195,7 @@ export default function KorlasCollectionsIndex({
                         <form onSubmit={submitSettings}>
                             <div className="px-8 py-6">
                                 <div className="mb-6">
-                                    <label className="mb-3 block text-sm font-bold text-slate-700">
+                                    <label className="mb-3 block text-sm font-medium text-slate-700">
                                         Visibilitas Laporan
                                     </label>
                                     <div className="space-y-3">
@@ -312,7 +312,7 @@ export default function KorlasCollectionsIndex({
 
                                 {data.google_sheet_status === 'active' && (
                                     <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-                                        <label className="mb-2 block text-sm font-bold text-slate-700">
+                                        <label className="mb-2 block text-sm font-medium text-slate-700">
                                             Link Google Sheet (Akses Publik /
                                             Anyone with link)
                                         </label>
@@ -346,14 +346,14 @@ export default function KorlasCollectionsIndex({
                                     onClick={() =>
                                         setIsSettingsModalOpen(false)
                                     }
-                                    className="inline-flex w-full justify-center rounded-2xl bg-white px-6 py-3.5 text-base font-bold text-slate-700 shadow-sm ring-1 ring-slate-300 transition-all ring-inset hover:bg-slate-50 sm:w-auto"
+                                    className="inline-flex w-full justify-center rounded-2xl bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-300 transition-all ring-inset hover:bg-slate-50 sm:w-auto"
                                 >
                                     Batal
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="sm:w-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
+                                    className="sm:w-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                 >
                                     {processing
                                         ? 'Menyimpan...'

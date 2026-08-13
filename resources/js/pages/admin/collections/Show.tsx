@@ -57,7 +57,7 @@ export default function AdminCollectionsShow({
                     <CaretLeft weight="bold" className="h-6 w-6" />
                 </Link>
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-800">
+                    <h1 className="text-xl font-semibold tracking-tight text-slate-800">
                         Detail Setoran Kelas
                     </h1>
                     <p className="mt-1 text-sm font-medium text-slate-500">
@@ -69,7 +69,7 @@ export default function AdminCollectionsShow({
 
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
                 <div className="space-y-6 lg:col-span-2">
-                    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+                    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                         <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/50 px-8 py-6">
                             <h2 className="text-xl font-semibold text-slate-800">
                                 Rincian Pembayaran Siswa
@@ -79,8 +79,8 @@ export default function AdminCollectionsShow({
                             </span>
                         </div>
                         <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-slate-100">
-                                <thead className="bg-slate-50/50">
+                            <table className="min-w-full divide-y divide-slate-200">
+                                <thead className="bg-slate-50">
                                     <tr>
                                         <th
                                             scope="col"
@@ -112,9 +112,9 @@ export default function AdminCollectionsShow({
                                     {collection.details.map((detail: any) => (
                                         <tr
                                             key={detail.id}
-                                            className="transition-all duration-200 hover:bg-blue-50/30"
+                                            className="transition-colors hover:bg-slate-50/50"
                                         >
-                                            <td className="px-4 py-3 text-sm font-semibold text-slate-800">
+                                            <td className="px-4 py-2.5 text-sm font-semibold text-slate-800">
                                                 {detail.student.name}
                                             </td>
                                             <td className="px-4 py-3 text-right text-sm font-medium text-slate-600">
@@ -241,7 +241,7 @@ export default function AdminCollectionsShow({
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                                 >
                                     <CheckCircle
                                         weight="bold"

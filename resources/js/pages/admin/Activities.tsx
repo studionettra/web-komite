@@ -101,21 +101,21 @@ export default function Activities({ activities }: { activities: any }) {
         <DashboardLayout>
             <Head title="Riwayat Aktivitas" />
 
-            <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-800">
+                    <h1 className="text-xl font-semibold tracking-tight text-slate-800">
                         Riwayat Aktivitas
                     </h1>
-                    <p className="mt-2 text-sm font-medium text-slate-500">
-                        Pantau seluruh rekam jejak aktivitas pengurus dan akses keuangan.
+                    <p className="mt-1 text-sm text-slate-500">
+                        Pantau semua aktivitas dan perubahan sistem.
                     </p>
                 </div>
             </div>
 
-            <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                 <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-slate-100">
-                        <thead className="bg-slate-50/50">
+                    <table className="min-w-full divide-y divide-slate-200">
+                        <thead className="bg-slate-50">
                             <tr>
                                 <th scope="col" className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase">Waktu</th>
                                 <th scope="col" className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase">Subjek</th>
@@ -125,14 +125,14 @@ export default function Activities({ activities }: { activities: any }) {
                         </thead>
                         <tbody className="divide-y divide-slate-100 bg-white">
                             {activities.data.length > 0 ? activities.data.map((activity: any) => (
-                                <tr key={activity.id} className="transition-colors hover:bg-slate-50/80">
+                                <tr key={activity.id} className="transition-colors hover:bg-slate-50/50">
                                     <td className="px-4 py-3 whitespace-nowrap text-sm text-slate-500">
                                         <div className="flex items-center gap-2">
                                             <ClockCounterClockwise weight="duotone" className="h-4 w-4 text-slate-400" />
                                             {new Date(activity.created_at).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })}
                                         </div>
                                     </td>
-                                    <td className="px-4 py-3 whitespace-nowrap text-sm font-bold text-slate-900">
+                                    <td className="px-4 py-3 whitespace-nowrap text-sm font-semibold text-slate-900">
                                         <div className="flex items-center gap-2">
                                             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-blue-600">
                                                 <User weight="fill" className="h-3 w-3" />
@@ -183,7 +183,7 @@ export default function Activities({ activities }: { activities: any }) {
                                 </tr>
                             )) : (
                                 <tr>
-                                    <td colSpan={4} className="px-6 py-8 text-center text-sm text-slate-500">
+                                    <td colSpan={4} className="px-4 py-8 text-center text-sm text-slate-500">
                                         Belum ada aktivitas yang dicatat.
                                     </td>
                                 </tr>
@@ -193,7 +193,7 @@ export default function Activities({ activities }: { activities: any }) {
                 </div>
 
                 {activities.links && activities.links.length > 3 && (
-                    <div className="border-t border-slate-100 bg-slate-50/50 px-4 py-3 flex justify-between items-center">
+                    <div className="border-t border-slate-200 bg-slate-50 px-4 py-3 flex justify-between items-center">
                         <div className="hidden sm:block text-sm font-medium text-slate-500">
                             Menampilkan <span className="font-semibold text-blue-600">{activities.from || 0}</span> sampai <span className="font-semibold text-blue-600">{activities.to || 0}</span> dari <span className="font-semibold text-slate-800">{activities.total || 0}</span> hasil
                         </div>

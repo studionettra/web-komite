@@ -32,48 +32,24 @@ export default function Home({
     recentPosts,
 }: any) {
     useEffect(() => {
-        const script = document.createElement('script');
-        script.src = 'https://elfsightcdn.com/platform.js';
-        script.async = true;
-        document.body.appendChild(script);
+        let script: HTMLScriptElement | null = null;
+        let cleanerInterval: any;
 
-        // Skrip untuk membersihkan watermark secara agresif lewat Javascript
-        const cleanerInterval = setInterval(() => {
-            // Cari elemen link yang mengarah ke elfsight
-            const links = document.querySelectorAll(
-                'a[href*="elfsight.com"], a[href*="elfsight"]',
-            );
-            links.forEach((link) => {
-                // Sembunyikan elemen
-                (link as HTMLElement).style.setProperty(
-                    'display',
-                    'none',
-                    'important',
+        // Tunda eksekusi script Elfsight agar tidak memblokir render (LCP)
+        const initTimer = setTimeout(() => {
+            script = document.createElement('script');
+            script.src = 'https://elfsightcdn.com/platform.js';
+            script.async = true;
+            document.body.appendChild(script);
+
+            // Skrip untuk membersihkan watermark secara agresif lewat Javascript
+            cleanerInterval = setInterval(() => {
+                // Cari elemen link yang mengarah ke elfsight
+                const links = document.querySelectorAll(
+                    'a[href*="elfsight.com"], a[href*="elfsight"]',
                 );
-            });
-
-            // Cari elemen badge dengan nama class spesifik
-            const badges = document.querySelectorAll(
-                '[class*="Badge__Container"], [class*="Watermark__Container"], .eapps-link',
-            );
-            badges.forEach((badge) => {
-                (badge as HTMLElement).style.setProperty(
-                    'display',
-                    'none',
-                    'important',
-                );
-            });
-
-            // Cek jika ada shadow root
-            const widget = document.querySelector(
-                '.elfsight-app-81fba1fa-87f5-4b47-bdbd-1eff0f9bdbf6',
-            );
-
-            if (widget && widget.shadowRoot) {
-                const shadowLinks = widget.shadowRoot.querySelectorAll(
-                    'a[href*="elfsight.com"]',
-                );
-                shadowLinks.forEach((link) => {
+                links.forEach((link) => {
+                    // Sembunyikan elemen
                     (link as HTMLElement).style.setProperty(
                         'display',
                         'none',
@@ -81,23 +57,53 @@ export default function Home({
                     );
                 });
 
-                const shadowBadges = widget.shadowRoot.querySelectorAll(
-                    '[class*="Badge__Container"], [class*="Watermark__Container"]',
+                // Cari elemen badge dengan nama class spesifik
+                const badges = document.querySelectorAll(
+                    '[class*="Badge__Container"], [class*="Watermark__Container"], .eapps-link',
                 );
-                shadowBadges.forEach((badge) => {
+                badges.forEach((badge) => {
                     (badge as HTMLElement).style.setProperty(
                         'display',
                         'none',
                         'important',
                     );
                 });
-            }
-        }, 300);
+
+                // Cek jika ada shadow root
+                const widget = document.querySelector(
+                    '.elfsight-app-81fba1fa-87f5-4b47-bdbd-1eff0f9bdbf6',
+                );
+
+                if (widget && widget.shadowRoot) {
+                    const shadowLinks = widget.shadowRoot.querySelectorAll(
+                        'a[href*="elfsight.com"]',
+                    );
+                    shadowLinks.forEach((link) => {
+                        (link as HTMLElement).style.setProperty(
+                            'display',
+                            'none',
+                            'important',
+                        );
+                    });
+
+                    const shadowBadges = widget.shadowRoot.querySelectorAll(
+                        '[class*="Badge__Container"], [class*="Watermark__Container"]',
+                    );
+                    shadowBadges.forEach((badge) => {
+                        (badge as HTMLElement).style.setProperty(
+                            'display',
+                            'none',
+                            'important',
+                        );
+                    });
+                }
+            }, 300);
+        }, 3500); // Tunda 3.5 detik
 
         return () => {
-            clearInterval(cleanerInterval);
-
-            if (document.body.contains(script)) {
+            clearTimeout(initTimer);
+            if (cleanerInterval) clearInterval(cleanerInterval);
+            if (script && document.body.contains(script)) {
                 document.body.removeChild(script);
             }
         };
@@ -181,22 +187,29 @@ export default function Home({
                                     disableOnInteraction: false,
                                 }}
                                 loop={true}
+                                observer={true}
+                                observeParents={true}
                                 className="h-full w-full [&_.swiper-pagination]:bottom-6! sm:[&_.swiper-pagination]:bottom-10! [&_.swiper-pagination-bullet]:mx-1.5! [&_.swiper-pagination-bullet]:h-2! [&_.swiper-pagination-bullet]:w-2! [&_.swiper-pagination-bullet]:border [&_.swiper-pagination-bullet]:border-white/80 [&_.swiper-pagination-bullet]:bg-white/30 [&_.swiper-pagination-bullet]:opacity-100 [&_.swiper-pagination-bullet]:shadow-[0_0_3px_rgba(0,0,0,0.5)] [&_.swiper-pagination-bullet]:transition-all [&_.swiper-pagination-bullet-active]:scale-125 [&_.swiper-pagination-bullet-active]:border-white [&_.swiper-pagination-bullet-active]:bg-white [&_.swiper-pagination-bullet-active]:shadow-[0_0_6px_rgba(0,0,0,0.6)]"
                             >
                                 {/* 1. Incidental Banners */}
-                                {banners &&
-                                    banners.map((banner: any) => (
+                                {banners && Array.isArray(banners) &&
+                                    banners.map((banner: any, index: number) => (
                                         <SwiperSlide
                                             key={`banner-${banner.id}`}
                                         >
                                             <div className="group relative h-full w-full bg-slate-900">
-                                                <img
-                                                    src={`/storage/${banner.image}`}
-                                                    alt={
-                                                        banner.title || 'Banner'
-                                                    }
-                                                    className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
-                                                />
+                                                <picture className="block h-full w-full">
+                                                    <source srcSet={`/storage/${banner.image.replace(/\.(jpg|jpeg|png)$/i, '.webp')}?v=2`} type="image/webp" />
+                                                    <img
+                                                        src={`/storage/${banner.image}?v=2`}
+                                                        alt={
+                                                            banner.title || 'Banner'
+                                                        }
+                                                        fetchPriority={index === 0 ? "high" : "auto"}
+                                                        loading={index === 0 ? "eager" : "lazy"}
+                                                        className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
+                                                    />
+                                                </picture>
                                                 {/* Optional subtle gradient at bottom just for pagination visibility */}
                                                 <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-slate-950/50 to-transparent"></div>
                                             </div>
@@ -213,11 +226,16 @@ export default function Home({
                                                 key={`prog-img-${idx}`}
                                             >
                                                 <div className="group relative h-full w-full bg-slate-900">
-                                                    <img
-                                                        src={`/storage/${img}`}
-                                                        alt={`${heroProgram.title} - ${idx + 1}`}
-                                                        className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
-                                                    />
+                                                    <picture className="block h-full w-full">
+                                                        <source srcSet={`/storage/${img.replace(/\.(jpg|jpeg|png)$/i, '.webp')}`} type="image/webp" />
+                                                        <img
+                                                            src={`/storage/${img}`}
+                                                            alt={`${heroProgram.title} - ${idx + 1}`}
+                                                            fetchPriority={(!banners || banners.length === 0) && idx === 0 ? "high" : "auto"}
+                                                            loading={(!banners || banners.length === 0) && idx === 0 ? "eager" : "lazy"}
+                                                            className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
+                                                        />
+                                                    </picture>
                                                     {/* Playful Bottom Gradient Overlay */}
                                                     <div className="absolute inset-x-0 top-1/3 bottom-0 bg-linear-to-t from-sky-950/95 via-sky-900/50 to-transparent"></div>
                                                     <div className="absolute inset-0 flex items-end pb-16 sm:pb-20 lg:pb-24">
@@ -423,7 +441,7 @@ export default function Home({
 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     {/* Upcoming Sessions Content (Inside Hero Section) */}
-                    {upcomingSessions && upcomingSessions.length > 0 && (
+                    {upcomingSessions && Array.isArray(upcomingSessions) && upcomingSessions.length > 0 && (
                         <div className="relative mt-4 mb-4 sm:mt-8 sm:mb-8">
                             <div className="mb-8 flex flex-col items-center justify-between gap-4 text-center sm:mb-12 sm:flex-row sm:text-left">
                                 <div>
@@ -512,8 +530,8 @@ export default function Home({
             <ProgramCalendar
                 activePrograms={
                     heroProgram
-                        ? [heroProgram, ...activePrograms]
-                        : activePrograms
+                        ? [heroProgram, ...(Array.isArray(activePrograms) ? activePrograms : [])]
+                        : (Array.isArray(activePrograms) ? activePrograms : [])
                 }
             />
 
@@ -620,7 +638,7 @@ export default function Home({
                     </div>
 
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                        {recentPosts?.length > 0 ? (
+                        {recentPosts && Array.isArray(recentPosts) && recentPosts.length > 0 ? (
                             recentPosts.map((post: any) => (
                                 <Link
                                     key={post.id}

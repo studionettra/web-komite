@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -68,6 +69,8 @@ class PostController extends Controller
             'seo_description' => $request->seo_description,
         ]);
 
+        Cache::forget('home.recentPosts');
+
         return redirect()->route('admin.posts.index')->with('success', 'Kabar berhasil ditambahkan.');
     }
 
@@ -125,6 +128,8 @@ class PostController extends Controller
             'seo_description' => $request->seo_description,
         ]);
 
+        Cache::forget('home.recentPosts');
+
         return redirect()->route('admin.posts.index')->with('success', 'Kabar berhasil diperbarui.');
     }
 
@@ -135,6 +140,8 @@ class PostController extends Controller
         }
 
         $post->delete();
+
+        Cache::forget('home.recentPosts');
 
         return redirect()->back()->with('success', 'Kabar berhasil dihapus.');
     }
@@ -147,7 +154,8 @@ class PostController extends Controller
 
         if ($request->hasFile('file')) {
             $path = $request->file('file')->store('posts/attachments', 'public');
-            return response()->json(['url' => asset('storage/' . $path)]);
+
+            return response()->json(['url' => asset('storage/'.$path)]);
         }
 
         return response()->json(['error' => 'File not found'], 400);

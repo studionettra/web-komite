@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $role = $request->user()->roles->first()->name ?? '';
         if (! in_array($role, ['Superadmin', 'Sekretaris'])) {
@@ -65,7 +65,7 @@ class DocumentController extends Controller
         return back();
     }
 
-    public function destroy(Request $request, Document $document)
+    public function destroy(Request $request, Document $document): \Illuminate\Http\RedirectResponse
     {
         $role = $request->user()->roles->first()->name ?? '';
         if (! in_array($role, ['Superadmin', 'Sekretaris'])) {

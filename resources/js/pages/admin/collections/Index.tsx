@@ -35,8 +35,8 @@ export default function AdminCollectionsIndex({
         <DashboardLayout>
             <Head title="Verifikasi Setoran Kelas" />
 
-            <div className="mb-6 flex flex-col gap-2">
-                <h1 className="text-2xl font-bold tracking-tight text-slate-800">
+            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                <h1 className="text-xl font-semibold tracking-tight text-slate-800">
                     Verifikasi Setoran Kelas
                 </h1>
                 <p className="text-sm font-medium text-slate-500">
@@ -45,10 +45,10 @@ export default function AdminCollectionsIndex({
                 </p>
             </div>
 
-            <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                 <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-slate-100">
-                        <thead className="bg-slate-50/50">
+                    <table className="min-w-full divide-y divide-slate-200">
+                        <thead className="bg-slate-50">
                             <tr>
                                 <th
                                     scope="col"
@@ -81,7 +81,7 @@ export default function AdminCollectionsIndex({
                                 <tr>
                                     <td
                                         colSpan={4}
-                                        className="px-6 py-8 text-center text-sm text-slate-500"
+                                        className="px-4 py-8 text-center text-sm text-slate-500"
                                     >
                                         Belum ada setoran masuk dari Korlas.
                                     </td>
@@ -90,7 +90,7 @@ export default function AdminCollectionsIndex({
                                 collections.data.map((collection: any) => (
                                     <tr
                                         key={collection.id}
-                                        className="transition-all duration-200 hover:bg-blue-50/30"
+                                        className="transition-colors hover:bg-slate-50/50"
                                     >
                                         <td className="px-4 py-3 whitespace-nowrap">
                                             <div className="text-sm font-semibold text-slate-800">

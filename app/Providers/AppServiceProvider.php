@@ -5,6 +5,7 @@ namespace App\Providers;
 use Carbon\CarbonImmutable;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -28,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureDefaults();
 
-        Event::listen(function (Login $event) {
+        Event::listen(function (Login $event): void {
             activity('auth')
                 ->causedBy($event->user)
                 ->withProperties([
@@ -38,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
                 ->log('login');
         });
 
-        Event::listen(function (Logout $event) {
+        Event::listen(function (Logout $event): void {
             if ($event->user) {
                 activity('auth')
                     ->causedBy($event->user)
@@ -57,6 +58,8 @@ class AppServiceProvider extends ServiceProvider
     protected function configureDefaults(): void
     {
         Date::use(CarbonImmutable::class);
+
+        Model::preventLazyLoading(! app()->isProduction());
 
         DB::prohibitDestructiveCommands(
             app()->isProduction(),

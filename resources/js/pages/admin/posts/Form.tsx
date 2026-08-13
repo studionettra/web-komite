@@ -144,7 +144,7 @@ export default function PostForm({
                     <CaretLeft weight="bold" className="h-4 w-4" />
                 </Link>
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                    <h1 className="text-xl font-semibold tracking-tight text-slate-800">
                         {isEditing ? 'Edit Kabar' : 'Tulis Kabar Baru'}
                     </h1>
                 </div>
@@ -321,7 +321,7 @@ export default function PostForm({
                     <button
                         type="submit"
                         disabled={processing}
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                     >
                         {processing ? 'Menyimpan...' : (isEditing ? 'Simpan Perubahan' : 'Terbitkan Kabar')}
                     </button>

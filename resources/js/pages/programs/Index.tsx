@@ -7,6 +7,8 @@ import {
     Clock,
     FlagBanner,
     FileText,
+    X,
+    Plus,
 } from '@phosphor-icons/react';
 import type { FormEventHandler } from 'react';
 import { useState } from 'react';
@@ -21,6 +23,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
 
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<number | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { data, setData, post, processing, errors, reset, clearErrors } =
         useForm({
@@ -41,6 +44,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
         reset();
         setData('_method', 'post');
         clearErrors();
+        setIsModalOpen(true);
     };
 
     const openEdit = (program: any) => {
@@ -60,6 +64,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
             existing_images: program.images || [],
             _method: 'put',
         });
+        setIsModalOpen(true);
     };
 
     const submit: FormEventHandler = (e) => {
@@ -72,6 +77,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                     setData('_method', 'post');
                     setIsEditing(false);
                     setEditingId(null);
+                    setIsModalOpen(false);
                 },
                 forceFormData: true,
             });
@@ -80,6 +86,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                 onSuccess: () => {
                     reset();
                     setData('_method', 'post');
+                    setIsModalOpen(false);
                 },
                 forceFormData: true,
             });
@@ -136,54 +143,54 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
         <DashboardLayout>
             <Head title="Daftar Program" />
 
-            <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 className="text-2xl font-semibold tracking-tight text-slate-800 sm:text-3xl">
+                    <h1 className="text-xl font-semibold tracking-tight text-slate-800">
                         Daftar Program
                     </h1>
-                    <p className="mt-2 text-base text-slate-500">
+                    <p className="mt-1 text-sm text-slate-500">
                         Daftar agenda dan pelaksanaan program komite.
                     </p>
                 </div>
+                {canManageProgram && (
+                    <button
+                        onClick={openCreate}
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-md active:translate-y-0 sm:w-auto"
+                    >
+                        <Plus weight="bold" className="h-5 w-5" />
+                        <span>Tambah Program</span>
+                    </button>
+                )}
             </div>
 
-            <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-                {canManageProgram && (
-                    <div className="lg:col-span-1">
-                        <div className="sticky top-6 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm sm:p-5">
-                            <div className="mb-8 flex items-center justify-between">
-                                <h2 className="flex items-center gap-3 text-xl font-semibold text-slate-800">
-                                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
-                                        <Target
-                                            weight="fill"
-                                            className="h-6 w-6"
-                                        />
-                                    </div>
-                                    {isEditing
-                                        ? 'Edit Program'
-                                        : 'Tambah Program'}
-                                </h2>
-                                {isEditing && (
-                                    <button
-                                        onClick={openCreate}
-                                        className="text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700"
-                                    >
-                                        Batal
-                                    </button>
-                                )}
-                            </div>
-
-                            <form onSubmit={submit} className="space-y-6">
+            {canManageProgram && isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0">
+                    <div
+                        className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
+                        onClick={() => setIsModalOpen(false)}
+                    ></div>
+                    <div className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto custom-scrollbar transform rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
+                        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white px-8 py-6">
+                            <h3 className="text-lg font-semibold text-slate-900">
+                                {isEditing ? 'Edit Program' : 'Tambah Program'}
+                            </h3>
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-600"
+                            >
+                                <X weight="bold" className="h-5 w-5" />
+                            </button>
+                        </div>
+                        <form onSubmit={submit}>
+                            <div className="space-y-6 px-8 py-6">
                                 <div>
-                                    <label className="mb-2 block text-sm font-bold text-slate-700">
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
                                         Nama Program
                                     </label>
                                     <input
                                         type="text"
                                         value={data.title}
-                                        onChange={(e) =>
-                                            setData('title', e.target.value)
-                                        }
+                                        onChange={(e) => setData('title', e.target.value)}
                                         className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                         required
                                     />
@@ -194,17 +201,12 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                     )}
                                 </div>
                                 <div>
-                                    <label className="mb-2 block text-sm font-bold text-slate-700">
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
                                         Deskripsi Singkat
                                     </label>
                                     <textarea
                                         value={data.description}
-                                        onChange={(e) =>
-                                            setData(
-                                                'description',
-                                                e.target.value,
-                                            )
-                                        }
+                                        onChange={(e) => setData('description', e.target.value)}
                                         rows={3}
                                         className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                         required
@@ -216,24 +218,36 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                     )}
                                 </div>
                                 <div>
-                                    <label className="mb-2 block text-sm font-bold text-slate-700">
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
                                         Gambar Banner (Opsional, Maks 5)
                                     </label>
-                                    
+
                                     {isEditing && data.existing_images && data.existing_images.length > 0 && (
                                         <div className="mb-3">
-                                            <p className="mb-1.5 text-xs font-medium text-slate-500">Banner saat ini:</p>
+                                            <p className="mb-1.5 text-xs font-medium text-slate-500">
+                                                Banner saat ini:
+                                            </p>
                                             <div className="flex flex-wrap gap-2">
                                                 {data.existing_images.map((img: string, idx: number) => (
-                                                    <div key={idx} className="relative overflow-hidden rounded-xl border border-slate-200">
-                                                        <img 
-                                                            src={`/storage/${img}`} 
-                                                            alt={`Current banner ${idx+1}`} 
-                                                            className="h-24 w-32 object-cover" 
+                                                    <div
+                                                        key={idx}
+                                                        className="relative overflow-hidden rounded-xl border border-slate-200"
+                                                    >
+                                                        <img
+                                                            src={`/storage/${img}`}
+                                                            alt={`Current banner ${idx + 1}`}
+                                                            loading="lazy"
+                                                            decoding="async"
+                                                            className="h-24 w-32 object-cover"
                                                         />
                                                         <button
                                                             type="button"
-                                                            onClick={() => setData('existing_images', data.existing_images.filter((i) => i !== img))}
+                                                            onClick={() =>
+                                                                setData(
+                                                                    'existing_images',
+                                                                    data.existing_images.filter((i) => i !== img),
+                                                                )
+                                                            }
                                                             className="absolute right-1 top-1 rounded-full bg-rose-500 p-1 text-white shadow-sm hover:bg-rose-600 focus:outline-none"
                                                         >
                                                             <Trash className="h-3 w-3" />
@@ -268,144 +282,113 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                 </div>
                                 <div className="relative z-20 grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="mb-2 block text-sm font-bold text-slate-700">
+                                        <label className="mb-2 block text-sm font-medium text-slate-700">
                                             Kategori
                                         </label>
                                         <Select
                                             value={data.frequency}
-                                            onChange={(val) =>
-                                                setData(
-                                                    'frequency',
-                                                    val as string,
-                                                )
-                                            }
+                                            onChange={(val) => setData('frequency', val as string)}
                                             options={[
-                                                {
-                                                    value: 'monthly',
-                                                    label: 'Bulanan',
-                                                },
-                                                {
-                                                    value: 'incidental',
-                                                    label: 'Insidental',
-                                                },
+                                                { value: 'monthly', label: 'Bulanan' },
+                                                { value: 'incidental', label: 'Insidental' },
                                             ]}
                                         />
                                     </div>
                                     <div>
-                                        <label className="mb-2 block text-sm font-bold text-slate-700">
+                                        <label className="mb-2 block text-sm font-medium text-slate-700">
                                             Status
                                         </label>
                                         <Select
                                             value={data.status}
-                                            onChange={(val) =>
-                                                setData('status', val as string)
-                                            }
+                                            onChange={(val) => setData('status', val as string)}
                                             options={[
-                                                {
-                                                    value: 'planned',
-                                                    label: 'Akan Datang',
-                                                },
-                                                {
-                                                    value: 'ongoing',
-                                                    label: 'Sedang Berlangsung',
-                                                },
-                                                {
-                                                    value: 'completed',
-                                                    label: 'Selesai',
-                                                },
+                                                { value: 'planned', label: 'Akan Datang' },
+                                                { value: 'ongoing', label: 'Sedang Berlangsung' },
+                                                { value: 'completed', label: 'Selesai' },
                                             ]}
                                         />
                                     </div>
                                 </div>
                                 <div className="border-t border-slate-100 pt-6">
                                     <p className="mb-4 rounded-xl bg-slate-50 p-4 text-xs font-semibold leading-relaxed text-slate-500">
-                                        Isi tanggal di bawah jika ini adalah
-                                        acara 1x jalan{' '}
-                                        <span className="text-slate-400 italic">
+                                        Isi tanggal di bawah jika ini adalah acara 1x jalan{' '}
+                                        <span className="italic text-slate-400">
                                             (Contoh: Market Day, Lomba HUT RI)
                                         </span>
-                                        . Kosongkan jika program rutin memiliki
-                                        sesi berulang{' '}
-                                        <span className="text-slate-400 italic">
+                                        . Kosongkan jika program rutin memiliki sesi berulang{' '}
+                                        <span className="italic text-slate-400">
                                             (Contoh: Jumat Berbagi, Renang)
                                         </span>
                                         .
                                     </p>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label className="mb-2 block text-sm font-bold text-slate-700">
+                                            <label className="mb-2 block text-sm font-medium text-slate-700">
                                                 Tanggal Mulai (Opsional)
                                             </label>
                                             <input
                                                 type="date"
                                                 value={data.start_date}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        'start_date',
-                                                        e.target.value,
-                                                    )
-                                                }
+                                                onChange={(e) => setData('start_date', e.target.value)}
                                                 className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                             />
                                         </div>
                                         <div>
-                                            <label className="mb-2 block text-sm font-bold text-slate-700">
+                                            <label className="mb-2 block text-sm font-medium text-slate-700">
                                                 Tanggal Selesai (Opsional)
                                             </label>
                                             <input
                                                 type="date"
                                                 value={data.end_date}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        'end_date',
-                                                        e.target.value,
-                                                    )
-                                                }
+                                                onChange={(e) => setData('end_date', e.target.value)}
                                                 className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
                                             />
                                         </div>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div className="flex flex-col-reverse gap-3 border-t border-slate-100 bg-slate-50 px-8 py-6 sm:flex-row sm:justify-end">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="inline-flex w-full justify-center rounded-2xl bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-300 transition-all ring-inset hover:bg-slate-50 sm:w-auto"
+                                >
+                                    Batal
+                                </button>
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95 sm:w-auto"
                                 >
-                                    {processing
-                                        ? 'Menyimpan...'
-                                        : 'Simpan Program'}
+                                    {processing ? 'Menyimpan...' : 'Simpan Program'}
                                 </button>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
-                )}
+                </div>
+            )}
 
-                <div
-                    className={
-                        canManageProgram ? 'lg:col-span-2' : 'lg:col-span-3'
-                    }
-                >
-                    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+            <div className="w-full">
+                    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                         <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-slate-100">
+                            <table className="min-w-full divide-y divide-slate-200">
                                 <thead className="bg-slate-50">
                                     <tr>
                                         <th
                                             scope="col"
-                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
+                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
                                         >
                                             Program
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
+                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
                                         >
                                             Status & Kategori
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase sm:px-8"
+                                            className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase"
                                         >
                                             Aksi
                                         </th>
@@ -416,7 +399,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                         <tr>
                                             <td
                                                 colSpan={3}
-                                                className="px-6 py-16 text-center text-slate-500"
+                                                className="px-4 py-12 text-center text-sm text-slate-500"
                                             >
                                                 <div className="flex flex-col items-center justify-center">
                                                     <Target
@@ -434,7 +417,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                     {programs.data.map((program: any) => (
                                         <tr
                                             key={program.id}
-                                            className="transition-colors hover:bg-slate-50/80"
+                                            className="transition-colors hover:bg-slate-50/50"
                                         >
                                             <td className="px-4 py-3">
                                                 <Link
@@ -482,7 +465,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="px-4 py-3 text-right align-top whitespace-nowrap sm:px-8">
+                                            <td className="px-4 py-3 text-right align-top whitespace-nowrap">
                                                 <div className="flex justify-end gap-2">
                                                     <Link
                                                         href={`/programs/${program.id}`}
@@ -508,10 +491,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                                                 className="flex items-center justify-center rounded-2xl bg-blue-50 px-3 text-blue-600 transition-all hover:-translate-y-0.5 hover:bg-blue-100 hover:shadow-sm"
                                                                 title="Edit Program"
                                                             >
-                                                                <PencilSimple
-                                                                    weight="fill"
-                                                                    className="h-5 w-5"
-                                                                />
+                                                                <PencilSimple weight="fill" className="h-4 w-4" />
                                                             </button>
                                                             <button
                                                                 onClick={() =>
@@ -523,10 +503,7 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                                                                 className="flex items-center justify-center rounded-2xl bg-rose-50 px-3 text-rose-600 transition-all hover:-translate-y-0.5 hover:bg-rose-100 hover:shadow-sm"
                                                                 title="Hapus Program"
                                                             >
-                                                                <Trash
-                                                                    weight="fill"
-                                                                    className="h-5 w-5"
-                                                                />
+                                                                <Trash weight="fill" className="h-4 w-4" />
                                                             </button>
                                                         </>
                                                     )}
@@ -572,7 +549,6 @@ export default function ProgramsIndex({ programs }: { programs: any }) {
                         )}
                     </div>
                 </div>
-            </div>
         </DashboardLayout>
     );
 }

@@ -7,23 +7,36 @@ export default function PostsIndex({
     posts,
     categories,
     currentCategory,
+    currentSearch,
 }: {
     posts: any;
     categories: any[];
     currentCategory: string | null;
+    currentSearch?: string;
 }) {
     const [isLoaded, setIsLoaded] = useState(false);
+    const [search, setSearch] = useState(currentSearch || '');
 
     useEffect(() => {
         setIsLoaded(true);
     }, []);
 
     const handleCategoryChange = (slug: string) => {
-        if (currentCategory === slug) {
-            router.get('/kabar');
-        } else {
-            router.get('/kabar', { category: slug });
+        const params: any = {};
+        if (search) params.search = search;
+        if (currentCategory !== slug) {
+            params.category = slug;
         }
+        router.get('/kabar', params);
+    };
+
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        const params: any = {};
+        if (currentCategory) params.category = currentCategory;
+        if (search) params.search = search;
+        
+        router.get('/kabar', params, { preserveState: true });
     };
 
     return (
@@ -93,6 +106,22 @@ export default function PostsIndex({
                         <p className="mx-auto max-w-2xl text-sm leading-relaxed font-medium text-slate-600 sm:text-lg">
                             Ikuti perkembangan terbaru, artikel, dan informasi seputar kegiatan komite dan sekolah TKIT Al-Ikhlash.
                         </p>
+
+                        <form onSubmit={handleSearch} className="mt-8 relative mx-auto max-w-lg">
+                            <input
+                                type="text"
+                                placeholder="Cari kabar apa hari ini? 🔍"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className="w-full rounded-full border-[4px] border-slate-900 bg-white py-3 pl-6 pr-16 text-sm font-bold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-sky-200 shadow-[4px_4px_0_#0ea5e9] transition-all focus:-translate-y-1 focus:shadow-[6px_6px_0_#0ea5e9] sm:py-4 sm:text-lg"
+                            />
+                            <button
+                                type="submit"
+                                className="absolute right-2 top-2 bottom-2 flex aspect-square items-center justify-center rounded-full bg-blue-500 text-white transition-all hover:bg-blue-600 hover:-translate-y-0.5 active:translate-y-0 active:scale-95"
+                            >
+                                <MagnifyingGlass weight="bold" className="h-5 w-5 sm:h-6 sm:w-6" />
+                            </button>
+                        </form>
                     </div>
                 </div>
             </section>
@@ -106,11 +135,13 @@ export default function PostsIndex({
                                 <MagnifyingGlass weight="duotone" className="h-16 w-16 text-slate-300 mb-4" />
                                 <h3 className="text-xl font-extrabold text-slate-800 mb-2">Belum ada kabar</h3>
                                 <p className="text-slate-500">
-                                    {currentCategory 
-                                        ? 'Belum ada kabar untuk kategori ini.' 
-                                        : 'Belum ada kabar yang diterbitkan.'}
+                                    {currentSearch 
+                                        ? `Pencarian "${currentSearch}" tidak ditemukan.`
+                                        : currentCategory 
+                                            ? 'Belum ada kabar untuk kategori ini.' 
+                                            : 'Belum ada kabar yang diterbitkan.'}
                                 </p>
-                                {currentCategory && (
+                                {(currentCategory || currentSearch) && (
                                     <Link href="/kabar" className="mt-6 font-bold text-blue-600 hover:underline">
                                         Lihat Semua Kabar
                                     </Link>
@@ -129,6 +160,8 @@ export default function PostsIndex({
                                                     <img 
                                                         src={`/storage/${post.image_path}`} 
                                                         alt={post.title} 
+                                                        loading="lazy"
+                                                        decoding="async"
                                                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                                     />
                                                 ) : (

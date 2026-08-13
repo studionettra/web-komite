@@ -28,8 +28,8 @@ export default function TransactionsIndex({
         <DashboardLayout>
             <Head title="Keuangan" />
 
-            <div className="mb-6 flex flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center">
-                <h1 className="text-2xl font-semibold tracking-tight text-slate-800 sm:text-3xl">
+            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                <h1 className="text-xl font-semibold tracking-tight text-slate-800">
                     Catatan Keuangan Bendahara
                 </h1>
 
@@ -46,7 +46,7 @@ export default function TransactionsIndex({
                 )}
             </div>
 
-            <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                 {sheetStatus === 'preparing' ? (
                     <div className="flex flex-col items-center justify-center p-12 py-20 text-center">
                         <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-50">

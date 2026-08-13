@@ -20,7 +20,7 @@ class AdminAcademicYearController extends Controller
 
     public function show(AcademicYear $academicYear)
     {
-        $academicYear->load(['months' => function ($query) {
+        $academicYear->load(['months' => function ($query): void {
             $query->withCount(['activities', 'learningPrograms'])->orderBy('order_index');
         }]);
 
@@ -29,7 +29,7 @@ class AdminAcademicYearController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -47,7 +47,7 @@ class AdminAcademicYearController extends Controller
         return back();
     }
 
-    public function update(Request $request, AcademicYear $academicYear)
+    public function update(Request $request, AcademicYear $academicYear): \Illuminate\Http\RedirectResponse
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -65,7 +65,7 @@ class AdminAcademicYearController extends Controller
         return back();
     }
 
-    public function destroy(AcademicYear $academicYear)
+    public function destroy(AcademicYear $academicYear): \Illuminate\Http\RedirectResponse
     {
         if ($academicYear->months()->exists()) {
             Alert::error('Gagal', 'Tidak dapat menghapus Tahun Ajaran karena masih berisi data bulan.');

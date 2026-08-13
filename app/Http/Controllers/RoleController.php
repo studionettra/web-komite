@@ -18,7 +18,7 @@ class RoleController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $request->validate(['name' => 'required|string|unique:roles,name']);
 
@@ -29,7 +29,7 @@ class RoleController extends Controller
         return back();
     }
 
-    public function destroy(Role $role)
+    public function destroy(Role $role): \Illuminate\Http\RedirectResponse
     {
         if ($role->name === 'Superadmin') {
             Alert::error('Gagal', 'Role Superadmin tidak dapat dihapus.');

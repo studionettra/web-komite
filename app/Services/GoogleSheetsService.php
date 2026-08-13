@@ -12,11 +12,11 @@ use Google\Service\Sheets\ValueRange;
 
 class GoogleSheetsService
 {
-    protected $client;
+    protected \Google\Client $client;
 
-    protected $service;
+    protected \Google\Service\Sheets $service;
 
-    protected $driveService;
+    protected \Google\Service\Drive $driveService;
 
     public function __construct()
     {
@@ -67,7 +67,7 @@ class GoogleSheetsService
      * @param  string  $range  The range to clear (e.g., 'Sheet1!A:F')
      * @return bool
      */
-    public function clearRange(string $range)
+    public function clearRange(string $range): bool
     {
         $spreadsheetId = $this->getSpreadsheetId();
         $requestBody = new ClearValuesRequest;
@@ -88,7 +88,7 @@ class GoogleSheetsService
      * @param  array  $values  2D array of values
      * @return bool
      */
-    public function appendData(string $range, array $values)
+    public function appendData(string $range, array $values): bool
     {
         $spreadsheetId = $this->getSpreadsheetId();
 

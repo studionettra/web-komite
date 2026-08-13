@@ -21,11 +21,10 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\Public\PostController as PublicPostController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\SitemapController;
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -40,12 +39,12 @@ Route::post('/kalender-akademik/verify', [AcademicCalendarController::class, 've
 Route::get('/kebijakan-privasi', [HomeController::class, 'privacyPolicy'])->name('public.privacy-policy');
 Route::get('/syarat-dan-ketentuan', [HomeController::class, 'termsAndConditions'])->name('public.terms-and-conditions');
 
-Route::middleware(['guest', 'prevent-back-history'])->group(function () {
+Route::middleware(['guest', 'prevent-back-history'])->group(function (): void {
     Route::get('/login', [AuthController::class, 'create'])->name('login');
     Route::post('/login', [AuthController::class, 'store']);
 });
 
-Route::middleware(['auth', 'prevent-back-history'])->group(function () {
+Route::middleware(['auth', 'prevent-back-history'])->group(function (): void {
     Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -61,14 +60,14 @@ Route::middleware(['auth', 'prevent-back-history'])->group(function () {
     Route::get('/academic-calendar/{academicYear}', [AdminAcademicYearController::class, 'show'])->name('academic-years.show');
 
     // Korlas routes
-    Route::middleware(['role:Superadmin|Korlas'])->prefix('korlas')->name('korlas.')->group(function () {
+    Route::middleware(['role:Superadmin|Korlas'])->prefix('korlas')->name('korlas.')->group(function (): void {
         Route::resource('students', StudentController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('collections', [CollectionController::class, 'index'])->name('collections.index');
         Route::put('collections/settings', [CollectionController::class, 'updateSettings'])->name('collections.settings');
     });
 
     // Superadmin | Sekretaris restricted routes
-    Route::middleware(['role:Superadmin|Sekretaris'])->group(function () {
+    Route::middleware(['role:Superadmin|Sekretaris'])->group(function (): void {
         Route::get('/activities', [ActivityLogController::class, 'index'])->name('activities.index');
 
         Route::post('/programs', [ProgramController::class, 'store'])->name('programs.store');
@@ -101,18 +100,18 @@ Route::middleware(['auth', 'prevent-back-history'])->group(function () {
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
     // Superadmin | Humas restricted routes
-    Route::middleware(['role:Superadmin|Humas'])->prefix('admin')->name('admin.')->group(function () {
+    Route::middleware(['role:Superadmin|Humas'])->prefix('admin')->name('admin.')->group(function (): void {
         Route::resource('categories', CategoryController::class)->except(['create', 'show', 'edit']);
         Route::post('posts/upload-image', [AdminPostController::class, 'uploadImage'])->name('posts.upload-image');
         Route::resource('posts', AdminPostController::class)->except(['show']);
     });
 
-    Route::middleware(['role:Superadmin|Bendahara'])->group(function () {
+    Route::middleware(['role:Superadmin|Bendahara'])->group(function (): void {
         // Settings
         Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
         Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
     });
-    Route::middleware(['role:Superadmin'])->group(function () {
+    Route::middleware(['role:Superadmin'])->group(function (): void {
         Route::resource('users', UserController::class)->except(['create', 'show', 'edit']);
         Route::resource('roles', RoleController::class)->only(['index', 'store', 'destroy']);
 

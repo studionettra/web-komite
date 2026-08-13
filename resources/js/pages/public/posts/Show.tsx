@@ -106,6 +106,8 @@ export default function PostShow({
                             <img 
                                 src={`/storage/${post.image_path}`} 
                                 alt={post.title} 
+                                fetchPriority="high"
+                                decoding="async"
                                 className="w-full h-auto max-h-[50vh] sm:max-h-[70vh] object-cover"
                             />
                         </div>
@@ -159,6 +161,8 @@ export default function PostShow({
                                             <img 
                                                 src={`/storage/${relatedPost.image_path}`} 
                                                 alt={relatedPost.title} 
+                                                loading="lazy"
+                                                decoding="async"
                                                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                             />
                                         </div>

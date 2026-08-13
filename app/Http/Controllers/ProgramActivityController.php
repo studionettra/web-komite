@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ProgramActivityController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate([
             'program_id' => 'required|exists:programs,id',
@@ -25,7 +25,7 @@ class ProgramActivityController extends Controller
         return back();
     }
 
-    public function update(Request $request, ProgramActivity $programActivity)
+    public function update(Request $request, ProgramActivity $programActivity): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -41,7 +41,7 @@ class ProgramActivityController extends Controller
         return back();
     }
 
-    public function destroy(ProgramActivity $programActivity)
+    public function destroy(ProgramActivity $programActivity): \Illuminate\Http\RedirectResponse
     {
 
         if ($programActivity->documents()->exists()) {

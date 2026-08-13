@@ -7,6 +7,7 @@ use App\Models\AcademicYear;
 use App\Models\Classroom;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Inertia\Inertia;
 
 class AcademicCalendarController extends Controller
@@ -22,10 +23,10 @@ class AcademicCalendarController extends Controller
         }
 
         $query = AcademicYear::with([
-            'months.activities' => function ($query) {
+            'months.activities' => function ($query): void {
                 $query->orderBy('start_day', 'asc');
             },
-            'months.learningPrograms' => function ($query) {
+            'months.learningPrograms' => function ($query): void {
                 $query->orderBy('start_day', 'asc');
             },
         ]);
@@ -49,6 +50,15 @@ class AcademicCalendarController extends Controller
 
     public function verifyAccess(Request $request)
     {
+        $key = 'verify-academic-'.$request->ip();
+
+        if (RateLimiter::tooManyAttempts($key, 5)) {
+            $seconds = RateLimiter::availableIn($key);
+            Alert::error('Terlalu Banyak Percobaan', "Mohon tunggu $seconds detik sebelum mencoba lagi.");
+
+            return back();
+        }
+
         $request->validate([
             'student_name' => 'required|string|min:3',
             'classroom_id' => 'required|exists:classrooms,id',
@@ -75,13 +85,14 @@ class AcademicCalendarController extends Controller
             ->get();
 
         // Pengecekan ketat (regex spasi dan case-insensitive) di level PHP untuk sisa kandidat
-        $matchedStudent = $potentialStudents->first(function ($student) use ($inputName) {
+        $matchedStudent = $potentialStudents->first(function ($student) use ($inputName): bool {
             $dbName = strtolower(trim(preg_replace('/\s+/', ' ', $student->name)));
 
             return $dbName === $inputName;
         });
 
         if ($matchedStudent) {
+            RateLimiter::clear($key);
             $request->session()->put('verified_academic_parent', true);
             $request->session()->put('verified_academic_classroom_id', $matchedStudent->classroom_id);
             Alert::success('Akses Diberikan', 'Selamat datang, Wali dari '.$matchedStudent->name);
@@ -101,6 +112,7 @@ class AcademicCalendarController extends Controller
             return redirect()->route('public.academic-calendar');
         }
 
+        RateLimiter::hit($key, 180);
         Alert::error('Akses Ditolak', 'Nama siswa tidak ditemukan. Pastikan ejaan sesuai dengan data sekolah.');
 
         activity('academic_access')

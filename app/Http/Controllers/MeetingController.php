@@ -19,7 +19,7 @@ class MeetingController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate([
             'date' => 'required|date',
@@ -47,7 +47,7 @@ class MeetingController extends Controller
         return back();
     }
 
-    public function update(Request $request, Meeting $meeting)
+    public function update(Request $request, Meeting $meeting): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate([
             'date' => 'required|date',
@@ -75,7 +75,7 @@ class MeetingController extends Controller
         return back();
     }
 
-    public function destroy(Meeting $meeting)
+    public function destroy(Meeting $meeting): \Illuminate\Http\RedirectResponse
     {
         foreach ($meeting->documents as $doc) {
             if ($doc->file_path) {

@@ -1,5 +1,5 @@
 import { Head, useForm, router, Link } from '@inertiajs/react';
-import { PencilSimple, Trash, Plus } from '@phosphor-icons/react';
+import { PencilSimple, Trash, Plus, X } from '@phosphor-icons/react';
 import type { FormEventHandler } from 'react';
 import { useState } from 'react';
 import Select from '../../components/ui/Select';
@@ -15,6 +15,7 @@ export default function UsersIndex({
 }) {
     const [isEditing, setIsEditing] = useState(false);
     const [editingId, setEditingId] = useState<number | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { data, setData, post, put, processing, errors, reset, clearErrors } =
         useForm({
@@ -29,6 +30,7 @@ export default function UsersIndex({
         setEditingId(null);
         reset();
         clearErrors();
+        setIsModalOpen(true);
     };
 
     const openEdit = (user: any) => {
@@ -41,6 +43,7 @@ export default function UsersIndex({
             password: '',
             role: user.roles[0]?.name || '',
         });
+        setIsModalOpen(true);
     };
 
     const submit: FormEventHandler = (e) => {
@@ -52,11 +55,15 @@ export default function UsersIndex({
                     reset();
                     setIsEditing(false);
                     setEditingId(null);
+                    setIsModalOpen(false);
                 },
             });
         } else {
             post('/users', {
-                onSuccess: () => reset(),
+                onSuccess: () => {
+                    reset();
+                    setIsModalOpen(false);
+                },
             });
         }
     };
@@ -71,144 +78,151 @@ export default function UsersIndex({
         <DashboardLayout>
             <Head title="Manajemen Pengguna" />
 
-            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-                    Manajemen Pengguna
-                </h1>
-                {!isEditing && (
-                    <button
-                        onClick={openCreate}
-                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
-                    >
-                        <Plus weight="bold" className="h-4 w-4" />
-                        Tambah Pengguna
-                    </button>
-                )}
+            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                <div>
+                    <h1 className="text-xl font-semibold tracking-tight text-slate-800">
+                        Manajemen Pengguna
+                    </h1>
+                    <p className="mt-1 text-sm text-slate-500">
+                        Kelola akun pengguna, reset password, dan hak akses
+                        sistem.
+                    </p>
+                </div>
+                <button
+                    onClick={openCreate}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-md active:translate-y-0 sm:w-auto"
+                >
+                    <Plus weight="bold" className="h-5 w-5" />
+                    <span>Pengguna Baru</span>
+                </button>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-                <div className="lg:col-span-4 xl:col-span-3">
-                    <div className="sticky top-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                        <div className="mb-5 flex items-center justify-between border-b border-slate-100 pb-4">
-                            <h2 className="text-base font-semibold text-slate-900">
-                                {isEditing
-                                    ? 'Edit Pengguna'
-                                    : 'Pengguna Baru'}
-                            </h2>
-                            {isEditing && (
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0">
+                    <div
+                        className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
+                        onClick={() => setIsModalOpen(false)}
+                    ></div>
+                    <div className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto custom-scrollbar transform rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
+                        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white px-8 py-6">
+                            <h3 className="text-lg font-semibold text-slate-900">
+                                {isEditing ? 'Edit Pengguna' : 'Pengguna Baru'}
+                            </h3>
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-slate-400 transition-all hover:bg-slate-100 hover:text-slate-600"
+                            >
+                                <X weight="bold" className="h-5 w-5" />
+                            </button>
+                        </div>
+                        
+                        <form onSubmit={submit}>
+                            <div className="space-y-6 px-8 py-6">
+                                <div>
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
+                                        Nama Lengkap
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={data.name}
+                                        onChange={(e) => setData('name', e.target.value)}
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                        required
+                                        placeholder="Nama pengguna"
+                                    />
+                                    {errors.name && (
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
+                                            {errors.name}
+                                        </div>
+                                    )}
+                                </div>
+                                <div>
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
+                                        Email
+                                    </label>
+                                    <input
+                                        type="email"
+                                        value={data.email}
+                                        onChange={(e) => setData('email', e.target.value)}
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                        required
+                                        placeholder="Alamat email"
+                                    />
+                                    {errors.email && (
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
+                                            {errors.email}
+                                        </div>
+                                    )}
+                                </div>
+                                <div>
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
+                                        Password{' '}
+                                        {isEditing && (
+                                            <span className="font-normal text-slate-400">
+                                                (Kosongkan jika tetap)
+                                            </span>
+                                        )}
+                                    </label>
+                                    <input
+                                        type="password"
+                                        value={data.password}
+                                        onChange={(e) => setData('password', e.target.value)}
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                        required={!isEditing}
+                                        placeholder="Minimal 6 karakter"
+                                    />
+                                    {errors.password && (
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
+                                            {errors.password}
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="relative z-20">
+                                    <label className="mb-2 block text-sm font-medium text-slate-700">
+                                        Role
+                                    </label>
+                                    <Select
+                                        value={data.role}
+                                        onChange={(val) => setData('role', val as string)}
+                                        options={[
+                                            { value: '', label: 'Pilih Role...' },
+                                            ...roles.map((r) => ({
+                                                value: r.name,
+                                                label: r.name,
+                                            })),
+                                        ]}
+                                        placeholder="Pilih Role..."
+                                    />
+                                    {errors.role && (
+                                        <div className="mt-2 text-sm font-medium text-rose-500">
+                                            {errors.role}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            
+                            <div className="flex flex-col-reverse gap-3 border-t border-slate-100 bg-slate-50 px-8 py-6 sm:flex-row sm:justify-end">
                                 <button
-                                    onClick={openCreate}
-                                    className="text-xs font-medium text-blue-600 hover:text-blue-700 hover:underline"
+                                    type="button"
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="inline-flex w-full justify-center rounded-2xl bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-300 transition-all ring-inset hover:bg-slate-50 sm:w-auto"
                                 >
                                     Batal
                                 </button>
-                            )}
-                        </div>
-
-                        <form onSubmit={submit} className="space-y-4">
-                            <div>
-                                <label className="mb-1.5 block text-xs font-semibold text-slate-700">
-                                    Nama Lengkap
-                                </label>
-                                <input
-                                    type="text"
-                                    value={data.name}
-                                    onChange={(e) =>
-                                        setData('name', e.target.value)
-                                    }
-                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    required
-                                    placeholder="Nama pengguna"
-                                />
-                                {errors.name && (
-                                    <div className="mt-1.5 text-xs font-medium text-rose-500">
-                                        {errors.name}
-                                    </div>
-                                )}
+                                <button
+                                    type="submit"
+                                    disabled={processing}
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95 sm:w-auto"
+                                >
+                                    {processing ? 'Menyimpan...' : 'Simpan Pengguna'}
+                                </button>
                             </div>
-                            <div>
-                                <label className="mb-1.5 block text-xs font-semibold text-slate-700">
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    value={data.email}
-                                    onChange={(e) =>
-                                        setData('email', e.target.value)
-                                    }
-                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    required
-                                    placeholder="Alamat email"
-                                />
-                                {errors.email && (
-                                    <div className="mt-1.5 text-xs font-medium text-rose-500">
-                                        {errors.email}
-                                    </div>
-                                )}
-                            </div>
-                            <div>
-                                <label className="mb-1.5 block text-xs font-semibold text-slate-700">
-                                    Password{' '}
-                                    {isEditing && (
-                                        <span className="font-normal text-slate-400">
-                                            (Kosongkan jika tetap)
-                                        </span>
-                                    )}
-                                </label>
-                                <input
-                                    type="password"
-                                    value={data.password}
-                                    onChange={(e) =>
-                                        setData('password', e.target.value)
-                                    }
-                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    required={!isEditing}
-                                    placeholder="Minimal 6 karakter"
-                                />
-                                {errors.password && (
-                                    <div className="mt-1.5 text-xs font-medium text-rose-500">
-                                        {errors.password}
-                                    </div>
-                                )}
-                            </div>
-                            <div className="relative z-20">
-                                <label className="mb-1.5 block text-xs font-semibold text-slate-700">
-                                    Role
-                                </label>
-                                <Select
-                                    value={data.role}
-                                    onChange={(val) =>
-                                        setData('role', val as string)
-                                    }
-                                    options={[
-                                        { value: '', label: 'Pilih Role...' },
-                                        ...roles.map((r) => ({
-                                            value: r.name,
-                                            label: r.name,
-                                        })),
-                                    ]}
-                                    placeholder="Pilih Role..."
-                                />
-                                {errors.role && (
-                                    <div className="mt-1.5 text-xs font-medium text-rose-500">
-                                        {errors.role}
-                                    </div>
-                                )}
-                            </div>
-                            <button
-                                type="submit"
-                                disabled={processing}
-                                className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
-                            >
-                                {processing
-                                    ? 'Menyimpan...'
-                                    : 'Simpan Pengguna'}
-                            </button>
                         </form>
                     </div>
                 </div>
+            )}
 
-                <div className="lg:col-span-8 xl:col-span-9">
+            <div className="w-full">
                     <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y divide-slate-200">
@@ -216,19 +230,19 @@ export default function UsersIndex({
                                     <tr>
                                         <th
                                             scope="col"
-                                            className="px-4 py-3 text-left text-[11px] font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
                                         >
                                             Nama & Email
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-4 py-3 text-left text-[11px] font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
                                         >
                                             Role
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-4 py-3 text-right text-[11px] font-bold tracking-wider text-slate-500 uppercase"
+                                            className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase"
                                         >
                                             Aksi
                                         </th>
@@ -314,7 +328,6 @@ export default function UsersIndex({
                         </div>
                     </div>
                 </div>
-            </div>
         </DashboardLayout>
     );
 }

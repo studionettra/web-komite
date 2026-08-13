@@ -11,7 +11,7 @@ use Inertia\Inertia;
 
 class AdminAcademicMonthController extends Controller
 {
-    public function store(Request $request, AcademicYear $academicYear)
+    public function store(Request $request, AcademicYear $academicYear): \Illuminate\Http\RedirectResponse
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -39,7 +39,7 @@ class AdminAcademicMonthController extends Controller
         ]);
     }
 
-    public function update(Request $request, AcademicMonth $academicMonth)
+    public function update(Request $request, AcademicMonth $academicMonth): \Illuminate\Http\RedirectResponse
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -60,7 +60,7 @@ class AdminAcademicMonthController extends Controller
             'learning_programs.*.description' => 'nullable|string',
         ]);
 
-        DB::transaction(function () use ($data, $academicMonth) {
+        DB::transaction(function () use ($data, $academicMonth): void {
             $academicMonth->fill([
                 'name' => $data['name'],
                 'year' => $data['year'],
@@ -111,7 +111,7 @@ class AdminAcademicMonthController extends Controller
         return back();
     }
 
-    public function destroy(AcademicMonth $academicMonth)
+    public function destroy(AcademicMonth $academicMonth): \Illuminate\Http\RedirectResponse
     {
         if ($academicMonth->activities()->exists() || $academicMonth->learningPrograms()->exists()) {
             Alert::error('Gagal', 'Tidak dapat menghapus bulan ini karena masih memiliki kegiatan atau program pembelajaran.');

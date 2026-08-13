@@ -23,6 +23,14 @@ class PostController extends Controller
             }
         }
 
+        if ($request->has('search') && ! empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search): void {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
+            });
+        }
+
         $posts = $query->paginate(12)->withQueryString();
         $categories = Category::has('posts')->orderBy('name', 'asc')->get();
 
@@ -30,6 +38,7 @@ class PostController extends Controller
             'posts' => $posts,
             'categories' => $categories,
             'currentCategory' => $request->category,
+            'currentSearch' => $request->search,
         ]);
     }
 
@@ -43,22 +52,22 @@ class PostController extends Controller
         $relatedPosts = Post::with(['category'])
             ->where('is_published', true)
             ->where('id', '!=', $post->id)
-            ->when($post->category_id, function ($query) use ($post) {
+            ->when($post->category_id, function ($query) use ($post): void {
                 $query->where('category_id', $post->category_id);
             })
             ->latest('published_at')
             ->take(3)
             ->get();
 
-        $defaultDesc = mb_substr(strip_tags($post->content), 0, 160) . '...';
-        
+        $defaultDesc = mb_substr(strip_tags($post->content), 0, 160).'...';
+
         return Inertia::render('public/posts/Show', [
             'post' => $post,
             'relatedPosts' => $relatedPosts,
             'meta' => [
-                'title' => $post->seo_title ?: ($post->title . ' | Komite TKIT Al-Ikhlash'),
+                'title' => $post->seo_title ?: ($post->title.' | Komite TKIT Al-Ikhlash'),
                 'description' => $post->seo_description ?: $defaultDesc,
-                'image' => $post->image_path ? asset('storage/' . $post->image_path) : null,
+                'image' => $post->image_path ? asset('storage/'.$post->image_path) : null,
                 'type' => 'article',
             ],
         ]);

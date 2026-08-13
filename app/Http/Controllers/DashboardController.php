@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use App\Models\Meeting;
+use App\Models\Post;
 use App\Models\Program;
 use App\Models\Student;
-use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\Analytics\Facades\Analytics;
+use Spatie\Analytics\Period;
 
 class DashboardController extends Controller
 {
@@ -73,31 +75,31 @@ class DashboardController extends Controller
 
         if (in_array($role, ['Superadmin', 'Humas'])) {
             try {
-                $analytics = \Spatie\Analytics\Facades\Analytics::fetchTotalVisitorsAndPageViews(\Spatie\Analytics\Period::days(7));
+                $analytics = Analytics::fetchTotalVisitorsAndPageViews(Period::days(7));
                 $data['analytics'] = [
                     'visitors' => $analytics->sum('activeUsers'),
                     'pageViews' => $analytics->sum('screenPageViews'),
-                    'chart' => $analytics->map(function ($item) {
+                    'chart' => $analytics->map(function (array $item): array {
                         return [
                             'date' => $item['date']->format('d M'),
                             'visitors' => (int) $item['activeUsers'],
-                            'pageViews' => (int) $item['screenPageViews']
+                            'pageViews' => (int) $item['screenPageViews'],
                         ];
-                    })->values()->toArray()
+                    })->values()->toArray(),
                 ];
             } catch (\Exception $e) {
                 $message = $e->getMessage();
                 $friendlyMessage = 'Gagal memuat data analitik. Pastikan Google Analytics API sudah diaktifkan.';
-                
+
                 if (str_contains($message, 'SERVICE_DISABLED') || str_contains($message, 'not been used')) {
                     $friendlyMessage = 'Google Analytics belum dikonfigurasi atau belum diaktifkan di Google Cloud Project Anda.';
-                } else if (str_contains($message, 'credentials')) {
+                } elseif (str_contains($message, 'credentials')) {
                     $friendlyMessage = 'Kredensial Google Analytics tidak valid atau tidak ditemukan.';
                 }
 
                 $data['analytics'] = [
                     'error' => true,
-                    'message' => $friendlyMessage
+                    'message' => $friendlyMessage,
                 ];
             }
         }
