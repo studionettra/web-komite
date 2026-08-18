@@ -13,7 +13,7 @@ export default function AnggotaDashboard({
             </h2>
 
             {/* Transparency Card */}
-            <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-5 text-white shadow-lg shadow-emerald-900/20 ">
+            <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-5 text-white shadow-lg shadow-emerald-900/20">
                 <div className="pointer-events-none absolute top-0 right-0 -mt-16 -mr-16 h-48 w-48 rounded-full bg-white/10 blur-2xl"></div>
                 <div className="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
                     <div>

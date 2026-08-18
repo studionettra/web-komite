@@ -41,8 +41,8 @@ export default function AcademicCalendar({ academicYear, allYears }: any) {
         return (
             <PublicLayout>
                 <Head title="Kalender Akademik - KBIT-TKIT Al-Ikhlash">
-                <meta name="robots" content="noindex, nofollow" />
-            </Head>
+                    <meta name="robots" content="noindex, nofollow" />
+                </Head>
                 <div className="flex min-h-[50vh] items-center justify-center">
                     <p className="text-slate-500">
                         Belum ada data kalender akademik.

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Response;
 
 class SitemapController extends Controller
 {
-    public function index(): \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+    public function index(): ResponseFactory|Response
     {
         $baseUrl = config('app.url');
 

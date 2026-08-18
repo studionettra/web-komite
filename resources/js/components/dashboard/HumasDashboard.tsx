@@ -8,10 +8,14 @@ import {
     CheckCircle,
     Users,
     ArrowUpRight,
-    ChartLineUp
+    ChartLineUp,
 } from '@phosphor-icons/react';
 
-export default function HumasDashboard({ metrics, recent_posts: recentPosts, analytics }: any) {
+export default function HumasDashboard({
+    metrics,
+    recent_posts: recentPosts,
+    analytics,
+}: any) {
     return (
         <div className="space-y-6 sm:space-y-8">
             <h2 className="mb-1 px-1 text-lg font-bold tracking-tight text-slate-900">
@@ -87,7 +91,10 @@ export default function HumasDashboard({ metrics, recent_posts: recentPosts, ana
                     <div className="relative z-10 flex h-full flex-col justify-between">
                         <div className="flex items-center gap-3">
                             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600">
-                                <FileText weight="duotone" className="h-6 w-6" />
+                                <FileText
+                                    weight="duotone"
+                                    className="h-6 w-6"
+                                />
                             </div>
                             <span className="text-sm font-bold text-slate-600">
                                 Konsep (Draft)
@@ -112,43 +119,60 @@ export default function HumasDashboard({ metrics, recent_posts: recentPosts, ana
                 <h2 className="mb-4 px-1 text-lg font-bold tracking-tight text-slate-900">
                     Kinerja Website (7 Hari Terakhir)
                 </h2>
-                
+
                 {analytics?.error ? (
-                    <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-200 border-dashed bg-slate-50/50 p-8 text-center">
+                    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center">
                         <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400">
                             <ChartLineUp weight="duotone" className="h-6 w-6" />
                         </div>
-                        <h4 className="text-sm font-bold text-slate-700">Analitik Belum Tersedia</h4>
+                        <h4 className="text-sm font-bold text-slate-700">
+                            Analitik Belum Tersedia
+                        </h4>
                         <p className="mt-1 max-w-sm text-xs text-slate-500">
-                            {analytics.message || 'Data statistik pengunjung belum bisa dimuat saat ini.'}
+                            {analytics.message ||
+                                'Data statistik pengunjung belum bisa dimuat saat ini.'}
                         </p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         {/* Card 1: Visitors */}
                         <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/50 transition-all hover:shadow-md hover:shadow-blue-900/5">
-                            <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-blue-50/50 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                            <div className="absolute -top-6 -right-6 h-24 w-24 rounded-full bg-blue-50/50 opacity-0 transition-opacity group-hover:opacity-100"></div>
                             <div className="relative z-10 flex items-start justify-between">
                                 <div>
-                                    <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Pengunjung</div>
-                                    <div className="mt-2 text-4xl font-extrabold tracking-tighter text-slate-900">{analytics?.visitors || 0}</div>
+                                    <div className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                        Total Pengunjung
+                                    </div>
+                                    <div className="mt-2 text-4xl font-extrabold tracking-tighter text-slate-900">
+                                        {analytics?.visitors || 0}
+                                    </div>
                                 </div>
                                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600 transition-transform duration-300 group-hover:scale-110">
-                                    <Users weight="duotone" className="h-6 w-6" />
+                                    <Users
+                                        weight="duotone"
+                                        className="h-6 w-6"
+                                    />
                                 </div>
                             </div>
                         </div>
-                        
+
                         {/* Card 2: Page Views */}
                         <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/50 transition-all hover:shadow-md hover:shadow-emerald-900/5">
-                            <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-emerald-50/50 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                            <div className="absolute -top-6 -right-6 h-24 w-24 rounded-full bg-emerald-50/50 opacity-0 transition-opacity group-hover:opacity-100"></div>
                             <div className="relative z-10 flex items-start justify-between">
                                 <div>
-                                    <div className="text-xs font-semibold uppercase tracking-wider text-slate-500">Tayangan Halaman</div>
-                                    <div className="mt-2 text-4xl font-extrabold tracking-tighter text-slate-900">{analytics?.pageViews || 0}</div>
+                                    <div className="text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                        Tayangan Halaman
+                                    </div>
+                                    <div className="mt-2 text-4xl font-extrabold tracking-tighter text-slate-900">
+                                        {analytics?.pageViews || 0}
+                                    </div>
                                 </div>
                                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 transition-transform duration-300 group-hover:scale-110">
-                                    <ArrowUpRight weight="duotone" className="h-6 w-6" />
+                                    <ArrowUpRight
+                                        weight="duotone"
+                                        className="h-6 w-6"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -211,17 +235,20 @@ export default function HumasDashboard({ metrics, recent_posts: recentPosts, ana
                                                     <ClockCounterClockwise className="h-3.5 w-3.5" />
                                                     {new Date(
                                                         post.created_at,
-                                                    ).toLocaleDateString('id-ID', {
-                                                        day: 'numeric',
-                                                        month: 'short',
-                                                        year: 'numeric',
-                                                    })}
+                                                    ).toLocaleDateString(
+                                                        'id-ID',
+                                                        {
+                                                            day: 'numeric',
+                                                            month: 'short',
+                                                            year: 'numeric',
+                                                        },
+                                                    )}
                                                 </span>
                                                 <span className="text-slate-300">
                                                     •
                                                 </span>
                                                 <span
-                                                    className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                                                    className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase ${
                                                         post.is_published
                                                             ? 'bg-emerald-100 text-emerald-700'
                                                             : 'bg-amber-100 text-amber-700'

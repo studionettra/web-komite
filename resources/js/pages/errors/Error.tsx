@@ -2,26 +2,29 @@ import { Link, Head } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 
 export default function ErrorPage({ status }: { status: number }) {
-    const title = {
-        503: '503',
-        500: '500',
-        404: '404',
-        403: '403',
-    }[status] || 'Error';
+    const title =
+        {
+            503: '503',
+            500: '500',
+            404: '404',
+            403: '403',
+        }[status] || 'Error';
 
-    const description = {
-        503: 'Layanan sedang dalam perbaikan. Kami akan segera kembali.',
-        500: 'Oops, terjadi kesalahan pada sistem kami. Coba lagi beberapa saat lagi.',
-        404: 'Halaman tidak ditemukan. Mungkin alamatnya salah ketik atau halamannya sudah dipindah.',
-        403: 'Maaf, Anda tidak memiliki akses ke halaman ini.',
-    }[status] || 'Terjadi kesalahan tak terduga.';
+    const description =
+        {
+            503: 'Layanan sedang dalam perbaikan. Kami akan segera kembali.',
+            500: 'Oops, terjadi kesalahan pada sistem kami. Coba lagi beberapa saat lagi.',
+            404: 'Halaman tidak ditemukan. Mungkin alamatnya salah ketik atau halamannya sudah dipindah.',
+            403: 'Maaf, Anda tidak memiliki akses ke halaman ini.',
+        }[status] || 'Terjadi kesalahan tak terduga.';
 
-    const heading = {
-        503: 'Sedang Perbaikan',
-        500: 'Kesalahan Sistem',
-        404: 'Halaman Hilang',
-        403: 'Akses Ditolak',
-    }[status] || 'Terjadi Kesalahan';
+    const heading =
+        {
+            503: 'Sedang Perbaikan',
+            500: 'Kesalahan Sistem',
+            404: 'Halaman Hilang',
+            403: 'Akses Ditolak',
+        }[status] || 'Terjadi Kesalahan';
 
     // Abstract Shapes for background (Kindergarten Theme)
     const shapes = [
@@ -31,7 +34,7 @@ export default function ErrorPage({ status }: { status: number }) {
             position: '-top-10 -left-20',
             borderRadius: 'rounded-full',
             animate: { y: [0, 20, 0], rotate: [0, 10, -10, 0] },
-            duration: 8
+            duration: 8,
         },
         {
             color: 'bg-teal-400',
@@ -39,7 +42,7 @@ export default function ErrorPage({ status }: { status: number }) {
             position: 'top-20 -right-10',
             borderRadius: 'rounded-[40px]',
             animate: { y: [0, -30, 0], rotate: [0, -15, 10, 0] },
-            duration: 9
+            duration: 9,
         },
         {
             color: 'bg-rose-400',
@@ -47,7 +50,7 @@ export default function ErrorPage({ status }: { status: number }) {
             position: '-bottom-16 -left-10',
             borderRadius: 'rounded-[60px]',
             animate: { y: [0, -20, 0], rotate: [0, 20, -10, 0] },
-            duration: 10
+            duration: 10,
         },
         {
             color: 'bg-blue-300',
@@ -55,16 +58,16 @@ export default function ErrorPage({ status }: { status: number }) {
             position: 'bottom-10 right-10',
             borderRadius: 'rounded-full',
             animate: { y: [0, 15, 0], rotate: [0, -20, 15, 0] },
-            duration: 7
-        }
+            duration: 7,
+        },
     ];
 
     return (
-        <div className="relative min-h-[100dvh] flex items-center justify-center bg-orange-50/50 overflow-hidden font-sans selection:bg-teal-200">
+        <div className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-orange-50/50 font-sans selection:bg-teal-200">
             <Head title={heading} />
 
             {/* Background Abstract Floating Shapes */}
-            <div className="absolute inset-0 pointer-events-none opacity-30 sm:opacity-50 blur-3xl sm:blur-[60px]">
+            <div className="pointer-events-none absolute inset-0 opacity-30 blur-3xl sm:opacity-50 sm:blur-[60px]">
                 {shapes.map((shape, i) => (
                     <motion.div
                         key={i}
@@ -73,7 +76,7 @@ export default function ErrorPage({ status }: { status: number }) {
                         transition={{
                             duration: shape.duration,
                             repeat: Infinity,
-                            ease: "easeInOut"
+                            ease: 'easeInOut',
                         }}
                     />
                 ))}
@@ -86,29 +89,33 @@ export default function ErrorPage({ status }: { status: number }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <div className="relative inline-block mb-6">
-                        <span className="text-[120px] sm:text-[160px] font-black leading-none text-slate-800 drop-shadow-sm">
+                    <div className="relative mb-6 inline-block">
+                        <span className="text-[120px] leading-none font-black text-slate-800 drop-shadow-sm sm:text-[160px]">
                             {title}
                         </span>
-                        
+
                         {/* Playful indicator dots matching the status */}
-                        <motion.div 
-                            className="absolute -top-4 -right-8 w-12 h-12 bg-rose-400 rounded-full"
+                        <motion.div
+                            className="absolute -top-4 -right-8 h-12 w-12 rounded-full bg-rose-400"
                             animate={{ scale: [1, 1.1, 1] }}
                             transition={{ duration: 2, repeat: Infinity }}
                         />
-                        <motion.div 
-                            className="absolute bottom-4 -left-4 w-6 h-6 bg-yellow-400 rounded-full"
+                        <motion.div
+                            className="absolute bottom-4 -left-4 h-6 w-6 rounded-full bg-yellow-400"
                             animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
+                            transition={{
+                                duration: 2.5,
+                                repeat: Infinity,
+                                delay: 0.5,
+                            }}
                         />
                     </div>
 
-                    <h1 className="text-3xl sm:text-4xl font-semibold text-slate-800 mb-4 tracking-tight">
+                    <h1 className="mb-4 text-3xl font-semibold tracking-tight text-slate-800 sm:text-4xl">
                         {heading}
                     </h1>
-                    
-                    <p className="text-lg text-slate-600 mb-10 max-w-sm mx-auto leading-relaxed">
+
+                    <p className="mx-auto mb-10 max-w-sm text-lg leading-relaxed text-slate-600">
                         {description}
                     </p>
 

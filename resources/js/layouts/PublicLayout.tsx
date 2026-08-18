@@ -1,5 +1,4 @@
 import { Link, usePage } from '@inertiajs/react';
-import { useRef, useEffect, useState } from 'react';
 import {
     House,
     Users,
@@ -18,6 +17,7 @@ import {
     Sun,
     Newspaper,
 } from '@phosphor-icons/react';
+import { useRef, useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import appLogo from '../../images/logo/logo-komite-alikhlash-jatipadang.png';
 import FlashMessage from '../components/FlashMessage';
@@ -39,7 +39,7 @@ export default function PublicLayout({
                     observer.disconnect();
                 }
             },
-            { threshold: 0.2 }
+            { threshold: 0.2 },
         );
 
         if (footerRef.current) {
@@ -51,6 +51,7 @@ export default function PublicLayout({
 
     const navLinkClass = (path: string) => {
         const isActive = path === '/' ? url === '/' : url.startsWith(path);
+
         return `relative px-4 py-2 font-bold text-sm transition-all duration-300 rounded-full ${isActive ? 'bg-blue-100/50 text-blue-600 shadow-sm' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'}`;
     };
 
@@ -63,55 +64,55 @@ export default function PublicLayout({
             <div className="fixed top-4 z-50 w-full">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <header className="flex h-16 w-full items-center justify-between rounded-full border border-white/60 bg-white/70 px-4 shadow-xl shadow-sky-900/5 backdrop-blur-xl transition-all duration-300 sm:px-6">
-                    <div className="flex w-full items-center justify-center md:w-auto md:justify-start">
-                        <Link
-                            href="/"
-                            className="group flex items-center gap-2.5 sm:gap-3"
-                        >
-                            <div className="flex h-9 w-9 shrink-0 items-center justify-center transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10">
-                                <img
-                                    src={appLogo}
-                                    alt="Logo Komite"
-                                    className="h-full w-full object-contain drop-shadow-sm"
-                                />
-                            </div>
-                            <div className="flex flex-col justify-center">
-                                <span className="mb-0.5 text-[8.5px] leading-none font-bold tracking-widest text-slate-500 uppercase sm:text-[10px]">
-                                    Komite KBIT-TKIT
-                                </span>
-                                <span className="bg-linear-to-r from-slate-900 to-slate-700 bg-clip-text text-[11px] leading-none font-extrabold whitespace-nowrap text-transparent transition-all duration-300 group-hover:to-blue-600 sm:text-sm">
-                                    Al-Ikhlash Pasar Minggu
-                                </span>
-                            </div>
-                        </Link>
-                    </div>
+                        <div className="flex w-full items-center justify-center md:w-auto md:justify-start">
+                            <Link
+                                href="/"
+                                className="group flex items-center gap-2.5 sm:gap-3"
+                            >
+                                <div className="flex h-9 w-9 shrink-0 items-center justify-center transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10">
+                                    <img
+                                        src={appLogo}
+                                        alt="Logo Komite"
+                                        className="h-full w-full object-contain drop-shadow-sm"
+                                    />
+                                </div>
+                                <div className="flex flex-col justify-center">
+                                    <span className="mb-0.5 text-[8.5px] leading-none font-bold tracking-widest text-slate-500 uppercase sm:text-[10px]">
+                                        Komite KBIT-TKIT
+                                    </span>
+                                    <span className="bg-linear-to-r from-slate-900 to-slate-700 bg-clip-text text-[11px] leading-none font-extrabold whitespace-nowrap text-transparent transition-all duration-300 group-hover:to-blue-600 sm:text-sm">
+                                        Al-Ikhlash Pasar Minggu
+                                    </span>
+                                </div>
+                            </Link>
+                        </div>
 
-                    <div className="hidden items-center gap-2 md:flex">
-                        <nav className="flex items-center gap-2">
-                            <Link href="/" className={navLinkClass('/')}>
-                                Beranda
-                            </Link>
-                            <Link
-                                href="/pengurus"
-                                className={navLinkClass('/pengurus')}
-                            >
-                                Pengurus
-                            </Link>
-                            <Link
-                                href="/program"
-                                className={navLinkClass('/program')}
-                            >
-                                Program
-                            </Link>
-                            <Link
-                                href="/kabar"
-                                className={navLinkClass('/kabar')}
-                            >
-                                Kabar
-                            </Link>
-                        </nav>
-                    </div>
-                </header>
+                        <div className="hidden items-center gap-2 md:flex">
+                            <nav className="flex items-center gap-2">
+                                <Link href="/" className={navLinkClass('/')}>
+                                    Beranda
+                                </Link>
+                                <Link
+                                    href="/pengurus"
+                                    className={navLinkClass('/pengurus')}
+                                >
+                                    Pengurus
+                                </Link>
+                                <Link
+                                    href="/program"
+                                    className={navLinkClass('/program')}
+                                >
+                                    Program
+                                </Link>
+                                <Link
+                                    href="/kabar"
+                                    className={navLinkClass('/kabar')}
+                                >
+                                    Kabar
+                                </Link>
+                            </nav>
+                        </div>
+                    </header>
                 </div>
             </div>
 
@@ -146,7 +147,7 @@ export default function PublicLayout({
                         </div>
                     </div>
                     <div
-                        className={`absolute bottom-[2%] left-[10%] md:bottom-[10%] md:left-[25%] -z-10 origin-top-left transition-all delay-500 duration-1000 ease-out ${isLoaded ? 'translate-x-[50%] -translate-y-[20%] scale-100 rotate-[25deg] opacity-80' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                        className={`absolute bottom-[2%] left-[10%] -z-10 origin-top-left transition-all delay-500 duration-1000 ease-out md:bottom-[10%] md:left-[25%] ${isLoaded ? 'translate-x-[50%] -translate-y-[20%] scale-100 rotate-[25deg] opacity-80' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
                     >
                         <div className="flex h-28 w-28 items-center justify-center rounded-[2.5rem] bg-emerald-100 shadow-lg shadow-emerald-200/50 sm:h-36 sm:w-36 sm:rounded-[3rem]">
                             <Smiley
@@ -156,7 +157,7 @@ export default function PublicLayout({
                         </div>
                     </div>
                     <div
-                        className={`absolute bottom-[8%] right-[10%] md:bottom-[15%] md:right-[5%] -z-10 origin-top-right transition-all delay-700 duration-1000 ease-out ${isLoaded ? '-translate-x-[30%] -translate-y-[30%] scale-100 rotate-[-20deg] opacity-80' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
+                        className={`absolute right-[10%] bottom-[8%] -z-10 origin-top-right transition-all delay-700 duration-1000 ease-out md:right-[5%] md:bottom-[15%] ${isLoaded ? '-translate-x-[30%] -translate-y-[30%] scale-100 rotate-[-20deg] opacity-80' : 'translate-x-0 translate-y-0 scale-50 rotate-0 opacity-0'}`}
                     >
                         <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] bg-pink-100 shadow-lg shadow-pink-200/50 sm:h-32 sm:w-32 sm:rounded-[2.5rem]">
                             <Backpack
@@ -319,25 +320,33 @@ export default function PublicLayout({
                                 >
                                     Kebijakan Privasi
                                 </Link>
-                                <span className="hidden text-slate-300 sm:inline">&middot;</span>
+                                <span className="hidden text-slate-300 sm:inline">
+                                    &middot;
+                                </span>
                                 <Link
                                     href="/syarat-dan-ketentuan"
                                     className="font-semibold text-slate-600 transition-colors hover:text-blue-600"
                                 >
                                     Syarat &amp; Ketentuan
                                 </Link>
-                                <span className="hidden text-slate-300 sm:inline">&middot;</span>
+                                <span className="hidden text-slate-300 sm:inline">
+                                    &middot;
+                                </span>
                                 <Link
                                     href="/login"
                                     className="inline-flex items-center gap-1.5 text-slate-400 transition-colors hover:text-blue-600"
                                 >
-                                    <SignIn weight="regular" className="h-3.5 w-3.5" />
+                                    <SignIn
+                                        weight="regular"
+                                        className="h-3.5 w-3.5"
+                                    />
                                     Login Pengurus
                                 </Link>
                             </div>
                             <div className="mt-4 flex flex-col items-center justify-between gap-2 text-xs text-slate-400 sm:flex-row">
                                 <span>
-                                    &copy; {new Date().getFullYear()} Komite TKIT Al-Ikhlash. Hak Cipta Dilindungi.
+                                    &copy; {new Date().getFullYear()} Komite
+                                    TKIT Al-Ikhlash. Hak Cipta Dilindungi.
                                 </span>
                                 <span>
                                     Powered by{' '}
@@ -425,7 +434,6 @@ export default function PublicLayout({
                                 Kabar
                             </span>
                         </Link>
-
                     </div>
                 </nav>
             </div>

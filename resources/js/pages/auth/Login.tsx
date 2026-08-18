@@ -1,5 +1,4 @@
 import { useForm, Head } from '@inertiajs/react';
-import type { FormEventHandler } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import {
     EnvelopeSimple,
@@ -7,6 +6,7 @@ import {
     WarningCircle,
     Sparkle,
 } from '@phosphor-icons/react';
+import type { FormEventHandler } from 'react';
 import appLogo from '../../../images/logo/logo-komite-alikhlash-jatipadang.png';
 import PublicLayout from '../../layouts/PublicLayout';
 
@@ -58,7 +58,7 @@ export default function Login() {
                 <div className="absolute top-10 left-10 h-64 w-64 rounded-full bg-blue-400/20 mix-blend-multiply blur-3xl"></div>
                 <div className="absolute right-10 bottom-10 h-64 w-64 rounded-full bg-pink-400/20 mix-blend-multiply blur-3xl"></div>
 
-                <div className="mt-3 relative w-full max-w-md rounded-2xl border border-white/50 bg-white/80 p-6 shadow-2xl shadow-sky-900/10 backdrop-blur-xl sm:p-10">
+                <div className="relative mt-3 w-full max-w-md rounded-2xl border border-white/50 bg-white/80 p-6 shadow-2xl shadow-sky-900/10 backdrop-blur-xl sm:p-10">
                     {/* Decorative Top Accent */}
                     <div className="absolute top-0 left-1/2 h-1.5 w-1/3 -translate-x-1/2 rounded-b-full bg-linear-to-r from-blue-400 via-sky-400 to-emerald-400"></div>
 

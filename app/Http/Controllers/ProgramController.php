@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Alert;
 use App\Models\Program;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -46,7 +47,7 @@ class ProgramController extends Controller
         ]);
     }
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -79,7 +80,7 @@ class ProgramController extends Controller
         return back();
     }
 
-    public function update(Request $request, Program $program): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, Program $program): RedirectResponse
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -126,7 +127,7 @@ class ProgramController extends Controller
         return back();
     }
 
-    public function destroy(Program $program): \Illuminate\Http\RedirectResponse
+    public function destroy(Program $program): RedirectResponse
     {
 
         if ($program->documents()->exists()) {

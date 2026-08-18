@@ -103,7 +103,7 @@ export default function UsersIndex({
                         className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
                         onClick={() => setIsModalOpen(false)}
                     ></div>
-                    <div className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto custom-scrollbar transform rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
+                    <div className="custom-scrollbar relative max-h-[90vh] w-full max-w-xl transform overflow-y-auto rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
                         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white px-8 py-6">
                             <h3 className="text-lg font-semibold text-slate-900">
                                 {isEditing ? 'Edit Pengguna' : 'Pengguna Baru'}
@@ -115,7 +115,7 @@ export default function UsersIndex({
                                 <X weight="bold" className="h-5 w-5" />
                             </button>
                         </div>
-                        
+
                         <form onSubmit={submit}>
                             <div className="space-y-6 px-8 py-6">
                                 <div>
@@ -125,8 +125,10 @@ export default function UsersIndex({
                                     <input
                                         type="text"
                                         value={data.name}
-                                        onChange={(e) => setData('name', e.target.value)}
-                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                        onChange={(e) =>
+                                            setData('name', e.target.value)
+                                        }
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         required
                                         placeholder="Nama pengguna"
                                     />
@@ -143,8 +145,10 @@ export default function UsersIndex({
                                     <input
                                         type="email"
                                         value={data.email}
-                                        onChange={(e) => setData('email', e.target.value)}
-                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                        onChange={(e) =>
+                                            setData('email', e.target.value)
+                                        }
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         required
                                         placeholder="Alamat email"
                                     />
@@ -166,8 +170,10 @@ export default function UsersIndex({
                                     <input
                                         type="password"
                                         value={data.password}
-                                        onChange={(e) => setData('password', e.target.value)}
-                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                        onChange={(e) =>
+                                            setData('password', e.target.value)
+                                        }
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         required={!isEditing}
                                         placeholder="Minimal 6 karakter"
                                     />
@@ -183,9 +189,14 @@ export default function UsersIndex({
                                     </label>
                                     <Select
                                         value={data.role}
-                                        onChange={(val) => setData('role', val as string)}
+                                        onChange={(val) =>
+                                            setData('role', val as string)
+                                        }
                                         options={[
-                                            { value: '', label: 'Pilih Role...' },
+                                            {
+                                                value: '',
+                                                label: 'Pilih Role...',
+                                            },
                                             ...roles.map((r) => ({
                                                 value: r.name,
                                                 label: r.name,
@@ -200,7 +211,7 @@ export default function UsersIndex({
                                     )}
                                 </div>
                             </div>
-                            
+
                             <div className="flex flex-col-reverse gap-3 border-t border-slate-100 bg-slate-50 px-8 py-6 sm:flex-row sm:justify-end">
                                 <button
                                     type="button"
@@ -214,7 +225,9 @@ export default function UsersIndex({
                                     disabled={processing}
                                     className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95 sm:w-auto"
                                 >
-                                    {processing ? 'Menyimpan...' : 'Simpan Pengguna'}
+                                    {processing
+                                        ? 'Menyimpan...'
+                                        : 'Simpan Pengguna'}
                                 </button>
                             </div>
                         </form>
@@ -223,111 +236,139 @@ export default function UsersIndex({
             )}
 
             <div className="w-full">
-                    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-slate-200">
-                                <thead className="bg-slate-50">
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-slate-200">
+                            <thead className="bg-slate-50">
+                                <tr>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                    >
+                                        Nama & Email
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                    >
+                                        Role
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                    >
+                                        Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100 bg-white">
+                                {users.data.length === 0 ? (
                                     <tr>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                        <td
+                                            colSpan={3}
+                                            className="px-4 py-8 text-center text-sm text-slate-500"
                                         >
-                                            Nama & Email
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
-                                        >
-                                            Role
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase"
-                                        >
-                                            Aksi
-                                        </th>
+                                            Tidak ada data pengguna.
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-100 bg-white">
-                                    {users.data.length === 0 ? (
-                                        <tr>
-                                            <td colSpan={3} className="px-4 py-8 text-center text-sm text-slate-500">
-                                                Tidak ada data pengguna.
+                                ) : (
+                                    users.data.map((user: any) => (
+                                        <tr
+                                            key={user.id}
+                                            className="transition-colors hover:bg-slate-50/50"
+                                        >
+                                            <td className="px-4 py-3">
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm font-semibold text-slate-900">
+                                                        {user.name}
+                                                    </span>
+                                                    <span className="mt-0.5 text-xs text-slate-500">
+                                                        {user.email}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-3 whitespace-nowrap">
+                                                <span className="inline-flex rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200/60 ring-inset">
+                                                    {user.roles[0]?.name || '-'}
+                                                </span>
+                                            </td>
+                                            <td className="px-4 py-3 text-right whitespace-nowrap">
+                                                <div className="flex justify-end gap-1.5">
+                                                    <button
+                                                        onClick={() =>
+                                                            openEdit(user)
+                                                        }
+                                                        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-blue-600"
+                                                        title="Edit Pengguna"
+                                                    >
+                                                        <PencilSimple
+                                                            weight="bold"
+                                                            className="h-4 w-4"
+                                                        />
+                                                    </button>
+                                                    <button
+                                                        onClick={() =>
+                                                            deleteUser(
+                                                                user.id,
+                                                                user.name,
+                                                            )
+                                                        }
+                                                        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-rose-600"
+                                                        title="Hapus Pengguna"
+                                                    >
+                                                        <Trash
+                                                            weight="bold"
+                                                            className="h-4 w-4"
+                                                        />
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
-                                    ) : (
-                                        users.data.map((user: any) => (
-                                            <tr
-                                                key={user.id}
-                                                className="transition-colors hover:bg-slate-50/50"
-                                            >
-                                                <td className="px-4 py-3">
-                                                    <div className="flex flex-col">
-                                                        <span className="text-sm font-semibold text-slate-900">
-                                                            {user.name}
-                                                        </span>
-                                                        <span className="text-xs text-slate-500 mt-0.5">
-                                                            {user.email}
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td className="px-4 py-3 whitespace-nowrap">
-                                                    <span className="inline-flex rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200/60 ring-inset">
-                                                        {user.roles[0]?.name || '-'}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 py-3 text-right whitespace-nowrap">
-                                                    <div className="flex justify-end gap-1.5">
-                                                        <button
-                                                            onClick={() => openEdit(user)}
-                                                            className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-blue-600"
-                                                            title="Edit Pengguna"
-                                                        >
-                                                            <PencilSimple weight="bold" className="h-4 w-4" />
-                                                        </button>
-                                                        <button
-                                                            onClick={() => deleteUser(user.id, user.name)}
-                                                            className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-rose-600"
-                                                            title="Hapus Pengguna"
-                                                        >
-                                                            <Trash weight="bold" className="h-4 w-4" />
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {/* Pagination & Footer */}
+                    <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 bg-slate-50 px-4 py-3 sm:flex-row">
+                        <div className="text-xs font-medium text-slate-500">
+                            Menampilkan{' '}
+                            <span className="font-semibold text-slate-900">
+                                {users.from || 0}
+                            </span>{' '}
+                            -{' '}
+                            <span className="font-semibold text-slate-900">
+                                {users.to || 0}
+                            </span>{' '}
+                            dari{' '}
+                            <span className="font-semibold text-slate-900">
+                                {users.total}
+                            </span>{' '}
+                            data
                         </div>
-                        
-                        {/* Pagination & Footer */}
-                        <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 bg-slate-50 px-4 py-3 sm:flex-row">
-                            <div className="text-xs font-medium text-slate-500">
-                                Menampilkan <span className="font-semibold text-slate-900">{users.from || 0}</span> -{' '}
-                                <span className="font-semibold text-slate-900">{users.to || 0}</span> dari{' '}
-                                <span className="font-semibold text-slate-900">{users.total}</span> data
+
+                        {users.links && users.links.length > 3 && (
+                            <div className="flex items-center gap-1">
+                                {users.links.map((link: any, index: number) => (
+                                    <Link
+                                        key={index}
+                                        href={link.url || '#'}
+                                        className={`inline-flex min-w-[32px] items-center justify-center rounded-lg px-2 py-1.5 text-xs font-semibold transition-colors ${
+                                            link.active
+                                                ? 'bg-slate-900 text-white'
+                                                : 'text-slate-600 hover:bg-slate-200'
+                                        } ${!link.url ? 'pointer-events-none opacity-50' : ''}`}
+                                        dangerouslySetInnerHTML={{
+                                            __html: link.label,
+                                        }}
+                                    />
+                                ))}
                             </div>
-                            
-                            {users.links && users.links.length > 3 && (
-                                <div className="flex items-center gap-1">
-                                    {users.links.map((link: any, index: number) => (
-                                        <Link
-                                            key={index}
-                                            href={link.url || '#'}
-                                            className={`inline-flex min-w-[32px] items-center justify-center rounded-lg px-2 py-1.5 text-xs font-semibold transition-colors ${
-                                                link.active
-                                                    ? 'bg-slate-900 text-white'
-                                                    : 'text-slate-600 hover:bg-slate-200'
-                                            } ${!link.url ? 'pointer-events-none opacity-50' : ''}`}
-                                            dangerouslySetInnerHTML={{ __html: link.label }}
-                                        />
-                                    ))}
-                                </div>
-                            )}
-                        </div>
+                        )}
                     </div>
                 </div>
+            </div>
         </DashboardLayout>
     );
 }

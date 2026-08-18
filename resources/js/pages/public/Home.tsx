@@ -102,7 +102,11 @@ export default function Home({
 
         return () => {
             clearTimeout(initTimer);
-            if (cleanerInterval) clearInterval(cleanerInterval);
+
+            if (cleanerInterval) {
+clearInterval(cleanerInterval);
+}
+
             if (script && document.body.contains(script)) {
                 document.body.removeChild(script);
             }
@@ -169,8 +173,13 @@ export default function Home({
     return (
         <PublicLayout>
             <Head>
-                <title>Beranda - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu</title>
-                <meta name="description" content="Website resmi Komite KBIT-TKIT Al-Ikhlash Pasar Minggu. Dapatkan informasi terbaru seputar program, transparansi keuangan, dan kegiatan sekolah." />
+                <title>
+                    Beranda - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu
+                </title>
+                <meta
+                    name="description"
+                    content="Website resmi Komite KBIT-TKIT Al-Ikhlash Pasar Minggu. Dapatkan informasi terbaru seputar program, transparansi keuangan, dan kegiatan sekolah."
+                />
             </Head>
 
             {/* Hero Section */}
@@ -192,29 +201,44 @@ export default function Home({
                                 className="h-full w-full [&_.swiper-pagination]:bottom-6! sm:[&_.swiper-pagination]:bottom-10! [&_.swiper-pagination-bullet]:mx-1.5! [&_.swiper-pagination-bullet]:h-2! [&_.swiper-pagination-bullet]:w-2! [&_.swiper-pagination-bullet]:border [&_.swiper-pagination-bullet]:border-white/80 [&_.swiper-pagination-bullet]:bg-white/30 [&_.swiper-pagination-bullet]:opacity-100 [&_.swiper-pagination-bullet]:shadow-[0_0_3px_rgba(0,0,0,0.5)] [&_.swiper-pagination-bullet]:transition-all [&_.swiper-pagination-bullet-active]:scale-125 [&_.swiper-pagination-bullet-active]:border-white [&_.swiper-pagination-bullet-active]:bg-white [&_.swiper-pagination-bullet-active]:shadow-[0_0_6px_rgba(0,0,0,0.6)]"
                             >
                                 {/* 1. Incidental Banners */}
-                                {banners && Array.isArray(banners) &&
-                                    banners.map((banner: any, index: number) => (
-                                        <SwiperSlide
-                                            key={`banner-${banner.id}`}
-                                        >
-                                            <div className="group relative h-full w-full bg-slate-900">
-                                                <picture className="block h-full w-full">
-                                                    <source srcSet={`/storage/${banner.image.replace(/\.(jpg|jpeg|png)$/i, '.webp')}?v=2`} type="image/webp" />
-                                                    <img
-                                                        src={`/storage/${banner.image}?v=2`}
-                                                        alt={
-                                                            banner.title || 'Banner'
-                                                        }
-                                                        fetchPriority={index === 0 ? "high" : "auto"}
-                                                        loading={index === 0 ? "eager" : "lazy"}
-                                                        className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
-                                                    />
-                                                </picture>
-                                                {/* Optional subtle gradient at bottom just for pagination visibility */}
-                                                <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-slate-950/50 to-transparent"></div>
-                                            </div>
-                                        </SwiperSlide>
-                                    ))}
+                                {banners &&
+                                    Array.isArray(banners) &&
+                                    banners.map(
+                                        (banner: any, index: number) => (
+                                            <SwiperSlide
+                                                key={`banner-${banner.id}`}
+                                            >
+                                                <div className="group relative h-full w-full bg-slate-900">
+                                                    <picture className="block h-full w-full">
+                                                        <source
+                                                            srcSet={`/storage/${banner.image.replace(/\.(jpg|jpeg|png)$/i, '.webp')}?v=2`}
+                                                            type="image/webp"
+                                                        />
+                                                        <img
+                                                            src={`/storage/${banner.image}?v=2`}
+                                                            alt={
+                                                                banner.title ||
+                                                                'Banner'
+                                                            }
+                                                            fetchPriority={
+                                                                index === 0
+                                                                    ? 'high'
+                                                                    : 'auto'
+                                                            }
+                                                            loading={
+                                                                index === 0
+                                                                    ? 'eager'
+                                                                    : 'lazy'
+                                                            }
+                                                            className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
+                                                        />
+                                                    </picture>
+                                                    {/* Optional subtle gradient at bottom just for pagination visibility */}
+                                                    <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-slate-950/50 to-transparent"></div>
+                                                </div>
+                                            </SwiperSlide>
+                                        ),
+                                    )}
 
                                 {/* 2. Program Images + Info Overlay */}
                                 {heroProgram &&
@@ -227,12 +251,29 @@ export default function Home({
                                             >
                                                 <div className="group relative h-full w-full bg-slate-900">
                                                     <picture className="block h-full w-full">
-                                                        <source srcSet={`/storage/${img.replace(/\.(jpg|jpeg|png)$/i, '.webp')}`} type="image/webp" />
+                                                        <source
+                                                            srcSet={`/storage/${img.replace(/\.(jpg|jpeg|png)$/i, '.webp')}`}
+                                                            type="image/webp"
+                                                        />
                                                         <img
                                                             src={`/storage/${img}`}
                                                             alt={`${heroProgram.title} - ${idx + 1}`}
-                                                            fetchPriority={(!banners || banners.length === 0) && idx === 0 ? "high" : "auto"}
-                                                            loading={(!banners || banners.length === 0) && idx === 0 ? "eager" : "lazy"}
+                                                            fetchPriority={
+                                                                (!banners ||
+                                                                    banners.length ===
+                                                                        0) &&
+                                                                idx === 0
+                                                                    ? 'high'
+                                                                    : 'auto'
+                                                            }
+                                                            loading={
+                                                                (!banners ||
+                                                                    banners.length ===
+                                                                        0) &&
+                                                                idx === 0
+                                                                    ? 'eager'
+                                                                    : 'lazy'
+                                                            }
                                                             className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
                                                         />
                                                     </picture>
@@ -441,88 +482,90 @@ export default function Home({
 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     {/* Upcoming Sessions Content (Inside Hero Section) */}
-                    {upcomingSessions && Array.isArray(upcomingSessions) && upcomingSessions.length > 0 && (
-                        <div className="relative mt-4 mb-4 sm:mt-8 sm:mb-8">
-                            <div className="mb-8 flex flex-col items-center justify-between gap-4 text-center sm:mb-12 sm:flex-row sm:text-left">
-                                <div>
-                                    <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl">
-                                        Program Yang Akan Datang
-                                    </h2>
-                                    <p className="mt-2 text-sm text-slate-500 sm:mt-3 sm:text-base">
-                                        Jadwal sesi program yang akan datang
-                                    </p>
+                    {upcomingSessions &&
+                        Array.isArray(upcomingSessions) &&
+                        upcomingSessions.length > 0 && (
+                            <div className="relative mt-4 mb-4 sm:mt-8 sm:mb-8">
+                                <div className="mb-8 flex flex-col items-center justify-between gap-4 text-center sm:mb-12 sm:flex-row sm:text-left">
+                                    <div>
+                                        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl">
+                                            Program Yang Akan Datang
+                                        </h2>
+                                        <p className="mt-2 text-sm text-slate-500 sm:mt-3 sm:text-base">
+                                            Jadwal sesi program yang akan datang
+                                        </p>
+                                    </div>
+                                    <Link
+                                        href="/program"
+                                        className="group inline-flex items-center gap-1.5 rounded-full border-2 border-blue-200 bg-white px-6 py-2.5 text-sm font-extrabold text-blue-600 shadow-[0_4px_15px_rgba(59,130,246,0.15)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-blue-400 hover:bg-blue-50 hover:shadow-[0_8px_20px_rgba(59,130,246,0.25)] active:scale-95 sm:gap-2 sm:px-8 sm:py-3.5 sm:text-base"
+                                    >
+                                        Lihat Semua{' '}
+                                        <span
+                                            aria-hidden="true"
+                                            className="text-lg transition-transform group-hover:translate-x-1"
+                                        >
+                                            &rarr;
+                                        </span>
+                                    </Link>
                                 </div>
-                                <Link
-                                    href="/program"
-                                    className="group inline-flex items-center gap-1.5 rounded-full border-2 border-blue-200 bg-white px-6 py-2.5 text-sm font-extrabold text-blue-600 shadow-[0_4px_15px_rgba(59,130,246,0.15)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-blue-400 hover:bg-blue-50 hover:shadow-[0_8px_20px_rgba(59,130,246,0.25)] active:scale-95 sm:gap-2 sm:px-8 sm:py-3.5 sm:text-base"
-                                >
-                                    Lihat Semua{' '}
-                                    <span
-                                        aria-hidden="true"
-                                        className="text-lg transition-transform group-hover:translate-x-1"
-                                    >
-                                        &rarr;
-                                    </span>
-                                </Link>
-                            </div>
-                            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                                {upcomingSessions.map((session: any) => (
-                                    <div
-                                        key={session.id}
-                                        className="group relative overflow-hidden rounded-4xl border border-slate-100/60 bg-white/80 p-6 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-blue-100 hover:shadow-xl hover:shadow-blue-900/5 sm:rounded-[2.5rem] sm:p-8"
-                                    >
-                                        {/* Decorative soft glow */}
-                                        <div className="absolute -top-24 -right-24 h-48 w-48 rounded-full bg-blue-50/50 blur-3xl transition-all duration-500 group-hover:bg-blue-100/50"></div>
+                                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                                    {upcomingSessions.map((session: any) => (
+                                        <div
+                                            key={session.id}
+                                            className="group relative overflow-hidden rounded-4xl border border-slate-100/60 bg-white/80 p-6 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-blue-100 hover:shadow-xl hover:shadow-blue-900/5 sm:rounded-[2.5rem] sm:p-8"
+                                        >
+                                            {/* Decorative soft glow */}
+                                            <div className="absolute -top-24 -right-24 h-48 w-48 rounded-full bg-blue-50/50 blur-3xl transition-all duration-500 group-hover:bg-blue-100/50"></div>
 
-                                        <div className="relative z-10">
-                                            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-                                                <span className="inline-flex items-center rounded-full bg-blue-50 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-blue-600 uppercase transition-colors group-hover:bg-blue-100">
-                                                    {new Date(
-                                                        session.activity_date,
-                                                    ).toLocaleDateString(
-                                                        'id-ID',
-                                                        {
-                                                            day: 'numeric',
-                                                            month: 'long',
-                                                            year: 'numeric',
-                                                        },
-                                                    )}
-                                                </span>
-                                                {(session.start_time ||
-                                                    session.end_time) && (
-                                                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1.5 text-xs font-semibold text-slate-500">
-                                                        <Clock
-                                                            weight="bold"
-                                                            className="h-3 w-3"
-                                                        />
-                                                        {session.start_time?.substring(
-                                                            0,
-                                                            5,
-                                                        ) || ''}{' '}
-                                                        {session.end_time
-                                                            ? `- ${session.end_time.substring(0, 5)}`
-                                                            : ''}
+                                            <div className="relative z-10">
+                                                <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                                                    <span className="inline-flex items-center rounded-full bg-blue-50 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-blue-600 uppercase transition-colors group-hover:bg-blue-100">
+                                                        {new Date(
+                                                            session.activity_date,
+                                                        ).toLocaleDateString(
+                                                            'id-ID',
+                                                            {
+                                                                day: 'numeric',
+                                                                month: 'long',
+                                                                year: 'numeric',
+                                                            },
+                                                        )}
                                                     </span>
+                                                    {(session.start_time ||
+                                                        session.end_time) && (
+                                                        <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1.5 text-xs font-semibold text-slate-500">
+                                                            <Clock
+                                                                weight="bold"
+                                                                className="h-3 w-3"
+                                                            />
+                                                            {session.start_time?.substring(
+                                                                0,
+                                                                5,
+                                                            ) || ''}{' '}
+                                                            {session.end_time
+                                                                ? `- ${session.end_time.substring(0, 5)}`
+                                                                : ''}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <h4 className="mb-2 text-lg leading-snug font-bold text-slate-900 transition-colors group-hover:text-blue-600 sm:text-xl">
+                                                    {session.title}
+                                                </h4>
+                                                {session.program && (
+                                                    <p className="line-clamp-2 text-sm leading-relaxed font-medium text-slate-500">
+                                                        {session.program.title}
+                                                    </p>
                                                 )}
                                             </div>
-                                            <h4 className="mb-2 text-lg leading-snug font-bold text-slate-900 transition-colors group-hover:text-blue-600 sm:text-xl">
-                                                {session.title}
-                                            </h4>
-                                            {session.program && (
-                                                <p className="line-clamp-2 text-sm leading-relaxed font-medium text-slate-500">
-                                                    {session.program.title}
-                                                </p>
+                                            {getProgramIcon(
+                                                session.program?.title ||
+                                                    session.title,
                                             )}
                                         </div>
-                                        {getProgramIcon(
-                                            session.program?.title ||
-                                                session.title,
-                                        )}
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                 </div>
             </section>
 
@@ -530,8 +573,15 @@ export default function Home({
             <ProgramCalendar
                 activePrograms={
                     heroProgram
-                        ? [heroProgram, ...(Array.isArray(activePrograms) ? activePrograms : [])]
-                        : (Array.isArray(activePrograms) ? activePrograms : [])
+                        ? [
+                              heroProgram,
+                              ...(Array.isArray(activePrograms)
+                                  ? activePrograms
+                                  : []),
+                          ]
+                        : Array.isArray(activePrograms)
+                          ? activePrograms
+                          : []
                 }
             />
 
@@ -610,7 +660,7 @@ export default function Home({
             {/* Kabar Terkini (Recent Posts) Section */}
             <section className="relative overflow-hidden border-t-[6px] border-dashed border-sky-100 bg-sky-50/30 py-16 sm:py-24">
                 {/* Decorative Blobs */}
-                <div className="absolute top-0 right-0 -z-10 -mr-20 -mt-20 h-96 w-96 rounded-full bg-sky-200/40 mix-blend-multiply blur-3xl"></div>
+                <div className="absolute top-0 right-0 -z-10 -mt-20 -mr-20 h-96 w-96 rounded-full bg-sky-200/40 mix-blend-multiply blur-3xl"></div>
                 <div className="absolute bottom-0 left-0 -z-10 -mb-20 -ml-20 h-80 w-80 rounded-full bg-blue-200/40 mix-blend-multiply blur-3xl"></div>
 
                 <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -623,22 +673,29 @@ export default function Home({
                                 Berita & Informasi Komite
                             </h2>
                             <p className="text-base leading-relaxed font-medium text-slate-600 sm:text-lg">
-                                Ikuti berbagai kegiatan, informasi penting, dan cerita inspiratif dari keluarga besar KBIT-TKIT Al-Ikhlash.
+                                Ikuti berbagai kegiatan, informasi penting, dan
+                                cerita inspiratif dari keluarga besar KBIT-TKIT
+                                Al-Ikhlash.
                             </p>
                         </div>
-                        <div className="flex justify-center md:justify-end shrink-0">
+                        <div className="flex shrink-0 justify-center md:justify-end">
                             <Link
                                 href="/kabar"
                                 className="inline-flex items-center gap-2 rounded-full border-2 border-transparent bg-slate-900 px-6 py-3 text-sm font-bold tracking-wide text-white shadow-lg transition-all hover:-translate-y-1 hover:bg-slate-800 hover:shadow-xl sm:px-8 sm:py-3.5 sm:text-base"
                             >
                                 Lihat Semua Kabar
-                                <ArrowUpRight className="h-5 w-5" weight="bold" />
+                                <ArrowUpRight
+                                    className="h-5 w-5"
+                                    weight="bold"
+                                />
                             </Link>
                         </div>
                     </div>
 
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                        {recentPosts && Array.isArray(recentPosts) && recentPosts.length > 0 ? (
+                        {recentPosts &&
+                        Array.isArray(recentPosts) &&
+                        recentPosts.length > 0 ? (
                             recentPosts.map((post: any) => (
                                 <Link
                                     key={post.id}
@@ -654,37 +711,54 @@ export default function Home({
                                             />
                                         ) : (
                                             <div className="flex h-full w-full items-center justify-center text-slate-300">
-                                                <Article weight="duotone" className="h-20 w-20" />
+                                                <Article
+                                                    weight="duotone"
+                                                    className="h-20 w-20"
+                                                />
                                             </div>
                                         )}
                                         {/* Date Badge */}
-                                        <div className="absolute top-4 left-4 rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-extrabold text-slate-700 uppercase tracking-wider shadow-sm backdrop-blur-md">
-                                            {new Date(post.published_at || post.created_at).toLocaleDateString('id-ID', {
+                                        <div className="absolute top-4 left-4 rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-extrabold tracking-wider text-slate-700 uppercase shadow-sm backdrop-blur-md">
+                                            {new Date(
+                                                post.published_at ||
+                                                    post.created_at,
+                                            ).toLocaleDateString('id-ID', {
                                                 day: 'numeric',
                                                 month: 'short',
-                                                year: 'numeric'
+                                                year: 'numeric',
                                             })}
                                         </div>
                                     </div>
                                     <div className="flex flex-1 flex-col p-6 sm:p-8">
-                                        <h3 className="mb-4 line-clamp-3 text-xl font-bold leading-snug tracking-tight text-slate-900 transition-colors group-hover:text-sky-600">
+                                        <h3 className="mb-4 line-clamp-3 text-xl leading-snug font-bold tracking-tight text-slate-900 transition-colors group-hover:text-sky-600">
                                             {post.title}
                                         </h3>
                                         {/* Footer / Read More Action */}
-                                        <div className="mt-auto pt-4 flex items-center text-sm font-bold text-sky-600">
-                                            Baca selengkapnya 
-                                            <ArrowUpRight className="ml-1.5 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" weight="bold" />
+                                        <div className="mt-auto flex items-center pt-4 text-sm font-bold text-sky-600">
+                                            Baca selengkapnya
+                                            <ArrowUpRight
+                                                className="ml-1.5 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                                                weight="bold"
+                                            />
                                         </div>
                                     </div>
                                 </Link>
                             ))
                         ) : (
-                            <div className="col-span-1 md:col-span-3 flex flex-col items-center justify-center rounded-[2rem] border-2 border-dashed border-slate-200/60 bg-white/40 p-12 text-center sm:p-16">
+                            <div className="col-span-1 flex flex-col items-center justify-center rounded-[2rem] border-2 border-dashed border-slate-200/60 bg-white/40 p-12 text-center sm:p-16 md:col-span-3">
                                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
-                                    <Article weight="duotone" className="h-8 w-8" />
+                                    <Article
+                                        weight="duotone"
+                                        className="h-8 w-8"
+                                    />
                                 </div>
-                                <h3 className="text-lg font-bold text-slate-700">Belum Ada Kabar</h3>
-                                <p className="mt-2 text-sm text-slate-500">Kabar atau artikel terbaru belum tersedia saat ini.</p>
+                                <h3 className="text-lg font-bold text-slate-700">
+                                    Belum Ada Kabar
+                                </h3>
+                                <p className="mt-2 text-sm text-slate-500">
+                                    Kabar atau artikel terbaru belum tersedia
+                                    saat ini.
+                                </p>
                             </div>
                         )}
                     </div>

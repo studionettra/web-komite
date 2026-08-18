@@ -1,6 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
-import { useState, useRef, useEffect } from 'react';
-import PublicLayout from '../../layouts/PublicLayout';
+import { router } from '@inertiajs/react';
 import {
     LockKey,
     ShieldCheck,
@@ -9,8 +8,9 @@ import {
     CaretDown,
     WhatsappLogo,
 } from '@phosphor-icons/react';
+import { useState, useRef, useEffect } from 'react';
+import PublicLayout from '../../layouts/PublicLayout';
 // We will use standard router instead of wayfinder if we are not sure, or we can use Inertia's post directly
-import { router } from '@inertiajs/react';
 
 export default function AcademicCalendarGate({
     classrooms = [],
@@ -37,6 +37,7 @@ export default function AcademicCalendarGate({
             }
         }
         document.addEventListener('mousedown', handleClickOutside);
+
         return () =>
             document.removeEventListener('mousedown', handleClickOutside);
     }, []);
@@ -71,7 +72,7 @@ export default function AcademicCalendarGate({
                 <div className="absolute top-10 left-10 h-64 w-64 rounded-full bg-blue-400/20 mix-blend-multiply blur-3xl"></div>
                 <div className="absolute right-10 bottom-10 h-64 w-64 rounded-full bg-pink-400/20 mix-blend-multiply blur-3xl"></div>
 
-                <div className="mt-3 relative w-full max-w-md rounded-[2.5rem] border border-white/50 bg-white/80 p-6 shadow-2xl shadow-sky-900/10 backdrop-blur-xl sm:p-10">
+                <div className="relative mt-3 w-full max-w-md rounded-[2.5rem] border border-white/50 bg-white/80 p-6 shadow-2xl shadow-sky-900/10 backdrop-blur-xl sm:p-10">
                     {/* Decorative Top Accent */}
                     <div className="absolute top-0 left-1/2 h-1.5 w-1/3 -translate-x-1/2 rounded-b-full bg-linear-to-r from-blue-400 via-sky-400 to-emerald-400"></div>
 
@@ -280,7 +281,9 @@ export default function AcademicCalendarGate({
                             target={failedAttempts >= 3 ? '_blank' : undefined}
                             rel={failedAttempts >= 3 ? 'noreferrer' : undefined}
                             onClick={(e) => {
-                                if (failedAttempts < 3) e.preventDefault();
+                                if (failedAttempts < 3) {
+e.preventDefault();
+}
                             }}
                             className={`inline-flex w-full items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm font-bold transition-all ${
                                 failedAttempts >= 3

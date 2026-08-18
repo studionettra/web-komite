@@ -1,8 +1,8 @@
 import { usePage } from '@inertiajs/react';
+import { CheckCircle, Warning, XCircle, Info, X } from '@phosphor-icons/react';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { showDeleteSuccess } from '../utils/alertManager';
-import { CheckCircle, Warning, XCircle, Info, X } from '@phosphor-icons/react';
 
 export default function FlashMessage() {
     const { flash } = usePage().props as any;
@@ -13,6 +13,7 @@ export default function FlashMessage() {
 
             if (type === 'delete-success') {
                 showDeleteSuccess(message || title);
+
                 return;
             }
 

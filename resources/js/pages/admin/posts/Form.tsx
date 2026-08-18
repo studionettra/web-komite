@@ -17,7 +17,13 @@ export default function PostForm({
 }) {
     const isEditing = !!post;
 
-    const { data, setData, post: postForm, processing, errors } = useForm({
+    const {
+        data,
+        setData,
+        post: postForm,
+        processing,
+        errors,
+    } = useForm({
         title: post?.title || '',
         content: post?.content || '',
         image: null as File | null,
@@ -29,7 +35,7 @@ export default function PostForm({
     });
 
     const [imagePreview, setImagePreview] = useState<string | null>(
-        post?.image_path ? `/storage/${post.image_path}` : null
+        post?.image_path ? `/storage/${post.image_path}` : null,
     );
 
     const trixInputRef = useRef<HTMLInputElement>(null);
@@ -51,16 +57,21 @@ export default function PostForm({
 
                 const xhr = new XMLHttpRequest();
                 xhr.open('POST', '/admin/posts/upload-image', true);
-                
+
                 // For Laravel CSRF protection if needed, though Inertia handles most of it
-                const csrfToken = document.head.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                const csrfToken = document.head
+                    .querySelector('meta[name="csrf-token"]')
+                    ?.getAttribute('content');
+
                 if (csrfToken) {
                     xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
                 }
 
                 xhr.upload.onprogress = (event) => {
                     if (event.lengthComputable) {
-                        const progress = Math.round((event.loaded * 100) / event.total);
+                        const progress = Math.round(
+                            (event.loaded * 100) / event.total,
+                        );
                         attachment.setUploadProgress(progress);
                     }
                 };
@@ -69,6 +80,7 @@ export default function PostForm({
                     if (xhr.status >= 200 && xhr.status < 300) {
                         try {
                             const response = JSON.parse(xhr.responseText);
+
                             if (response.url) {
                                 attachment.setAttributes({
                                     url: response.url,
@@ -80,13 +92,17 @@ export default function PostForm({
                         }
                     } else {
                         console.error('Upload failed', xhr.status);
-                        toast.error('Gagal mengunggah gambar. Pastikan format valid dan ukuran maksimal 2MB.');
+                        toast.error(
+                            'Gagal mengunggah gambar. Pastikan format valid dan ukuran maksimal 2MB.',
+                        );
                     }
                 };
 
                 xhr.onerror = () => {
                     console.error('Network error during upload');
-                    toast.error('Gagal mengunggah gambar karena kesalahan jaringan.');
+                    toast.error(
+                        'Gagal mengunggah gambar karena kesalahan jaringan.',
+                    );
                 };
 
                 xhr.send(formData);
@@ -94,15 +110,22 @@ export default function PostForm({
         };
 
         const editor = trixEditorRef.current;
+
         if (editor) {
             editor.addEventListener('trix-change', handleTrixChange);
-            editor.addEventListener('trix-attachment-add', handleTrixAttachment);
+            editor.addEventListener(
+                'trix-attachment-add',
+                handleTrixAttachment,
+            );
         }
 
         return () => {
             if (editor) {
                 editor.removeEventListener('trix-change', handleTrixChange);
-                editor.removeEventListener('trix-attachment-add', handleTrixAttachment);
+                editor.removeEventListener(
+                    'trix-attachment-add',
+                    handleTrixAttachment,
+                );
             }
         };
     }, []);
@@ -121,12 +144,15 @@ export default function PostForm({
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
+
         if (file) {
             if (file.size > 2 * 1024 * 1024) {
                 toast.error('Ukuran gambar maksimal 2MB');
                 e.target.value = '';
+
                 return;
             }
+
             setData('image', file);
             setImagePreview(URL.createObjectURL(file));
         }
@@ -150,8 +176,11 @@ export default function PostForm({
                 </div>
             </div>
 
-            <form onSubmit={submit} className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-                <div className="lg:col-span-2 space-y-6">
+            <form
+                onSubmit={submit}
+                className="grid grid-cols-1 gap-6 lg:grid-cols-3"
+            >
+                <div className="space-y-6 lg:col-span-2">
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                         <div className="space-y-5">
                             <div>
@@ -161,8 +190,10 @@ export default function PostForm({
                                 <input
                                     type="text"
                                     value={data.title}
-                                    onChange={(e) => setData('title', e.target.value)}
-                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    onChange={(e) =>
+                                        setData('title', e.target.value)
+                                    }
+                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500 focus:outline-none"
                                     required
                                     placeholder="Masukkan judul kabar..."
                                 />
@@ -177,10 +208,20 @@ export default function PostForm({
                                 <label className="mb-1.5 block text-xs font-semibold text-slate-700">
                                     Konten
                                 </label>
-                                <div className="prose prose-slate max-w-none rounded-xl border border-slate-200 bg-slate-50 overflow-hidden [&>trix-toolbar]:bg-white [&>trix-toolbar]:border-b [&>trix-toolbar]:border-slate-200">
-                                    <input id="trix-content" type="hidden" name="content" value={data.content} ref={trixInputRef} />
+                                <div className="prose prose-slate max-w-none overflow-hidden rounded-xl border border-slate-200 bg-slate-50 [&>trix-toolbar]:border-b [&>trix-toolbar]:border-slate-200 [&>trix-toolbar]:bg-white">
+                                    <input
+                                        id="trix-content"
+                                        type="hidden"
+                                        name="content"
+                                        value={data.content}
+                                        ref={trixInputRef}
+                                    />
                                     {/* @ts-ignore */}
-                                    <trix-editor input="trix-content" ref={trixEditorRef} class="trix-content min-h-[300px] p-4 text-sm outline-none bg-white font-medium text-slate-700"></trix-editor>
+                                    <trix-editor
+                                        input="trix-content"
+                                        ref={trixEditorRef}
+                                        class="trix-content min-h-[300px] bg-white p-4 text-sm font-medium text-slate-700 outline-none"
+                                    ></trix-editor>
                                 </div>
                                 {errors.content && (
                                     <div className="mt-1.5 text-xs text-rose-500">
@@ -192,7 +233,7 @@ export default function PostForm({
                     </div>
 
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                        <h2 className="mb-4 text-base font-semibold text-slate-900 border-b border-slate-100 pb-3">
+                        <h2 className="mb-4 border-b border-slate-100 pb-3 text-base font-semibold text-slate-900">
                             SEO & Meta
                         </h2>
                         <div className="space-y-4">
@@ -203,8 +244,10 @@ export default function PostForm({
                                 <input
                                     type="text"
                                     value={data.seo_title}
-                                    onChange={(e) => setData('seo_title', e.target.value)}
-                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    onChange={(e) =>
+                                        setData('seo_title', e.target.value)
+                                    }
+                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500 focus:outline-none"
                                     placeholder="Biarkan kosong untuk menggunakan judul asli"
                                 />
                                 {errors.seo_title && (
@@ -219,8 +262,13 @@ export default function PostForm({
                                 </label>
                                 <textarea
                                     value={data.seo_description}
-                                    onChange={(e) => setData('seo_description', e.target.value)}
-                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                    onChange={(e) =>
+                                        setData(
+                                            'seo_description',
+                                            e.target.value,
+                                        )
+                                    }
+                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500 focus:outline-none"
                                     placeholder="Ringkasan singkat untuk pencarian Google..."
                                     rows={3}
                                 />
@@ -234,21 +282,28 @@ export default function PostForm({
                     </div>
                 </div>
 
-                <div className="lg:col-span-1 space-y-6">
+                <div className="space-y-6 lg:col-span-1">
                     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                         <div className="space-y-5">
                             <div>
                                 <label className="mb-2 block text-xs font-semibold text-slate-700">
                                     Status Publikasi
                                 </label>
-                                <label className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 transition-colors hover:border-slate-300 cursor-pointer">
+                                <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 transition-colors hover:border-slate-300">
                                     <input
                                         type="checkbox"
                                         checked={data.is_published}
-                                        onChange={(e) => setData('is_published', e.target.checked)}
+                                        onChange={(e) =>
+                                            setData(
+                                                'is_published',
+                                                e.target.checked,
+                                            )
+                                        }
                                         className="h-5 w-5 rounded-md border-slate-300 text-blue-600 focus:ring-blue-500"
                                     />
-                                    <span className="text-sm font-semibold text-slate-700 select-none">Terbitkan Kabar Ini</span>
+                                    <span className="text-sm font-semibold text-slate-700 select-none">
+                                        Terbitkan Kabar Ini
+                                    </span>
                                 </label>
                             </div>
 
@@ -258,7 +313,9 @@ export default function PostForm({
                                 </label>
                                 <Select
                                     value={data.category_id}
-                                    onChange={(val) => setData('category_id', val as string)}
+                                    onChange={(val) =>
+                                        setData('category_id', val as string)
+                                    }
                                     options={[
                                         { value: '', label: 'Tanpa Kategori' },
                                         ...categories.map((c) => ({
@@ -282,9 +339,11 @@ export default function PostForm({
                             <label className="text-xs font-semibold text-slate-700">
                                 Gambar Sampul
                             </label>
-                            <span className="text-[10px] font-medium text-slate-500">Maks. 2MB</span>
+                            <span className="text-[10px] font-medium text-slate-500">
+                                Maks. 2MB
+                            </span>
                         </div>
-                        
+
                         <div className="relative overflow-hidden rounded-xl border border-dashed border-slate-300 bg-slate-50 transition-colors hover:border-blue-400 hover:bg-blue-50">
                             <input
                                 type="file"
@@ -299,15 +358,21 @@ export default function PostForm({
                                         alt="Preview"
                                         className="h-full w-full object-cover"
                                     />
-                                    <div className="absolute inset-0 bg-slate-900/50 flex items-center justify-center opacity-0 transition-opacity hover:opacity-100">
-                                        <span className="text-xs font-semibold text-white">Ganti Gambar</span>
+                                    <div className="absolute inset-0 flex items-center justify-center bg-slate-900/50 opacity-0 transition-opacity hover:opacity-100">
+                                        <span className="text-xs font-semibold text-white">
+                                            Ganti Gambar
+                                        </span>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="flex flex-col items-center justify-center py-10 text-slate-400">
                                     <ImageIcon className="mb-2 h-8 w-8 opacity-50" />
-                                    <span className="text-xs font-semibold text-slate-600">Klik untuk unggah</span>
-                                    <span className="text-[10px] font-medium mt-0.5">Format: JPG, PNG, WEBP</span>
+                                    <span className="text-xs font-semibold text-slate-600">
+                                        Klik untuk unggah
+                                    </span>
+                                    <span className="mt-0.5 text-[10px] font-medium">
+                                        Format: JPG, PNG, WEBP
+                                    </span>
                                 </div>
                             )}
                         </div>
@@ -323,7 +388,11 @@ export default function PostForm({
                         disabled={processing}
                         className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
                     >
-                        {processing ? 'Menyimpan...' : (isEditing ? 'Simpan Perubahan' : 'Terbitkan Kabar')}
+                        {processing
+                            ? 'Menyimpan...'
+                            : isEditing
+                              ? 'Simpan Perubahan'
+                              : 'Terbitkan Kabar'}
                     </button>
                 </div>
             </form>

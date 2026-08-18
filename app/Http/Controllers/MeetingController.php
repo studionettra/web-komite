@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Alert;
 use App\Models\Meeting;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -19,7 +20,7 @@ class MeetingController extends Controller
         ]);
     }
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'date' => 'required|date',
@@ -47,7 +48,7 @@ class MeetingController extends Controller
         return back();
     }
 
-    public function update(Request $request, Meeting $meeting): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, Meeting $meeting): RedirectResponse
     {
         $validated = $request->validate([
             'date' => 'required|date',
@@ -75,7 +76,7 @@ class MeetingController extends Controller
         return back();
     }
 
-    public function destroy(Meeting $meeting): \Illuminate\Http\RedirectResponse
+    public function destroy(Meeting $meeting): RedirectResponse
     {
         foreach ($meeting->documents as $doc) {
             if ($doc->file_path) {

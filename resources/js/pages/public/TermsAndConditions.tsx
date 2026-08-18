@@ -1,6 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
-import PublicLayout from '@/layouts/PublicLayout';
 import { Scroll, ArrowLeft } from '@phosphor-icons/react';
+import PublicLayout from '@/layouts/PublicLayout';
 
 export default function TermsAndConditions() {
     return (

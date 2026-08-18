@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Helpers\Alert;
 use App\Models\AcademicMonth;
 use App\Models\AcademicYear;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class AdminAcademicMonthController extends Controller
 {
-    public function store(Request $request, AcademicYear $academicYear): \Illuminate\Http\RedirectResponse
+    public function store(Request $request, AcademicYear $academicYear): RedirectResponse
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -39,7 +40,7 @@ class AdminAcademicMonthController extends Controller
         ]);
     }
 
-    public function update(Request $request, AcademicMonth $academicMonth): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, AcademicMonth $academicMonth): RedirectResponse
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -111,7 +112,7 @@ class AdminAcademicMonthController extends Controller
         return back();
     }
 
-    public function destroy(AcademicMonth $academicMonth): \Illuminate\Http\RedirectResponse
+    public function destroy(AcademicMonth $academicMonth): RedirectResponse
     {
         if ($academicMonth->activities()->exists() || $academicMonth->learningPrograms()->exists()) {
             Alert::error('Gagal', 'Tidak dapat menghapus bulan ini karena masih memiliki kegiatan atau program pembelajaran.');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Alert;
 use App\Models\AcademicYear;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -29,7 +30,7 @@ class AdminAcademicYearController extends Controller
         ]);
     }
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -47,7 +48,7 @@ class AdminAcademicYearController extends Controller
         return back();
     }
 
-    public function update(Request $request, AcademicYear $academicYear): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, AcademicYear $academicYear): RedirectResponse
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -65,7 +66,7 @@ class AdminAcademicYearController extends Controller
         return back();
     }
 
-    public function destroy(AcademicYear $academicYear): \Illuminate\Http\RedirectResponse
+    public function destroy(AcademicYear $academicYear): RedirectResponse
     {
         if ($academicYear->months()->exists()) {
             Alert::error('Gagal', 'Tidak dapat menghapus Tahun Ajaran karena masih berisi data bulan.');

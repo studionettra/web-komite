@@ -107,11 +107,16 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
                         className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
                         onClick={() => setIsModalOpen(false)}
                     ></div>
-                    <div className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto custom-scrollbar transform rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
+                    <div className="custom-scrollbar relative max-h-[90vh] w-full max-w-xl transform overflow-y-auto rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
                         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white px-8 py-6">
                             <h3 className="flex items-center gap-2 text-xl font-semibold text-slate-900">
-                                <CalendarBlank weight="bold" className="h-6 w-6 text-blue-600" />
-                                {isEditing ? 'Edit Tahun Ajaran' : 'Tambah Tahun Ajaran'}
+                                <CalendarBlank
+                                    weight="bold"
+                                    className="h-6 w-6 text-blue-600"
+                                />
+                                {isEditing
+                                    ? 'Edit Tahun Ajaran'
+                                    : 'Tambah Tahun Ajaran'}
                             </h3>
                             <button
                                 onClick={() => setIsModalOpen(false)}
@@ -130,8 +135,10 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
                                     <input
                                         type="text"
                                         value={data.name}
-                                        onChange={(e) => setData('name', e.target.value)}
-                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                        onChange={(e) =>
+                                            setData('name', e.target.value)
+                                        }
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         required
                                         placeholder="2026/2027"
                                     />
@@ -146,7 +153,12 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
                                         type="checkbox"
                                         id="is_active"
                                         checked={data.is_active}
-                                        onChange={(e) => setData('is_active', e.target.checked)}
+                                        onChange={(e) =>
+                                            setData(
+                                                'is_active',
+                                                e.target.checked,
+                                            )
+                                        }
                                         className="h-5 w-5 cursor-pointer rounded-md border-slate-300 text-blue-600 transition-colors focus:ring-blue-500"
                                     />
                                     <label
@@ -162,7 +174,7 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
                                     </div>
                                 )}
                             </div>
-                            
+
                             <div className="flex flex-col-reverse gap-3 border-t border-slate-100 bg-slate-50 px-8 py-6 sm:flex-row sm:justify-end">
                                 <button
                                     type="button"
@@ -185,114 +197,123 @@ export default function AcademicCalendarsIndex({ years }: { years: any[] }) {
             )}
 
             <div className="w-full">
-                    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-slate-200">
-                                <thead className="bg-slate-50">
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-slate-200">
+                            <thead className="bg-slate-50">
+                                <tr>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                    >
+                                        Tahun Ajaran
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3 text-center text-[11px] font-bold tracking-wider text-slate-500 uppercase"
+                                    >
+                                        Status
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3 text-center text-[11px] font-bold tracking-wider text-slate-500 uppercase"
+                                    >
+                                        Bulan
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                    >
+                                        Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100 bg-white">
+                                {years.length === 0 && (
                                     <tr>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                        <td
+                                            colSpan={4}
+                                            className="px-4 py-8 text-center text-sm text-slate-500"
                                         >
-                                            Tahun Ajaran
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3 text-center text-[11px] font-bold tracking-wider text-slate-500 uppercase"
-                                        >
-                                            Status
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3 text-center text-[11px] font-bold tracking-wider text-slate-500 uppercase"
-                                        >
-                                            Bulan
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase"
-                                        >
-                                            Aksi
-                                        </th>
+                                            Belum ada data tahun ajaran.
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-100 bg-white">
-                                    {years.length === 0 && (
-                                        <tr>
-                                            <td
-                                                colSpan={4}
-                                                className="px-4 py-8 text-center text-sm text-slate-500"
+                                )}
+                                {years.map((year: any) => (
+                                    <tr
+                                        key={year.id}
+                                        className="transition-colors hover:bg-slate-50/50"
+                                    >
+                                        <td className="px-4 py-3 whitespace-nowrap">
+                                            <Link
+                                                href={`/academic-calendar/${year.id}`}
+                                                className="text-sm font-semibold text-slate-900 transition-colors hover:text-blue-600 hover:underline"
                                             >
-                                                Belum ada data tahun ajaran.
-                                            </td>
-                                        </tr>
-                                    )}
-                                    {years.map((year: any) => (
-                                        <tr
-                                            key={year.id}
-                                            className="transition-colors hover:bg-slate-50/50"
-                                        >
-                                            <td className="px-4 py-3 whitespace-nowrap">
+                                                {year.name}
+                                            </Link>
+                                        </td>
+                                        <td className="px-4 py-3 text-center whitespace-nowrap">
+                                            {year.is_active ? (
+                                                <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-600/20 ring-inset">
+                                                    Aktif
+                                                </span>
+                                            ) : (
+                                                <span className="inline-flex items-center rounded-md bg-slate-50 px-2 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-500/20 ring-inset">
+                                                    Tidak Aktif
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td className="px-4 py-3 text-center text-sm whitespace-nowrap text-slate-600">
+                                            {year.months_count} Bulan
+                                        </td>
+                                        <td className="px-4 py-3 text-right whitespace-nowrap">
+                                            <div className="flex justify-end gap-1.5">
                                                 <Link
                                                     href={`/academic-calendar/${year.id}`}
-                                                    className="text-sm font-semibold text-slate-900 transition-colors hover:text-blue-600 hover:underline"
+                                                    className="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-2.5 py-1.5 text-xs font-semibold text-blue-700 transition-colors hover:bg-blue-100"
                                                 >
-                                                    {year.name}
+                                                    Kelola
                                                 </Link>
-                                            </td>
-                                            <td className="px-4 py-3 text-center whitespace-nowrap">
-                                                {year.is_active ? (
-                                                    <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-600/20 ring-inset">
-                                                        Aktif
-                                                    </span>
-                                                ) : (
-                                                    <span className="inline-flex items-center rounded-md bg-slate-50 px-2 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-500/20 ring-inset">
-                                                        Tidak Aktif
-                                                    </span>
+                                                {canManage && (
+                                                    <>
+                                                        <button
+                                                            onClick={() =>
+                                                                openEdit(year)
+                                                            }
+                                                            className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-blue-600"
+                                                            title="Edit Tahun Ajaran"
+                                                        >
+                                                            <PencilSimple
+                                                                weight="bold"
+                                                                className="h-4 w-4"
+                                                            />
+                                                        </button>
+                                                        <button
+                                                            onClick={() =>
+                                                                deleteYear(
+                                                                    year.id,
+                                                                    year.name,
+                                                                )
+                                                            }
+                                                            className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-rose-600"
+                                                            title="Hapus Tahun Ajaran"
+                                                        >
+                                                            <Trash
+                                                                weight="bold"
+                                                                className="h-4 w-4"
+                                                            />
+                                                        </button>
+                                                    </>
                                                 )}
-                                            </td>
-                                            <td className="px-4 py-3 text-center text-sm text-slate-600 whitespace-nowrap">
-                                                {year.months_count} Bulan
-                                            </td>
-                                            <td className="px-4 py-3 text-right whitespace-nowrap">
-                                                <div className="flex justify-end gap-1.5">
-                                                    <Link
-                                                        href={`/academic-calendar/${year.id}`}
-                                                        className="inline-flex items-center gap-1 rounded-lg bg-blue-50 px-2.5 py-1.5 text-xs font-semibold text-blue-700 transition-colors hover:bg-blue-100"
-                                                    >
-                                                        Kelola
-                                                    </Link>
-                                                    {canManage && (
-                                                        <>
-                                                            <button
-                                                                onClick={() =>
-                                                                    openEdit(year)
-                                                                }
-                                                                className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-blue-600"
-                                                                title="Edit Tahun Ajaran"
-                                                            >
-                                                                <PencilSimple weight="bold" className="h-4 w-4" />
-                                                            </button>
-                                                            <button
-                                                                onClick={() =>
-                                                                    deleteYear(year.id, year.name)
-                                                                }
-                                                                className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-rose-600"
-                                                                title="Hapus Tahun Ajaran"
-                                                            >
-                                                                <Trash weight="bold" className="h-4 w-4" />
-                                                            </button>
-                                                        </>
-                                                    )}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
         </DashboardLayout>
     );
 }

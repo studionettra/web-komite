@@ -201,6 +201,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                     'Teks terlalu panjang untuk link WhatsApp, namun teks telah berhasil di-copy. Silakan paste secara manual di WhatsApp.',
                 );
             });
+
             return;
         }
 
@@ -238,11 +239,16 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                         className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
                         onClick={() => setIsModalOpen(false)}
                     ></div>
-                    <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto custom-scrollbar transform rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
+                    <div className="custom-scrollbar relative max-h-[90vh] w-full max-w-2xl transform overflow-y-auto rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
                         <div className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-100 bg-white px-8 py-6">
                             <h3 className="flex items-center gap-2 text-xl font-semibold text-slate-900">
-                                <Note weight="duotone" className="h-6 w-6 text-blue-600" />
-                                {isEditing ? 'Edit Notulensi' : 'Catat Notulensi'}
+                                <Note
+                                    weight="duotone"
+                                    className="h-6 w-6 text-blue-600"
+                                />
+                                {isEditing
+                                    ? 'Edit Notulensi'
+                                    : 'Catat Notulensi'}
                             </h3>
                             <button
                                 onClick={() => setIsModalOpen(false)}
@@ -251,7 +257,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                 <X weight="bold" className="h-5 w-5" />
                             </button>
                         </div>
-                        
+
                         <form onSubmit={submit}>
                             <div className="space-y-6 px-8 py-6">
                                 <div>
@@ -264,6 +270,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         value={data.date}
                                         onFocus={(e: any) => {
                                             e.target.type = 'date';
+
                                             if (e.target.showPicker) {
                                                 e.target.showPicker();
                                             }
@@ -274,11 +281,16 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                             }
                                         }}
                                         onClick={(e: any) => {
-                                            if (e.target.type === 'date' && e.target.showPicker) {
+                                            if (
+                                                e.target.type === 'date' &&
+                                                e.target.showPicker
+                                            ) {
                                                 e.target.showPicker();
                                             }
                                         }}
-                                        onChange={(e) => setData('date', e.target.value)}
+                                        onChange={(e) =>
+                                            setData('date', e.target.value)
+                                        }
                                         className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         required
                                     />
@@ -295,7 +307,9 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                     <input
                                         type="text"
                                         value={data.agenda}
-                                        onChange={(e) => setData('agenda', e.target.value)}
+                                        onChange={(e) =>
+                                            setData('agenda', e.target.value)
+                                        }
                                         className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         placeholder="Contoh: Rapat Koordinasi Tahunan"
                                         required
@@ -306,7 +320,7 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         </div>
                                     )}
                                 </div>
-                                
+
                                 <div className="relative">
                                     <label className="mb-2 block text-sm font-medium text-slate-700">
                                         Daftar Hadir
@@ -336,7 +350,10 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                     }}
                                                     className="rounded-md p-0.5 transition-colors hover:bg-blue-200/50 hover:text-blue-900 focus:outline-none"
                                                 >
-                                                    <X weight="bold" className="h-3 w-3" />
+                                                    <X
+                                                        weight="bold"
+                                                        className="h-3 w-3"
+                                                    />
                                                 </button>
                                             </span>
                                         ))}
@@ -363,7 +380,11 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                     <input
                                                         type="text"
                                                         value={attendeeSearch}
-                                                        onChange={(e) => setAttendeeSearch(e.target.value)}
+                                                        onChange={(e) =>
+                                                            setAttendeeSearch(
+                                                                e.target.value,
+                                                            )
+                                                        }
                                                         placeholder="Cari nama pengurus..."
                                                         className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                                                         autoFocus
@@ -374,8 +395,12 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                         type="button"
                                                         onClick={() => {
                                                             selectAllAttendees();
-                                                            setIsDropdownOpen(false);
-                                                            setAttendeeSearch('');
+                                                            setIsDropdownOpen(
+                                                                false,
+                                                            );
+                                                            setAttendeeSearch(
+                                                                '',
+                                                            );
                                                         }}
                                                         className="text-xs font-semibold text-blue-600 hover:text-blue-700"
                                                     >
@@ -383,63 +408,87 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                                     </button>
                                                     <button
                                                         type="button"
-                                                        onClick={deselectAllAttendees}
+                                                        onClick={
+                                                            deselectAllAttendees
+                                                        }
                                                         className="text-xs font-semibold text-slate-500 hover:text-slate-700"
                                                     >
                                                         Hapus Semua
                                                     </button>
                                                 </div>
                                                 <div className="max-h-60 overflow-y-auto py-1.5">
-                                                    {filteredMembers.length === 0 ? (
+                                                    {filteredMembers.length ===
+                                                    0 ? (
                                                         <div className="px-4 py-3 text-center text-sm text-slate-500">
-                                                            Nama tidak ditemukan.
+                                                            Nama tidak
+                                                            ditemukan.
                                                         </div>
                                                     ) : (
-                                                        filteredMembers.map((name) => {
-                                                            const isSelected = selectedAttendees.includes(name);
+                                                        filteredMembers.map(
+                                                            (name) => {
+                                                                const isSelected =
+                                                                    selectedAttendees.includes(
+                                                                        name,
+                                                                    );
 
-                                                            return (
-                                                                <button
-                                                                    key={name}
-                                                                    type="button"
-                                                                    onClick={() => {
-                                                                        if (!isSelected) {
-                                                                            toggleAttendee(name);
+                                                                return (
+                                                                    <button
+                                                                        key={
+                                                                            name
                                                                         }
-                                                                        setAttendeeSearch('');
-                                                                        setIsDropdownOpen(false);
-                                                                    }}
-                                                                    disabled={isSelected}
-                                                                    className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm font-medium transition-colors ${
-                                                                        isSelected
-                                                                            ? 'cursor-not-allowed bg-slate-50/50 text-slate-400'
-                                                                            : 'text-slate-700 hover:bg-blue-50 hover:text-blue-700'
-                                                                    }`}
-                                                                >
-                                                                    {name}
-                                                                    {isSelected && (
-                                                                        <CheckCircle
-                                                                            weight="fill"
-                                                                            className="h-4 w-4 text-slate-300"
-                                                                        />
-                                                                    )}
-                                                                </button>
-                                                            );
-                                                        })
+                                                                        type="button"
+                                                                        onClick={() => {
+                                                                            if (
+                                                                                !isSelected
+                                                                            ) {
+                                                                                toggleAttendee(
+                                                                                    name,
+                                                                                );
+                                                                            }
+
+                                                                            setAttendeeSearch(
+                                                                                '',
+                                                                            );
+                                                                            setIsDropdownOpen(
+                                                                                false,
+                                                                            );
+                                                                        }}
+                                                                        disabled={
+                                                                            isSelected
+                                                                        }
+                                                                        className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm font-medium transition-colors ${
+                                                                            isSelected
+                                                                                ? 'cursor-not-allowed bg-slate-50/50 text-slate-400'
+                                                                                : 'text-slate-700 hover:bg-blue-50 hover:text-blue-700'
+                                                                        }`}
+                                                                    >
+                                                                        {name}
+                                                                        {isSelected && (
+                                                                            <CheckCircle
+                                                                                weight="fill"
+                                                                                className="h-4 w-4 text-slate-300"
+                                                                            />
+                                                                        )}
+                                                                    </button>
+                                                                );
+                                                            },
+                                                        )
                                                     )}
                                                 </div>
                                             </div>
                                         </>
                                     )}
                                 </div>
-                                
+
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-slate-700">
                                         Keputusan
                                     </label>
                                     <textarea
                                         value={data.decisions}
-                                        onChange={(e) => setData('decisions', e.target.value)}
+                                        onChange={(e) =>
+                                            setData('decisions', e.target.value)
+                                        }
                                         rows={4}
                                         placeholder="Tuliskan hasil atau keputusan rapat..."
                                         className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
@@ -457,7 +506,9 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                     </label>
                                     <textarea
                                         value={data.follow_up}
-                                        onChange={(e) => setData('follow_up', e.target.value)}
+                                        onChange={(e) =>
+                                            setData('follow_up', e.target.value)
+                                        }
                                         rows={3}
                                         placeholder="Siapa melakukan apa..."
                                         className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
@@ -476,15 +527,25 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                             multiple
                                             accept=".pdf,.jpg,.jpeg,.png"
                                             onChange={(e) =>
-                                                setData('documents', Array.from(e.target.files || []))
+                                                setData(
+                                                    'documents',
+                                                    Array.from(
+                                                        e.target.files || [],
+                                                    ),
+                                                )
                                             }
                                             className="block w-full rounded-2xl border-2 border-slate-200 bg-slate-50 text-sm text-slate-500 transition-colors file:mr-4 file:rounded-xl file:border-0 file:bg-blue-100 file:px-4 file:py-2.5 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-200"
                                         />
                                     </div>
                                     {isEditing && (
                                         <p className="mt-2 flex items-center gap-1 text-xs text-slate-500">
-                                            <Note weight="bold" className="text-blue-500" />
-                                            Upload file baru akan ditambahkan ke lampiran yang sudah ada. Maks 5MB/file.
+                                            <Note
+                                                weight="bold"
+                                                className="text-blue-500"
+                                            />
+                                            Upload file baru akan ditambahkan ke
+                                            lampiran yang sudah ada. Maks
+                                            5MB/file.
                                         </p>
                                     )}
                                     {!isEditing && (
@@ -498,18 +559,24 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                         </div>
                                     )}
                                     {Object.keys(errors)
-                                        .filter((key) => key.startsWith('documents.'))
+                                        .filter((key) =>
+                                            key.startsWith('documents.'),
+                                        )
                                         .map((key) => (
                                             <div
                                                 key={key}
                                                 className="mt-2 text-sm font-medium text-rose-500"
                                             >
-                                                {errors[key as keyof typeof errors]}
+                                                {
+                                                    errors[
+                                                        key as keyof typeof errors
+                                                    ]
+                                                }
                                             </div>
                                         ))}
                                 </div>
                             </div>
-                            
+
                             <div className="flex flex-col-reverse gap-3 border-t border-slate-100 bg-slate-50 px-8 py-6 sm:flex-row sm:justify-end">
                                 <button
                                     type="button"
@@ -523,7 +590,9 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                     disabled={processing}
                                     className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95 sm:w-auto"
                                 >
-                                    {processing ? 'Menyimpan...' : 'Simpan Notulensi'}
+                                    {processing
+                                        ? 'Menyimpan...'
+                                        : 'Simpan Notulensi'}
                                 </button>
                             </div>
                         </form>
@@ -532,458 +601,198 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
             )}
 
             <div className="w-full">
-                    {!canManageMeeting ? (
-                        <div className="space-y-6">
-                            {meetings.data.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white p-12 text-center shadow-sm sm:p-20">
-                                    <UsersThree
-                                        weight="duotone"
-                                        className="mb-6 h-16 w-16 text-slate-200"
-                                    />
-                                    <h3 className="text-lg font-semibold text-slate-800 sm:text-xl">
-                                        Belum Ada Notulensi
-                                    </h3>
-                                    <p className="mt-3 max-w-sm text-base text-slate-500">
-                                        Belum ada catatan rapat komite yang
-                                        dipublikasikan.
-                                    </p>
-                                </div>
-                            ) : (
-                                <div className="relative ml-3 space-y-12 border-l-[3px] border-slate-100 py-6 sm:ml-6">
-                                    {meetings.data.map((meeting: any) => (
-                                        <div
-                                            key={meeting.id}
-                                            className="group relative pl-6 sm:pl-10"
-                                        >
-                                            {/* Timeline dot */}
-                                            <div className="absolute top-2 -left-[0.85rem] flex h-6 w-6 items-center justify-center rounded-full border-4 border-white bg-blue-100 shadow-sm transition-all duration-300 group-hover:scale-125 group-hover:bg-blue-500 sm:-left-[0.85rem]">
-                                                <div className="h-2 w-2 rounded-full bg-blue-600 group-hover:bg-white"></div>
-                                            </div>
-
-                                            {/* Date Badge */}
-                                            <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-4 py-1.5 text-xs font-bold tracking-wider text-slate-600 uppercase">
-                                                <CalendarBlank
-                                                    weight="bold"
-                                                    className="h-4 w-4"
-                                                />
-                                                {meeting.date
-                                                    ? new Date(
-                                                          meeting.date,
-                                                      ).toLocaleDateString(
-                                                          'id-ID',
-                                                          {
-                                                              day: 'numeric',
-                                                              month: 'short',
-                                                              year: 'numeric',
-                                                          },
-                                                      )
-                                                    : '-'}
-                                            </div>
-
-                                            {/* Content Card */}
-                                            <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] sm:p-5">
-                                                <h3 className="mb-4 text-lg font-semibold text-slate-900">
-                                                    {meeting.agenda}
-                                                </h3>
-
-                                                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                                                    <div className="rounded-[1.5rem] border-2 border-emerald-100/50 bg-emerald-50/50 p-5">
-                                                        <div className="mb-4 flex items-center gap-2">
-                                                            <CheckCircle
-                                                                weight="fill"
-                                                                className="h-6 w-6 text-emerald-500"
-                                                            />
-                                                            <h4 className="text-base font-bold text-emerald-900">
-                                                                Hasil Keputusan
-                                                            </h4>
-                                                        </div>
-                                                        <p className="text-base leading-relaxed whitespace-pre-wrap text-slate-700">
-                                                            {meeting.decisions}
-                                                        </p>
-                                                    </div>
-
-                                                    <div className="space-y-4">
-                                                        {meeting.follow_up && (
-                                                            <div className="rounded-[1.5rem] border-2 border-orange-100/50 bg-orange-50/50 p-5">
-                                                                <div className="mb-4 flex items-center gap-2">
-                                                                    <ListChecks
-                                                                        weight="fill"
-                                                                        className="h-6 w-6 text-orange-500"
-                                                                    />
-                                                                    <h4 className="text-base font-bold text-orange-900">
-                                                                        Tindak
-                                                                        Lanjut
-                                                                    </h4>
-                                                                </div>
-                                                                <p className="text-base leading-relaxed whitespace-pre-wrap text-slate-700">
-                                                                    {
-                                                                        meeting.follow_up
-                                                                    }
-                                                                </p>
-                                                            </div>
-                                                        )}
-
-                                                        {meeting.attendees && (
-                                                            <div className="mt-2 flex items-start gap-2 text-sm text-slate-500">
-                                                                <UsersThree
-                                                                    weight="duotone"
-                                                                    className="h-5 w-5 shrink-0"
-                                                                />
-                                                                <div>
-                                                                    <span className="mb-1 block font-semibold text-slate-700">
-                                                                        Daftar
-                                                                        Hadir:
-                                                                    </span>
-                                                                    <span className="leading-relaxed">
-                                                                        {
-                                                                            meeting.attendees
-                                                                        }
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        )}
-                                                        {meeting.documents &&
-                                                            meeting.documents
-                                                                .length > 0 && (
-                                                                <div className="mt-3 flex items-start gap-2 border-t border-slate-100 pt-3 text-sm">
-                                                                    <Paperclip
-                                                                        weight="duotone"
-                                                                        className="mt-0.5 h-5 w-5 shrink-0 text-slate-400"
-                                                                    />
-                                                                    <div className="w-full">
-                                                                        <span className="mb-2 block font-semibold text-slate-700">
-                                                                            Lampiran
-                                                                            Dokumen:
-                                                                        </span>
-                                                                        <div className="flex flex-wrap gap-2">
-                                                                            {meeting.documents.map(
-                                                                                (
-                                                                                    doc: any,
-                                                                                ) => (
-                                                                                    <a
-                                                                                        key={
-                                                                                            doc.id
-                                                                                        }
-                                                                                        href={`/storage/${doc.file_path}`}
-                                                                                        target="_blank"
-                                                                                        rel="noreferrer"
-                                                                                        className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors hover:bg-blue-50 hover:text-blue-600"
-                                                                                    >
-                                                                                        {doc.file_type.toLowerCase() ===
-                                                                                        'pdf' ? (
-                                                                                            <FilePdf
-                                                                                                weight="fill"
-                                                                                                className="h-4 w-4 text-rose-500"
-                                                                                            />
-                                                                                        ) : (
-                                                                                            <ImageIcon
-                                                                                                weight="fill"
-                                                                                                className="h-4 w-4 text-blue-500"
-                                                                                            />
-                                                                                        )}
-                                                                                        File{' '}
-                                                                                        {doc.file_type.toUpperCase()}
-                                                                                    </a>
-                                                                                ),
-                                                                            )}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                    </div>
-                                                </div>
-                                            </div>
+                {!canManageMeeting ? (
+                    <div className="space-y-6">
+                        {meetings.data.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-100 bg-white p-12 text-center shadow-sm sm:p-20">
+                                <UsersThree
+                                    weight="duotone"
+                                    className="mb-6 h-16 w-16 text-slate-200"
+                                />
+                                <h3 className="text-lg font-semibold text-slate-800 sm:text-xl">
+                                    Belum Ada Notulensi
+                                </h3>
+                                <p className="mt-3 max-w-sm text-base text-slate-500">
+                                    Belum ada catatan rapat komite yang
+                                    dipublikasikan.
+                                </p>
+                            </div>
+                        ) : (
+                            <div className="relative ml-3 space-y-12 border-l-[3px] border-slate-100 py-6 sm:ml-6">
+                                {meetings.data.map((meeting: any) => (
+                                    <div
+                                        key={meeting.id}
+                                        className="group relative pl-6 sm:pl-10"
+                                    >
+                                        {/* Timeline dot */}
+                                        <div className="absolute top-2 -left-[0.85rem] flex h-6 w-6 items-center justify-center rounded-full border-4 border-white bg-blue-100 shadow-sm transition-all duration-300 group-hover:scale-125 group-hover:bg-blue-500 sm:-left-[0.85rem]">
+                                            <div className="h-2 w-2 rounded-full bg-blue-600 group-hover:bg-white"></div>
                                         </div>
-                                    ))}
-                                </div>
-                            )}
-                            {meetings.links && meetings.links.length > 3 && (
-                                <div className="mt-8 flex flex-wrap justify-center gap-1.5">
-                                    {meetings.links.map(
-                                        (link: any, k: number) =>
-                                            link.url ? (
-                                                <Link
-                                                    key={k}
-                                                    href={link.url}
-                                                    className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${link.active ? 'bg-blue-600 text-white shadow-sm' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-blue-600'}`}
-                                                    dangerouslySetInnerHTML={{
-                                                        __html: link.label,
-                                                    }}
-                                                />
-                                            ) : (
-                                                <span
-                                                    key={k}
-                                                    className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-400"
-                                                    dangerouslySetInnerHTML={{
-                                                        __html: link.label,
-                                                    }}
-                                                />
-                                            ),
-                                    )}
-                                </div>
-                            )}
-                            {meetings.total > 0 && (
-                                <div className="mt-4 text-center">
-                                    <div className="inline-block rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-500">
-                                        Menampilkan{' '}
-                                        {(meetings.current_page - 1) *
-                                            meetings.per_page +
-                                            1}{' '}
-                                        -{' '}
-                                        {Math.min(
-                                            meetings.current_page *
-                                                meetings.per_page,
-                                            meetings.total,
-                                        )}{' '}
-                                        dari {meetings.total} catatan
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                            <div className="overflow-hidden md:overflow-x-auto">
-                                <table className="block min-w-full divide-y divide-slate-100 md:table">
-                                    <thead className="hidden bg-slate-50 md:table-header-group">
-                                        <tr>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
-                                            >
-                                                Tanggal & Agenda
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
-                                            >
-                                                Keputusan
-                                            </th>
-                                            {canManageMeeting && (
-                                                <th
-                                                    scope="col"
-                                                    className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase"
-                                                >
-                                                    Aksi
-                                                </th>
-                                            )}
-                                        </tr>
-                                    </thead>
-                                    <tbody className="block divide-y divide-slate-100 bg-white md:table-row-group">
-                                        {meetings.data.length === 0 && (
-                                            <tr className="block md:table-row">
-                                                <td
-                                                    colSpan={
-                                                        canManageMeeting ? 3 : 2
-                                                    }
-                                                    className="px-4 py-12 text-center text-sm text-slate-500"
-                                                >
-                                                    <div className="flex flex-col items-center justify-center">
-                                                        <UsersThree
-                                                            weight="duotone"
-                                                            className="mb-4 h-16 w-16 text-slate-200"
-                                                        />
-                                                        <p className="text-base font-medium">
-                                                            Belum ada data
-                                                            notulensi rapat.
-                                                        </p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        )}
-                                        {meetings.data.map((meeting: any) => (
-                                            <tr
-                                                key={meeting.id}
-                                                className="block border-b border-slate-100 p-4 transition-colors last:border-0 hover:bg-slate-50/80 sm:p-5 md:table-row md:border-0 md:p-0"
-                                            >
-                                                <td className="block px-0 py-2 align-top md:table-cell md:px-4 md:py-4 lg:px-6">
-                                                    <div className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold tracking-wider text-slate-500 uppercase">
-                                                        <CalendarBlank weight="bold" />
-                                                        {meeting.date
-                                                            ? new Date(
-                                                                  meeting.date,
-                                                              ).toLocaleDateString(
-                                                                  'id-ID',
-                                                                  {
-                                                                      day: 'numeric',
-                                                                      month: 'short',
-                                                                      year: 'numeric',
-                                                                  },
-                                                              )
-                                                            : ''}
-                                                    </div>
-                                                    <div className="text-sm leading-snug font-bold text-slate-900">
-                                                        {meeting.agenda}
-                                                    </div>
-                                                    {meeting.attendees && (
-                                                        <div className="mt-2 flex items-start gap-1.5 text-xs text-slate-500">
-                                                            <UsersThree
-                                                                weight="bold"
-                                                                className="mt-0.5 shrink-0 text-slate-400"
-                                                            />
-                                                            <span className="leading-relaxed whitespace-pre-wrap">
-                                                                {
-                                                                    meeting.attendees
-                                                                }
-                                                            </span>
-                                                        </div>
-                                                    )}
-                                                </td>
-                                                <td className="mt-3 block px-0 py-2 align-top md:mt-0 md:table-cell md:px-4 md:py-4 lg:px-6">
-                                                    <div className="flex items-start gap-2">
+
+                                        {/* Date Badge */}
+                                        <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-4 py-1.5 text-xs font-bold tracking-wider text-slate-600 uppercase">
+                                            <CalendarBlank
+                                                weight="bold"
+                                                className="h-4 w-4"
+                                            />
+                                            {meeting.date
+                                                ? new Date(
+                                                      meeting.date,
+                                                  ).toLocaleDateString(
+                                                      'id-ID',
+                                                      {
+                                                          day: 'numeric',
+                                                          month: 'short',
+                                                          year: 'numeric',
+                                                      },
+                                                  )
+                                                : '-'}
+                                        </div>
+
+                                        {/* Content Card */}
+                                        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] sm:p-5">
+                                            <h3 className="mb-4 text-lg font-semibold text-slate-900">
+                                                {meeting.agenda}
+                                            </h3>
+
+                                            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                                <div className="rounded-[1.5rem] border-2 border-emerald-100/50 bg-emerald-50/50 p-5">
+                                                    <div className="mb-4 flex items-center gap-2">
                                                         <CheckCircle
                                                             weight="fill"
-                                                            className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500"
+                                                            className="h-6 w-6 text-emerald-500"
                                                         />
-                                                        <div className="text-sm leading-relaxed whitespace-pre-wrap text-slate-700">
-                                                            {meeting.decisions}
-                                                        </div>
+                                                        <h4 className="text-base font-bold text-emerald-900">
+                                                            Hasil Keputusan
+                                                        </h4>
                                                     </div>
+                                                    <p className="text-base leading-relaxed whitespace-pre-wrap text-slate-700">
+                                                        {meeting.decisions}
+                                                    </p>
+                                                </div>
+
+                                                <div className="space-y-4">
                                                     {meeting.follow_up && (
-                                                        <div className="mt-2 flex items-start gap-2 border-t border-slate-100 pt-2">
-                                                            <ListChecks
-                                                                weight="bold"
-                                                                className="mt-0.5 h-4 w-4 shrink-0 text-orange-500"
-                                                            />
-                                                            <div className="text-xs leading-relaxed font-medium whitespace-pre-wrap text-slate-600">
+                                                        <div className="rounded-[1.5rem] border-2 border-orange-100/50 bg-orange-50/50 p-5">
+                                                            <div className="mb-4 flex items-center gap-2">
+                                                                <ListChecks
+                                                                    weight="fill"
+                                                                    className="h-6 w-6 text-orange-500"
+                                                                />
+                                                                <h4 className="text-base font-bold text-orange-900">
+                                                                    Tindak
+                                                                    Lanjut
+                                                                </h4>
+                                                            </div>
+                                                            <p className="text-base leading-relaxed whitespace-pre-wrap text-slate-700">
                                                                 {
                                                                     meeting.follow_up
                                                                 }
+                                                            </p>
+                                                        </div>
+                                                    )}
+
+                                                    {meeting.attendees && (
+                                                        <div className="mt-2 flex items-start gap-2 text-sm text-slate-500">
+                                                            <UsersThree
+                                                                weight="duotone"
+                                                                className="h-5 w-5 shrink-0"
+                                                            />
+                                                            <div>
+                                                                <span className="mb-1 block font-semibold text-slate-700">
+                                                                    Daftar
+                                                                    Hadir:
+                                                                </span>
+                                                                <span className="leading-relaxed">
+                                                                    {
+                                                                        meeting.attendees
+                                                                    }
+                                                                </span>
                                                             </div>
                                                         </div>
                                                     )}
                                                     {meeting.documents &&
                                                         meeting.documents
                                                             .length > 0 && (
-                                                            <div className="mt-2 flex items-start gap-2 border-t border-slate-100 pt-2">
+                                                            <div className="mt-3 flex items-start gap-2 border-t border-slate-100 pt-3 text-sm">
                                                                 <Paperclip
-                                                                    weight="bold"
-                                                                    className="mt-0.5 h-4 w-4 shrink-0 text-blue-500"
+                                                                    weight="duotone"
+                                                                    className="mt-0.5 h-5 w-5 shrink-0 text-slate-400"
                                                                 />
-                                                                <div className="flex flex-wrap gap-2">
-                                                                    {meeting.documents.map(
-                                                                        (
-                                                                            doc: any,
-                                                                        ) => (
-                                                                            <a
-                                                                                key={
-                                                                                    doc.id
-                                                                                }
-                                                                                href={`/storage/${doc.file_path}`}
-                                                                                target="_blank"
-                                                                                rel="noreferrer"
-                                                                                className="flex items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-semibold text-slate-600 transition-colors hover:bg-blue-50 hover:text-blue-600"
-                                                                            >
-                                                                                {doc.file_type.toLowerCase() ===
-                                                                                'pdf' ? (
-                                                                                    <FilePdf
-                                                                                        weight="fill"
-                                                                                        className="text-rose-500"
-                                                                                    />
-                                                                                ) : (
-                                                                                    <ImageIcon
-                                                                                        weight="fill"
-                                                                                        className="text-blue-500"
-                                                                                    />
-                                                                                )}
-                                                                                Lihat
-                                                                                Lampiran
-                                                                            </a>
-                                                                        ),
-                                                                    )}
+                                                                <div className="w-full">
+                                                                    <span className="mb-2 block font-semibold text-slate-700">
+                                                                        Lampiran
+                                                                        Dokumen:
+                                                                    </span>
+                                                                    <div className="flex flex-wrap gap-2">
+                                                                        {meeting.documents.map(
+                                                                            (
+                                                                                doc: any,
+                                                                            ) => (
+                                                                                <a
+                                                                                    key={
+                                                                                        doc.id
+                                                                                    }
+                                                                                    href={`/storage/${doc.file_path}`}
+                                                                                    target="_blank"
+                                                                                    rel="noreferrer"
+                                                                                    className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors hover:bg-blue-50 hover:text-blue-600"
+                                                                                >
+                                                                                    {doc.file_type.toLowerCase() ===
+                                                                                    'pdf' ? (
+                                                                                        <FilePdf
+                                                                                            weight="fill"
+                                                                                            className="h-4 w-4 text-rose-500"
+                                                                                        />
+                                                                                    ) : (
+                                                                                        <ImageIcon
+                                                                                            weight="fill"
+                                                                                            className="h-4 w-4 text-blue-500"
+                                                                                        />
+                                                                                    )}
+                                                                                    File{' '}
+                                                                                    {doc.file_type.toUpperCase()}
+                                                                                </a>
+                                                                            ),
+                                                                        )}
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         )}
-                                                </td>
-                                                {canManageMeeting && (
-                                                    <td className="mt-4 block border-t border-slate-100 px-0 pt-4 text-right align-top whitespace-nowrap md:mt-0 md:table-cell md:border-0 md:px-4 md:py-4 lg:px-6">
-                                                        <div className="grid grid-cols-3 gap-3 md:flex md:justify-end md:gap-2">
-                                                            <button
-                                                                onClick={() =>
-                                                                    shareToWhatsApp(
-                                                                        meeting,
-                                                                    )
-                                                                }
-                                                                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-600 transition-all hover:-translate-y-0.5 hover:bg-emerald-100 hover:shadow-sm md:h-10 md:w-10 md:rounded-full md:bg-transparent md:p-0 md:text-emerald-500 md:hover:-translate-y-0 md:hover:bg-emerald-50 md:hover:shadow-none"
-                                                                title="Share via WhatsApp"
-                                                            >
-                                                                <WhatsappLogo
-                                                                    weight="fill"
-                                                                    className="h-5 w-5 md:h-5 md:w-5"
-                                                                />
-                                                                <span className="md:hidden">
-                                                                    Share
-                                                                </span>
-                                                            </button>
-                                                            <button
-                                                                onClick={() =>
-                                                                    openEdit(
-                                                                        meeting,
-                                                                    )
-                                                                }
-                                                                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-50 px-4 py-3 text-sm font-bold text-blue-600 transition-all hover:-translate-y-0.5 hover:bg-blue-100 hover:shadow-sm md:h-10 md:w-10 md:rounded-full md:bg-transparent md:p-0 md:text-blue-500 md:hover:-translate-y-0 md:hover:bg-blue-50 md:hover:shadow-none"
-                                                                title="Edit Notulensi"
-                                                            >
-                                                                <PencilSimple
-                                                                    weight="fill"
-                                                                    className="h-5 w-5 md:h-5 md:w-5"
-                                                                />
-                                                                <span className="md:hidden">
-                                                                    Edit
-                                                                </span>
-                                                            </button>
-                                                            <button
-                                                                onClick={() =>
-                                                                    deleteMeeting(
-                                                                        meeting.id,
-                                                                        meeting.agenda,
-                                                                    )
-                                                                }
-                                                                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-rose-50 px-4 py-3 text-sm font-bold text-rose-600 transition-all hover:-translate-y-0.5 hover:bg-rose-100 hover:shadow-sm md:h-10 md:w-10 md:rounded-full md:bg-transparent md:p-0 md:text-rose-500 md:hover:-translate-y-0 md:hover:bg-rose-50 md:hover:shadow-none"
-                                                                title="Hapus Notulensi"
-                                                            >
-                                                                <Trash
-                                                                    weight="fill"
-                                                                    className="h-5 w-5 md:h-5 md:w-5"
-                                                                />
-                                                                <span className="md:hidden">
-                                                                    Hapus
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                )}
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                            {meetings.links && meetings.links.length > 3 && (
-                                <div className="flex flex-wrap justify-center gap-1.5 border-t border-slate-100 bg-white px-4 py-3 sm:justify-start sm:px-6 sm:py-4">
-                                    {meetings.links.map(
-                                        (link: any, k: number) =>
-                                            link.url ? (
-                                                <Link
-                                                    key={k}
-                                                    href={link.url}
-                                                    className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${link.active ? 'bg-blue-600 text-white shadow-sm' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-blue-600'}`}
-                                                    dangerouslySetInnerHTML={{
-                                                        __html: link.label,
-                                                    }}
-                                                />
-                                            ) : (
-                                                <span
-                                                    key={k}
-                                                    className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-400"
-                                                    dangerouslySetInnerHTML={{
-                                                        __html: link.label,
-                                                    }}
-                                                />
-                                            ),
-                                    )}
-                                </div>
-                            )}
-                            {meetings.total > 0 && (
-                                <div className="border-t border-slate-100 bg-slate-50 px-4 py-3 text-center text-xs font-medium text-slate-500 sm:px-6 sm:py-4 sm:text-left">
+                        )}
+                        {meetings.links && meetings.links.length > 3 && (
+                            <div className="mt-8 flex flex-wrap justify-center gap-1.5">
+                                {meetings.links.map((link: any, k: number) =>
+                                    link.url ? (
+                                        <Link
+                                            key={k}
+                                            href={link.url}
+                                            className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${link.active ? 'bg-blue-600 text-white shadow-sm' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-blue-600'}`}
+                                            dangerouslySetInnerHTML={{
+                                                __html: link.label,
+                                            }}
+                                        />
+                                    ) : (
+                                        <span
+                                            key={k}
+                                            className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-400"
+                                            dangerouslySetInnerHTML={{
+                                                __html: link.label,
+                                            }}
+                                        />
+                                    ),
+                                )}
+                            </div>
+                        )}
+                        {meetings.total > 0 && (
+                            <div className="mt-4 text-center">
+                                <div className="inline-block rounded-full bg-slate-100 px-4 py-2 text-xs font-semibold text-slate-500">
                                     Menampilkan{' '}
                                     {(meetings.current_page - 1) *
                                         meetings.per_page +
@@ -994,12 +803,265 @@ export default function MeetingsIndex({ meetings }: { meetings: any }) {
                                             meetings.per_page,
                                         meetings.total,
                                     )}{' '}
-                                    dari total {meetings.total} notulensi
+                                    dari {meetings.total} catatan
                                 </div>
-                            )}
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                        <div className="overflow-hidden md:overflow-x-auto">
+                            <table className="block min-w-full divide-y divide-slate-100 md:table">
+                                <thead className="hidden bg-slate-50 md:table-header-group">
+                                    <tr>
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                        >
+                                            Tanggal & Agenda
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                        >
+                                            Keputusan
+                                        </th>
+                                        {canManageMeeting && (
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                            >
+                                                Aksi
+                                            </th>
+                                        )}
+                                    </tr>
+                                </thead>
+                                <tbody className="block divide-y divide-slate-100 bg-white md:table-row-group">
+                                    {meetings.data.length === 0 && (
+                                        <tr className="block md:table-row">
+                                            <td
+                                                colSpan={
+                                                    canManageMeeting ? 3 : 2
+                                                }
+                                                className="px-4 py-12 text-center text-sm text-slate-500"
+                                            >
+                                                <div className="flex flex-col items-center justify-center">
+                                                    <UsersThree
+                                                        weight="duotone"
+                                                        className="mb-4 h-16 w-16 text-slate-200"
+                                                    />
+                                                    <p className="text-base font-medium">
+                                                        Belum ada data notulensi
+                                                        rapat.
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                    {meetings.data.map((meeting: any) => (
+                                        <tr
+                                            key={meeting.id}
+                                            className="block border-b border-slate-100 p-4 transition-colors last:border-0 hover:bg-slate-50/80 sm:p-5 md:table-row md:border-0 md:p-0"
+                                        >
+                                            <td className="block px-0 py-2 align-top md:table-cell md:px-4 md:py-4 lg:px-6">
+                                                <div className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                                    <CalendarBlank weight="bold" />
+                                                    {meeting.date
+                                                        ? new Date(
+                                                              meeting.date,
+                                                          ).toLocaleDateString(
+                                                              'id-ID',
+                                                              {
+                                                                  day: 'numeric',
+                                                                  month: 'short',
+                                                                  year: 'numeric',
+                                                              },
+                                                          )
+                                                        : ''}
+                                                </div>
+                                                <div className="text-sm leading-snug font-bold text-slate-900">
+                                                    {meeting.agenda}
+                                                </div>
+                                                {meeting.attendees && (
+                                                    <div className="mt-2 flex items-start gap-1.5 text-xs text-slate-500">
+                                                        <UsersThree
+                                                            weight="bold"
+                                                            className="mt-0.5 shrink-0 text-slate-400"
+                                                        />
+                                                        <span className="leading-relaxed whitespace-pre-wrap">
+                                                            {meeting.attendees}
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td className="mt-3 block px-0 py-2 align-top md:mt-0 md:table-cell md:px-4 md:py-4 lg:px-6">
+                                                <div className="flex items-start gap-2">
+                                                    <CheckCircle
+                                                        weight="fill"
+                                                        className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500"
+                                                    />
+                                                    <div className="text-sm leading-relaxed whitespace-pre-wrap text-slate-700">
+                                                        {meeting.decisions}
+                                                    </div>
+                                                </div>
+                                                {meeting.follow_up && (
+                                                    <div className="mt-2 flex items-start gap-2 border-t border-slate-100 pt-2">
+                                                        <ListChecks
+                                                            weight="bold"
+                                                            className="mt-0.5 h-4 w-4 shrink-0 text-orange-500"
+                                                        />
+                                                        <div className="text-xs leading-relaxed font-medium whitespace-pre-wrap text-slate-600">
+                                                            {meeting.follow_up}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {meeting.documents &&
+                                                    meeting.documents.length >
+                                                        0 && (
+                                                        <div className="mt-2 flex items-start gap-2 border-t border-slate-100 pt-2">
+                                                            <Paperclip
+                                                                weight="bold"
+                                                                className="mt-0.5 h-4 w-4 shrink-0 text-blue-500"
+                                                            />
+                                                            <div className="flex flex-wrap gap-2">
+                                                                {meeting.documents.map(
+                                                                    (
+                                                                        doc: any,
+                                                                    ) => (
+                                                                        <a
+                                                                            key={
+                                                                                doc.id
+                                                                            }
+                                                                            href={`/storage/${doc.file_path}`}
+                                                                            target="_blank"
+                                                                            rel="noreferrer"
+                                                                            className="flex items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-semibold text-slate-600 transition-colors hover:bg-blue-50 hover:text-blue-600"
+                                                                        >
+                                                                            {doc.file_type.toLowerCase() ===
+                                                                            'pdf' ? (
+                                                                                <FilePdf
+                                                                                    weight="fill"
+                                                                                    className="text-rose-500"
+                                                                                />
+                                                                            ) : (
+                                                                                <ImageIcon
+                                                                                    weight="fill"
+                                                                                    className="text-blue-500"
+                                                                                />
+                                                                            )}
+                                                                            Lihat
+                                                                            Lampiran
+                                                                        </a>
+                                                                    ),
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                            </td>
+                                            {canManageMeeting && (
+                                                <td className="mt-4 block border-t border-slate-100 px-0 pt-4 text-right align-top whitespace-nowrap md:mt-0 md:table-cell md:border-0 md:px-4 md:py-4 lg:px-6">
+                                                    <div className="grid grid-cols-3 gap-3 md:flex md:justify-end md:gap-2">
+                                                        <button
+                                                            onClick={() =>
+                                                                shareToWhatsApp(
+                                                                    meeting,
+                                                                )
+                                                            }
+                                                            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-600 transition-all hover:-translate-y-0.5 hover:bg-emerald-100 hover:shadow-sm md:h-10 md:w-10 md:rounded-full md:bg-transparent md:p-0 md:text-emerald-500 md:hover:-translate-y-0 md:hover:bg-emerald-50 md:hover:shadow-none"
+                                                            title="Share via WhatsApp"
+                                                        >
+                                                            <WhatsappLogo
+                                                                weight="fill"
+                                                                className="h-5 w-5 md:h-5 md:w-5"
+                                                            />
+                                                            <span className="md:hidden">
+                                                                Share
+                                                            </span>
+                                                        </button>
+                                                        <button
+                                                            onClick={() =>
+                                                                openEdit(
+                                                                    meeting,
+                                                                )
+                                                            }
+                                                            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-50 px-4 py-3 text-sm font-bold text-blue-600 transition-all hover:-translate-y-0.5 hover:bg-blue-100 hover:shadow-sm md:h-10 md:w-10 md:rounded-full md:bg-transparent md:p-0 md:text-blue-500 md:hover:-translate-y-0 md:hover:bg-blue-50 md:hover:shadow-none"
+                                                            title="Edit Notulensi"
+                                                        >
+                                                            <PencilSimple
+                                                                weight="fill"
+                                                                className="h-5 w-5 md:h-5 md:w-5"
+                                                            />
+                                                            <span className="md:hidden">
+                                                                Edit
+                                                            </span>
+                                                        </button>
+                                                        <button
+                                                            onClick={() =>
+                                                                deleteMeeting(
+                                                                    meeting.id,
+                                                                    meeting.agenda,
+                                                                )
+                                                            }
+                                                            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-rose-50 px-4 py-3 text-sm font-bold text-rose-600 transition-all hover:-translate-y-0.5 hover:bg-rose-100 hover:shadow-sm md:h-10 md:w-10 md:rounded-full md:bg-transparent md:p-0 md:text-rose-500 md:hover:-translate-y-0 md:hover:bg-rose-50 md:hover:shadow-none"
+                                                            title="Hapus Notulensi"
+                                                        >
+                                                            <Trash
+                                                                weight="fill"
+                                                                className="h-5 w-5 md:h-5 md:w-5"
+                                                            />
+                                                            <span className="md:hidden">
+                                                                Hapus
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            )}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
-                    )}
-                </div>
+                        {meetings.links && meetings.links.length > 3 && (
+                            <div className="flex flex-wrap justify-center gap-1.5 border-t border-slate-100 bg-white px-4 py-3 sm:justify-start sm:px-6 sm:py-4">
+                                {meetings.links.map((link: any, k: number) =>
+                                    link.url ? (
+                                        <Link
+                                            key={k}
+                                            href={link.url}
+                                            className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${link.active ? 'bg-blue-600 text-white shadow-sm' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-blue-600'}`}
+                                            dangerouslySetInnerHTML={{
+                                                __html: link.label,
+                                            }}
+                                        />
+                                    ) : (
+                                        <span
+                                            key={k}
+                                            className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-400"
+                                            dangerouslySetInnerHTML={{
+                                                __html: link.label,
+                                            }}
+                                        />
+                                    ),
+                                )}
+                            </div>
+                        )}
+                        {meetings.total > 0 && (
+                            <div className="border-t border-slate-100 bg-slate-50 px-4 py-3 text-center text-xs font-medium text-slate-500 sm:px-6 sm:py-4 sm:text-left">
+                                Menampilkan{' '}
+                                {(meetings.current_page - 1) *
+                                    meetings.per_page +
+                                    1}{' '}
+                                -{' '}
+                                {Math.min(
+                                    meetings.current_page * meetings.per_page,
+                                    meetings.total,
+                                )}{' '}
+                                dari total {meetings.total} notulensi
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
         </DashboardLayout>
     );
 }

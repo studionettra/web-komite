@@ -2,10 +2,10 @@ import { Head, usePage } from '@inertiajs/react';
 import bannerImage from '../../images/banners/image-banner-dashboard-komite.png';
 import AnggotaDashboard from '../components/dashboard/AnggotaDashboard';
 import BendaharaDashboard from '../components/dashboard/BendaharaDashboard';
+import HumasDashboard from '../components/dashboard/HumasDashboard';
 import KorlasDashboard from '../components/dashboard/KorlasDashboard';
 import SekretarisDashboard from '../components/dashboard/SekretarisDashboard';
 import SuperadminDashboard from '../components/dashboard/SuperadminDashboard';
-import HumasDashboard from '../components/dashboard/HumasDashboard';
 import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function Dashboard(props: any) {

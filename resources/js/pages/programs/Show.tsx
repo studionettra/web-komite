@@ -17,22 +17,39 @@ import { useState, useRef } from 'react';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import { confirmDelete } from '../../utils/alertManager';
 
-function TimeInput24({ value, onChange, required }: { value: string; onChange: (val: string) => void; required?: boolean }) {
+function TimeInput24({
+    value,
+    onChange,
+    required,
+}: {
+    value: string;
+    onChange: (val: string) => void;
+    required?: boolean;
+}) {
     const [hour, minute] = (value || '00:00').split(':');
-    const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
-    const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
-    const baseClass = 'rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all hover:bg-white focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20 appearance-none text-center';
+    const hours = Array.from({ length: 24 }, (_, i) =>
+        String(i).padStart(2, '0'),
+    );
+    const minutes = Array.from({ length: 60 }, (_, i) =>
+        String(i).padStart(2, '0'),
+    );
+    const baseClass =
+        'rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all hover:bg-white focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20 appearance-none text-center';
 
     return (
         <div className="flex items-center gap-1.5">
             <select
                 value={hour || '00'}
-                onChange={(e) => onChange(`${e.target.value}:${minute || '00'}`)}
+                onChange={(e) =>
+                    onChange(`${e.target.value}:${minute || '00'}`)
+                }
                 className={`${baseClass} flex-1`}
                 required={required}
             >
                 {hours.map((h) => (
-                    <option key={h} value={h}>{h}</option>
+                    <option key={h} value={h}>
+                        {h}
+                    </option>
                 ))}
             </select>
             <span className="text-lg font-bold text-slate-500">:</span>
@@ -43,7 +60,9 @@ function TimeInput24({ value, onChange, required }: { value: string; onChange: (
                 required={required}
             >
                 {minutes.map((m) => (
-                    <option key={m} value={m}>{m}</option>
+                    <option key={m} value={m}>
+                        {m}
+                    </option>
                 ))}
             </select>
         </div>
@@ -155,13 +174,20 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                                 onClick={() => onEdit(activity)}
                                 disabled={!isPlanned}
                                 className={`flex items-center justify-center rounded-2xl p-2.5 transition-all hover:-translate-y-0.5 hover:shadow-sm ${
-                                    isPlanned 
-                                        ? 'bg-blue-50 text-blue-600 hover:bg-blue-100' 
-                                        : 'bg-slate-50 text-slate-300 cursor-not-allowed'
+                                    isPlanned
+                                        ? 'bg-blue-50 text-blue-600 hover:bg-blue-100'
+                                        : 'cursor-not-allowed bg-slate-50 text-slate-300'
                                 }`}
-                                title={isPlanned ? "Edit Sesi" : "Sesi tidak dapat diedit karena sedang/telah berlangsung"}
+                                title={
+                                    isPlanned
+                                        ? 'Edit Sesi'
+                                        : 'Sesi tidak dapat diedit karena sedang/telah berlangsung'
+                                }
                             >
-                                <PencilSimple weight="fill" className="h-4 w-4" />
+                                <PencilSimple
+                                    weight="fill"
+                                    className="h-4 w-4"
+                                />
                             </button>
                             <button
                                 onClick={() => deleteActivity(activity.id)}
@@ -179,31 +205,40 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                 <div className="mb-6 flex items-start justify-between">
                     <div>
                         <h5 className="text-sm font-bold text-slate-700">
-                            Lampiran & Dokumen ({activity.documents?.length || 0}/5)
+                            Lampiran & Dokumen (
+                            {activity.documents?.length || 0}/5)
                         </h5>
                         <p className="mt-1 text-xs font-medium text-slate-500">
                             Format: JPG, PNG, PDF, DOC. Maksimal 5MB/file.
                         </p>
                     </div>
-                    {canManageProgram && (activity.documents?.length || 0) < 5 && (
-                        <div>
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                className="hidden"
-                                accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
-                                onChange={handleFileChange}
-                            />
-                            <button
-                                onClick={() => fileInputRef.current?.click()}
-                                disabled={isUploading}
-                                className="inline-flex items-center gap-1.5 rounded-2xl bg-indigo-50 px-4 py-2 text-sm font-bold text-indigo-700 transition-all hover:-translate-y-0.5 hover:bg-indigo-100 hover:shadow-sm disabled:translate-y-0 disabled:opacity-50"
-                            >
-                                <UploadSimple weight="fill" className="h-4 w-4" />
-                                {isUploading ? 'Mengunggah...' : 'Unggah File'}
-                            </button>
-                        </div>
-                    )}
+                    {canManageProgram &&
+                        (activity.documents?.length || 0) < 5 && (
+                            <div>
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    className="hidden"
+                                    accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+                                    onChange={handleFileChange}
+                                />
+                                <button
+                                    onClick={() =>
+                                        fileInputRef.current?.click()
+                                    }
+                                    disabled={isUploading}
+                                    className="inline-flex items-center gap-1.5 rounded-2xl bg-indigo-50 px-4 py-2 text-sm font-bold text-indigo-700 transition-all hover:-translate-y-0.5 hover:bg-indigo-100 hover:shadow-sm disabled:translate-y-0 disabled:opacity-50"
+                                >
+                                    <UploadSimple
+                                        weight="fill"
+                                        className="h-4 w-4"
+                                    />
+                                    {isUploading
+                                        ? 'Mengunggah...'
+                                        : 'Unggah File'}
+                                </button>
+                            </div>
+                        )}
                 </div>
 
                 {errors?.file && (
@@ -270,7 +305,10 @@ function ActivityCard({ activity, programId, canManageProgram, onEdit }: any) {
                                                 className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-500 text-white transition-all hover:scale-105 hover:bg-rose-600"
                                                 title="Hapus"
                                             >
-                                                <Trash weight="fill" className="h-4 w-4" />
+                                                <Trash
+                                                    weight="fill"
+                                                    className="h-4 w-4"
+                                                />
                                             </button>
                                         )}
                                     </div>
@@ -340,9 +378,15 @@ export default function Show({ program }: any) {
         setEditActivityModal(activity);
         setEditData({
             title: activity.title,
-            activity_date: activity.activity_date ? activity.activity_date.substring(0, 10) : '',
-            start_time: activity.start_time ? activity.start_time.substring(0, 5) : '',
-            end_time: activity.end_time ? activity.end_time.substring(0, 5) : '',
+            activity_date: activity.activity_date
+                ? activity.activity_date.substring(0, 10)
+                : '',
+            start_time: activity.start_time
+                ? activity.start_time.substring(0, 5)
+                : '',
+            end_time: activity.end_time
+                ? activity.end_time.substring(0, 5)
+                : '',
             description: activity.description || '',
         });
         clearEditErrors();
@@ -350,8 +394,11 @@ export default function Show({ program }: any) {
 
     const submitEditActivity = (e: any) => {
         e.preventDefault();
-        if (!editActivityModal) return;
-        
+
+        if (!editActivityModal) {
+return;
+}
+
         putActivity(`/program-activities/${editActivityModal?.id}`, {
             preserveScroll: true,
             onSuccess: () => {
@@ -454,7 +501,7 @@ export default function Show({ program }: any) {
                                     onChange={(e) =>
                                         setActivityData('title', e.target.value)
                                     }
-                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                     required
                                 />
                                 {activityErrors.title && (
@@ -476,7 +523,7 @@ export default function Show({ program }: any) {
                                             e.target.value,
                                         )
                                     }
-                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                     required
                                 />
                                 {activityErrors.activity_date && (
@@ -534,7 +581,7 @@ export default function Show({ program }: any) {
                                         )
                                     }
                                     rows={3}
-                                    className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                    className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                 ></textarea>
                             </div>
                             <div className="pt-4">
@@ -583,7 +630,7 @@ export default function Show({ program }: any) {
                                     onChange={(e) =>
                                         setEditData('title', e.target.value)
                                     }
-                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                     required
                                 />
                                 {editErrors.title && (
@@ -600,9 +647,12 @@ export default function Show({ program }: any) {
                                     type="date"
                                     value={editData.activity_date}
                                     onChange={(e) =>
-                                        setEditData('activity_date', e.target.value)
+                                        setEditData(
+                                            'activity_date',
+                                            e.target.value,
+                                        )
                                     }
-                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                     required
                                 />
                                 {editErrors.activity_date && (
@@ -654,10 +704,13 @@ export default function Show({ program }: any) {
                                 <textarea
                                     value={editData.description}
                                     onChange={(e) =>
-                                        setEditData('description', e.target.value)
+                                        setEditData(
+                                            'description',
+                                            e.target.value,
+                                        )
                                     }
                                     rows={3}
-                                    className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                    className="w-full resize-none rounded-2xl border-2 border-slate-200 bg-slate-50 px-3 py-2 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                 ></textarea>
                             </div>
                             <div className="pt-4">
@@ -793,29 +846,36 @@ export default function Show({ program }: any) {
                             </div>
                         ) : (
                             <div className="space-y-6">
-                                {program.activities?.slice().sort((a: any, b: any) => {
-                                    const now = new Date();
-                                    now.setHours(0, 0, 0, 0);
-                                    
-                                    const dateA = new Date(a.activity_date);
-                                    dateA.setHours(0, 0, 0, 0);
-                                    
-                                    const dateB = new Date(b.activity_date);
-                                    dateB.setHours(0, 0, 0, 0);
-                                    
-                                    const diffA = Math.abs(dateA.getTime() - now.getTime());
-                                    const diffB = Math.abs(dateB.getTime() - now.getTime());
-                                    
-                                    return diffA - diffB;
-                                }).map((activity: any) => (
-                                    <ActivityCard
-                                        key={activity.id}
-                                        activity={activity}
-                                        programId={program.id}
-                                        canManageProgram={canManageProgram}
-                                        onEdit={openEditModal}
-                                    />
-                                ))}
+                                {program.activities
+                                    ?.slice()
+                                    .sort((a: any, b: any) => {
+                                        const now = new Date();
+                                        now.setHours(0, 0, 0, 0);
+
+                                        const dateA = new Date(a.activity_date);
+                                        dateA.setHours(0, 0, 0, 0);
+
+                                        const dateB = new Date(b.activity_date);
+                                        dateB.setHours(0, 0, 0, 0);
+
+                                        const diffA = Math.abs(
+                                            dateA.getTime() - now.getTime(),
+                                        );
+                                        const diffB = Math.abs(
+                                            dateB.getTime() - now.getTime(),
+                                        );
+
+                                        return diffA - diffB;
+                                    })
+                                    .map((activity: any) => (
+                                        <ActivityCard
+                                            key={activity.id}
+                                            activity={activity}
+                                            programId={program.id}
+                                            canManageProgram={canManageProgram}
+                                            onEdit={openEditModal}
+                                        />
+                                    ))}
                             </div>
                         )}
                     </div>

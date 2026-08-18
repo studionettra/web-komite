@@ -101,7 +101,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                             />
                         </div>
                         <span className="text-lg font-extrabold tracking-tight text-slate-800">
-                            Dashboard<span className="text-blue-500"> Komite</span>
+                            Dashboard
+                            <span className="text-blue-500"> Komite</span>
                         </span>
                     </div>
                     {/* Close button for mobile */}

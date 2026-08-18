@@ -1,7 +1,11 @@
 import { Link } from '@inertiajs/react';
 import { Briefcase, Users, ArrowUpRight } from '@phosphor-icons/react';
 
-export default function SuperadminDashboard({ metrics, ongoing_programs: ongoingPrograms, analytics }: any) {
+export default function SuperadminDashboard({
+    metrics,
+    ongoing_programs: ongoingPrograms,
+    analytics,
+}: any) {
     return (
         <div className="space-y-4 sm:space-y-6">
             <h2 className="mb-2 px-1 text-lg font-bold tracking-tight text-slate-900">
@@ -14,7 +18,7 @@ export default function SuperadminDashboard({ metrics, ongoing_programs: ongoing
                             <Briefcase weight="fill" className="h-5 w-5" />
                         </div>
                     </div>
-                    <div className="mb-1 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    <div className="mb-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">
                         Total Program Kerja
                     </div>
                     <div className="text-2xl font-bold tracking-tight text-slate-900">
@@ -28,7 +32,7 @@ export default function SuperadminDashboard({ metrics, ongoing_programs: ongoing
                             <Users weight="fill" className="h-5 w-5" />
                         </div>
                     </div>
-                    <div className="mb-1 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    <div className="mb-1 text-xs font-semibold tracking-wide text-slate-500 uppercase">
                         Notulensi Rapat
                     </div>
                     <div className="text-2xl font-bold tracking-tight text-slate-900">
@@ -50,13 +54,21 @@ export default function SuperadminDashboard({ metrics, ongoing_programs: ongoing
                             href="/admin/classrooms"
                             className="inline-flex items-center justify-between rounded-lg bg-white/10 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-white/20"
                         >
-                            Kelola Kelas & Korlas <ArrowUpRight weight="bold" className="h-3.5 w-3.5" />
+                            Kelola Kelas & Korlas{' '}
+                            <ArrowUpRight
+                                weight="bold"
+                                className="h-3.5 w-3.5"
+                            />
                         </Link>
                         <Link
                             href="/users"
                             className="inline-flex items-center justify-between rounded-lg bg-white/10 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-white/20"
                         >
-                            Kelola Pengguna <ArrowUpRight weight="bold" className="h-3.5 w-3.5" />
+                            Kelola Pengguna{' '}
+                            <ArrowUpRight
+                                weight="bold"
+                                className="h-3.5 w-3.5"
+                            />
                         </Link>
                     </div>
                 </div>
@@ -78,17 +90,28 @@ export default function SuperadminDashboard({ metrics, ongoing_programs: ongoing
                                 <Users weight="duotone" className="h-6 w-6" />
                             </div>
                             <div>
-                                <div className="text-sm font-semibold text-slate-500">Total Pengunjung</div>
-                                <div className="text-2xl font-bold text-slate-900">{analytics?.visitors || 0}</div>
+                                <div className="text-sm font-semibold text-slate-500">
+                                    Total Pengunjung
+                                </div>
+                                <div className="text-2xl font-bold text-slate-900">
+                                    {analytics?.visitors || 0}
+                                </div>
                             </div>
                         </div>
                         <div className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
-                                <ArrowUpRight weight="duotone" className="h-6 w-6" />
+                                <ArrowUpRight
+                                    weight="duotone"
+                                    className="h-6 w-6"
+                                />
                             </div>
                             <div>
-                                <div className="text-sm font-semibold text-slate-500">Tayangan Halaman</div>
-                                <div className="text-2xl font-bold text-slate-900">{analytics?.pageViews || 0}</div>
+                                <div className="text-sm font-semibold text-slate-500">
+                                    Tayangan Halaman
+                                </div>
+                                <div className="text-2xl font-bold text-slate-900">
+                                    {analytics?.pageViews || 0}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -132,7 +155,7 @@ export default function SuperadminDashboard({ metrics, ongoing_programs: ongoing
                                             {prog.description}
                                         </div>
                                     </div>
-                                    <span className="shrink-0 rounded-md border border-amber-200 bg-amber-50 px-2 py-1 text-[10px] font-semibold uppercase text-amber-700">
+                                    <span className="shrink-0 rounded-md border border-amber-200 bg-amber-50 px-2 py-1 text-[10px] font-semibold text-amber-700 uppercase">
                                         Ongoing
                                     </span>
                                 </div>

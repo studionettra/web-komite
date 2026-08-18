@@ -12,11 +12,11 @@ use Google\Service\Sheets\ValueRange;
 
 class GoogleSheetsService
 {
-    protected \Google\Client $client;
+    protected Client $client;
 
-    protected \Google\Service\Sheets $service;
+    protected Sheets $service;
 
-    protected \Google\Service\Drive $driveService;
+    protected Drive $driveService;
 
     public function __construct()
     {
@@ -65,7 +65,6 @@ class GoogleSheetsService
      * Clear data from a specific range in Google Sheets
      *
      * @param  string  $range  The range to clear (e.g., 'Sheet1!A:F')
-     * @return bool
      */
     public function clearRange(string $range): bool
     {
@@ -86,7 +85,6 @@ class GoogleSheetsService
      *
      * @param  string  $range  The range to write to (e.g., 'Sheet1!A1')
      * @param  array  $values  2D array of values
-     * @return bool
      */
     public function appendData(string $range, array $values): bool
     {

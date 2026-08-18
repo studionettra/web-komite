@@ -106,7 +106,7 @@ export default function ClassroomsIndex({
                         className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
                         onClick={() => setIsModalOpen(false)}
                     ></div>
-                    <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto custom-scrollbar transform rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
+                    <div className="custom-scrollbar relative max-h-[90vh] w-full max-w-2xl transform overflow-y-auto rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
                         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white px-8 py-6">
                             <h3 className="text-lg font-semibold text-slate-900">
                                 {isEditing ? 'Edit Kelas' : 'Tambah Kelas Baru'}
@@ -118,7 +118,7 @@ export default function ClassroomsIndex({
                                 <X weight="bold" className="h-5 w-5" />
                             </button>
                         </div>
-                        
+
                         <form onSubmit={submit}>
                             <div className="space-y-6 px-8 py-6">
                                 <div>
@@ -164,7 +164,8 @@ export default function ClassroomsIndex({
                                                             onChange={(e) =>
                                                                 setData(
                                                                     'google_sheet_status',
-                                                                    e.target.value,
+                                                                    e.target
+                                                                        .value,
                                                                 )
                                                             }
                                                             className="h-5 w-5 text-blue-600 focus:ring-blue-500"
@@ -176,8 +177,8 @@ export default function ClassroomsIndex({
                                                     <span className="pl-8 text-xs font-medium text-slate-500">
                                                         Laporan langsung dapat
                                                         dilihat oleh publik/wali
-                                                        murid yang mengakses kelas
-                                                        ini.
+                                                        murid yang mengakses
+                                                        kelas ini.
                                                     </span>
                                                 </div>
                                             </div>
@@ -199,7 +200,8 @@ export default function ClassroomsIndex({
                                                             onChange={(e) =>
                                                                 setData(
                                                                     'google_sheet_status',
-                                                                    e.target.value,
+                                                                    e.target
+                                                                        .value,
                                                                 )
                                                             }
                                                             className="h-5 w-5 text-amber-500 focus:ring-amber-400"
@@ -210,8 +212,9 @@ export default function ClassroomsIndex({
                                                     </div>
                                                     <span className="pl-8 text-xs font-medium text-slate-500">
                                                         Menampilkan pesan bahwa
-                                                        laporan ini sedang disusun,
-                                                        tidak bisa dilihat publik.
+                                                        laporan ini sedang
+                                                        disusun, tidak bisa
+                                                        dilihat publik.
                                                     </span>
                                                 </div>
                                             </div>
@@ -233,7 +236,8 @@ export default function ClassroomsIndex({
                                                             onChange={(e) =>
                                                                 setData(
                                                                     'google_sheet_status',
-                                                                    e.target.value,
+                                                                    e.target
+                                                                        .value,
                                                                 )
                                                             }
                                                             className="h-5 w-5 text-slate-600 focus:ring-slate-500"
@@ -244,8 +248,9 @@ export default function ClassroomsIndex({
                                                     </div>
                                                     <span className="pl-8 text-xs font-medium text-slate-500">
                                                         Fitur dinonaktifkan /
-                                                        offline (muncul pesan bahwa
-                                                        laporan belum terhubung).
+                                                        offline (muncul pesan
+                                                        bahwa laporan belum
+                                                        terhubung).
                                                     </span>
                                                 </div>
                                             </div>
@@ -315,7 +320,7 @@ export default function ClassroomsIndex({
                                     )}
                                 </div>
                             </div>
-                            
+
                             <div className="flex flex-col-reverse gap-3 border-t border-slate-100 bg-slate-50 px-8 py-6 sm:flex-row sm:justify-end">
                                 <button
                                     type="button"
@@ -329,7 +334,9 @@ export default function ClassroomsIndex({
                                     disabled={processing}
                                     className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95 sm:w-auto"
                                 >
-                                    {processing ? 'Menyimpan...' : 'Simpan Kelas'}
+                                    {processing
+                                        ? 'Menyimpan...'
+                                        : 'Simpan Kelas'}
                                 </button>
                             </div>
                         </form>
@@ -338,114 +345,115 @@ export default function ClassroomsIndex({
             )}
 
             <div className="w-full">
-                    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full divide-y divide-slate-200">
-                                <thead className="bg-slate-50">
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-slate-200">
+                            <thead className="bg-slate-50">
+                                <tr>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                    >
+                                        Nama Kelas
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                    >
+                                        Koordinator Kelas
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                    >
+                                        Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100 bg-white">
+                                {classrooms.length === 0 ? (
                                     <tr>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
+                                        <td
+                                            colSpan={3}
+                                            className="px-4 py-8 text-center text-sm text-slate-500"
                                         >
-                                            Nama Kelas
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3 text-left text-xs font-semibold tracking-wider text-slate-500 uppercase"
-                                        >
-                                            Koordinator Kelas
-                                        </th>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3 text-right text-xs font-semibold tracking-wider text-slate-500 uppercase"
-                                        >
-                                            Aksi
-                                        </th>
+                                            Belum ada data kelas.
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-100 bg-white">
-                                    {classrooms.length === 0 ? (
-                                        <tr>
-                                            <td
-                                                colSpan={3}
-                                                className="px-4 py-8 text-center text-sm text-slate-500"
-                                            >
-                                                Belum ada data kelas.
+                                ) : (
+                                    classrooms.map((classroom: any) => (
+                                        <tr
+                                            key={classroom.id}
+                                            className="transition-colors hover:bg-slate-50/50"
+                                        >
+                                            <td className="px-4 py-3 text-sm font-semibold whitespace-nowrap text-slate-800">
+                                                {classroom.name}
+                                            </td>
+                                            <td className="px-4 py-3 text-sm whitespace-nowrap text-slate-500">
+                                                {classroom.korlas ? (
+                                                    <span className="inline-flex rounded-full bg-blue-50 px-3 py-0.5 text-xs font-bold text-blue-600 ring-1 ring-blue-500/10 ring-inset">
+                                                        {classroom.korlas.name}
+                                                    </span>
+                                                ) : (
+                                                    <span className="font-medium text-slate-400 italic">
+                                                        Belum Ada Korlas
+                                                    </span>
+                                                )}
+                                                {classroom.google_sheet_link && (
+                                                    <a
+                                                        href={
+                                                            classroom.google_sheet_link
+                                                        }
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        className="ml-2 inline-flex rounded-full bg-emerald-50 px-3 py-0.5 text-xs font-bold text-emerald-600 ring-1 ring-emerald-500/10 transition-colors ring-inset hover:bg-emerald-100"
+                                                    >
+                                                        Link Sheet
+                                                    </a>
+                                                )}
+                                            </td>
+                                            <td className="px-4 py-3 text-right align-top whitespace-nowrap">
+                                                <div className="flex justify-end gap-2">
+                                                    <button
+                                                        onClick={() =>
+                                                            openEdit(classroom)
+                                                        }
+                                                        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-blue-600"
+                                                        title="Edit Kelas"
+                                                    >
+                                                        <PencilSimple
+                                                            weight="bold"
+                                                            className="h-4 w-4"
+                                                        />
+                                                    </button>
+                                                    <button
+                                                        onClick={() =>
+                                                            deleteClassroom(
+                                                                classroom.id,
+                                                                classroom.name,
+                                                            )
+                                                        }
+                                                        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-rose-600"
+                                                        title="Hapus Kelas"
+                                                    >
+                                                        <Trash
+                                                            weight="bold"
+                                                            className="h-4 w-4"
+                                                        />
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
-                                    ) : (
-                                        classrooms.map((classroom: any) => (
-                                            <tr
-                                                key={classroom.id}
-                                                className="transition-colors hover:bg-slate-50/50"
-                                            >
-                                                <td className="px-4 py-3 text-sm font-semibold whitespace-nowrap text-slate-800">
-                                                    {classroom.name}
-                                                </td>
-                                                <td className="px-4 py-3 text-sm whitespace-nowrap text-slate-500">
-                                                    {classroom.korlas ? (
-                                                        <span className="inline-flex rounded-full bg-blue-50 px-3 py-0.5 text-xs font-bold text-blue-600 ring-1 ring-blue-500/10 ring-inset">
-                                                            {
-                                                                classroom.korlas
-                                                                    .name
-                                                            }
-                                                        </span>
-                                                    ) : (
-                                                        <span className="font-medium text-slate-400 italic">
-                                                            Belum Ada Korlas
-                                                        </span>
-                                                    )}
-                                                    {classroom.google_sheet_link && (
-                                                        <a
-                                                            href={
-                                                                classroom.google_sheet_link
-                                                            }
-                                                            target="_blank"
-                                                            rel="noreferrer"
-                                                            className="ml-2 inline-flex rounded-full bg-emerald-50 px-3 py-0.5 text-xs font-bold text-emerald-600 ring-1 ring-emerald-500/10 transition-colors ring-inset hover:bg-emerald-100"
-                                                        >
-                                                            Link Sheet
-                                                        </a>
-                                                    )}
-                                                </td>
-                                                <td className="px-4 py-3 text-right align-top whitespace-nowrap">
-                                                    <div className="flex justify-end gap-2">
-                                                        <button
-                                                            onClick={() =>
-                                                                openEdit(
-                                                                    classroom,
-                                                                )
-                                                            }
-                                                            className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-blue-600"
-                                                            title="Edit Kelas"
-                                                        >
-                                                            <PencilSimple weight="bold" className="h-4 w-4" />
-                                                        </button>
-                                                        <button
-                                                            onClick={() =>
-                                                                deleteClassroom(
-                                                                    classroom.id,
-                                                                    classroom.name,
-                                                                )
-                                                            }
-                                                            className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-rose-600"
-                                                            title="Hapus Kelas"
-                                                        >
-                                                            <Trash weight="bold" className="h-4 w-4" />
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="border-t border-slate-200 bg-slate-50 px-4 py-3 text-xs font-semibold text-slate-500">
-                            Total {classrooms.length} Kelas
-                        </div>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="border-t border-slate-200 bg-slate-50 px-4 py-3 text-xs font-semibold text-slate-500">
+                        Total {classrooms.length} Kelas
                     </div>
                 </div>
+            </div>
         </DashboardLayout>
     );
 }

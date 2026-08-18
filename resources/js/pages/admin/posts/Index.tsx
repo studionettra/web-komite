@@ -1,13 +1,15 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { PencilSimple, Trash, Plus, CheckCircle, XCircle } from '@phosphor-icons/react';
+import {
+    PencilSimple,
+    Trash,
+    Plus,
+    CheckCircle,
+    XCircle,
+} from '@phosphor-icons/react';
 import DashboardLayout from '../../../layouts/DashboardLayout';
 import { confirmDelete } from '../../../utils/alertManager';
 
-export default function PostsIndex({
-    posts,
-}: {
-    posts: any;
-}) {
+export default function PostsIndex({ posts }: { posts: any }) {
     const deletePost = (id: number, title: string) => {
         confirmDelete(`Hapus kabar "${title}"?`, () => {
             router.delete(`/admin/posts/${id}`);
@@ -91,10 +93,10 @@ export default function PostsIndex({
                                     >
                                         <td className="px-4 py-3">
                                             <div className="flex flex-col">
-                                                <span className="text-sm font-semibold text-slate-900 line-clamp-1">
+                                                <span className="line-clamp-1 text-sm font-semibold text-slate-900">
                                                     {post.title}
                                                 </span>
-                                                <span className="mt-0.5 text-xs font-medium text-slate-500 line-clamp-1">
+                                                <span className="mt-0.5 line-clamp-1 text-xs font-medium text-slate-500">
                                                     {post.author?.name}
                                                 </span>
                                             </div>
@@ -113,23 +115,34 @@ export default function PostsIndex({
                                         <td className="px-4 py-3 text-sm whitespace-nowrap">
                                             {post.is_published ? (
                                                 <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-600/20 ring-inset">
-                                                    <CheckCircle weight="fill" className="h-3.5 w-3.5" />
+                                                    <CheckCircle
+                                                        weight="fill"
+                                                        className="h-3.5 w-3.5"
+                                                    />
                                                     Terbit
                                                 </span>
                                             ) : (
                                                 <span className="inline-flex items-center gap-1 rounded-md bg-slate-50 px-2 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-500/20 ring-inset">
-                                                    <XCircle weight="fill" className="h-3.5 w-3.5" />
+                                                    <XCircle
+                                                        weight="fill"
+                                                        className="h-3.5 w-3.5"
+                                                    />
                                                     Draft
                                                 </span>
                                             )}
                                         </td>
                                         <td className="px-4 py-3 text-sm whitespace-nowrap text-slate-600">
                                             {post.published_at
-                                                ? new Date(post.published_at).toLocaleDateString('id-ID', {
-                                                      day: 'numeric',
-                                                      month: 'short',
-                                                      year: 'numeric',
-                                                  })
+                                                ? new Date(
+                                                      post.published_at,
+                                                  ).toLocaleDateString(
+                                                      'id-ID',
+                                                      {
+                                                          day: 'numeric',
+                                                          month: 'short',
+                                                          year: 'numeric',
+                                                      },
+                                                  )
                                                 : '-'}
                                         </td>
                                         <td className="px-4 py-3 text-right align-middle whitespace-nowrap">
@@ -139,14 +152,25 @@ export default function PostsIndex({
                                                     className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-blue-600"
                                                     title="Edit Kabar"
                                                 >
-                                                    <PencilSimple weight="bold" className="h-4 w-4" />
+                                                    <PencilSimple
+                                                        weight="bold"
+                                                        className="h-4 w-4"
+                                                    />
                                                 </Link>
                                                 <button
-                                                    onClick={() => deletePost(post.id, post.title)}
+                                                    onClick={() =>
+                                                        deletePost(
+                                                            post.id,
+                                                            post.title,
+                                                        )
+                                                    }
                                                     className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-rose-600"
                                                     title="Hapus Kabar"
                                                 >
-                                                    <Trash weight="bold" className="h-4 w-4" />
+                                                    <Trash
+                                                        weight="bold"
+                                                        className="h-4 w-4"
+                                                    />
                                                 </button>
                                             </div>
                                         </td>
@@ -159,7 +183,8 @@ export default function PostsIndex({
                 {posts.links && posts.links.length > 3 && (
                     <div className="flex items-center justify-between border-t border-slate-200 bg-slate-50 px-4 py-3">
                         <span className="text-xs font-medium text-slate-500">
-                            Menampilkan {posts.from} - {posts.to} dari {posts.total}
+                            Menampilkan {posts.from} - {posts.to} dari{' '}
+                            {posts.total}
                         </span>
                         <div className="flex items-center gap-1">
                             {posts.links.map((link: any, i: number) => (
@@ -167,7 +192,9 @@ export default function PostsIndex({
                                     key={i}
                                     href={link.url || '#'}
                                     className={`inline-flex min-w-[32px] items-center justify-center rounded-lg px-2 py-1 text-xs font-semibold transition-colors ${link.active ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-200'} ${!link.url ? 'pointer-events-none opacity-50' : ''}`}
-                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
                                 />
                             ))}
                         </div>

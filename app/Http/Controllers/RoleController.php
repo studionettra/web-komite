@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Alert;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
@@ -18,7 +19,7 @@ class RoleController extends Controller
         ]);
     }
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $request->validate(['name' => 'required|string|unique:roles,name']);
 
@@ -29,7 +30,7 @@ class RoleController extends Controller
         return back();
     }
 
-    public function destroy(Role $role): \Illuminate\Http\RedirectResponse
+    public function destroy(Role $role): RedirectResponse
     {
         if ($role->name === 'Superadmin') {
             Alert::error('Gagal', 'Role Superadmin tidak dapat dihapus.');

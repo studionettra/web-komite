@@ -1,5 +1,4 @@
 import { Head } from '@inertiajs/react';
-import PublicLayout from '../../layouts/PublicLayout';
 import {
     ArrowUpRight,
     Table as TableIcon,
@@ -10,6 +9,7 @@ import {
     FileText,
 } from '@phosphor-icons/react';
 import { useState, useEffect } from 'react';
+import PublicLayout from '../../layouts/PublicLayout';
 
 export default function Finance({
     sheetUrl,
@@ -35,16 +35,23 @@ export default function Finance({
     }, []);
 
     const getEmbedUrl = (url: string | null) => {
-        if (!url) return '';
+        if (!url) {
+return '';
+}
+
         const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+
         if (match && match[1]) {
             let embed = `https://docs.google.com/spreadsheets/d/${match[1]}/edit?rm=minimal`;
             const gidMatch = url.match(/[#&?]gid=([0-9]+)/);
+
             if (gidMatch && gidMatch[1]) {
                 embed += `&gid=${gidMatch[1]}&single=true&widget=false&chrome=false`;
             }
+
             return embed;
         }
+
         return url;
     };
 

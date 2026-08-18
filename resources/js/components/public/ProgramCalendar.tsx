@@ -193,19 +193,19 @@ export default function ProgramCalendar({
             <div className="absolute bottom-0 left-0 -z-10 h-[60vh] w-[60vh] -translate-x-1/4 translate-y-1/4 rounded-full bg-blue-300/10 mix-blend-multiply blur-3xl"></div>
 
             <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="mb-12 flex flex-col items-center justify-between gap-2 sm:gap-6 sm:flex-row sm:items-end">
+                <div className="mb-12 flex flex-col items-center justify-between gap-2 sm:flex-row sm:items-end sm:gap-6">
                     <div className="max-w-2xl text-center sm:text-left">
                         <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl">
                             Jadwal Terdekat
                         </h2>
-                        <p className="mt-3 text-sm sm:text-base leading-relaxed font-medium text-slate-600">
+                        <p className="mt-3 text-sm leading-relaxed font-medium text-slate-600 sm:text-base">
                             Pantau agenda dan sesi kegiatan komite secara
                             interaktif melalui kalender program kami.
                         </p>
                     </div>
                     <Link
                         href="/program"
-                        className="inline-flex rounded-full border border-slate-200/60 bg-white/80 px-6 py-3.5 text-sm sm:text-base font-bold whitespace-nowrap text-slate-700 shadow-sm backdrop-blur-md transition-all hover:-translate-y-1 hover:bg-white hover:shadow-md hover:shadow-slate-200/50"
+                        className="inline-flex rounded-full border border-slate-200/60 bg-white/80 px-6 py-3.5 text-sm font-bold whitespace-nowrap text-slate-700 shadow-sm backdrop-blur-md transition-all hover:-translate-y-1 hover:bg-white hover:shadow-md hover:shadow-slate-200/50 sm:text-base"
                     >
                         Lihat Semua Program
                     </Link>
@@ -239,15 +239,15 @@ export default function ProgramCalendar({
 
                     {/* Right Col: Event Details */}
                     <div className="flex h-full flex-col lg:col-span-7">
-                        <div className="mb-8 flex justify-center sm:justify-start items-center gap-3 sm:gap-4 border-b border-slate-200/50 pb-5 text-left">
-                            <div className="flex h-12 w-12 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl sm:rounded-3xl bg-blue-100 text-blue-500 shadow-inner">
+                        <div className="mb-8 flex items-center justify-center gap-3 border-b border-slate-200/50 pb-5 text-left sm:justify-start sm:gap-4">
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-blue-500 shadow-inner sm:h-16 sm:w-16 sm:rounded-3xl">
                                 <CalendarBlank
                                     weight="fill"
                                     className="h-6 w-6 sm:h-8 sm:w-8"
                                 />
                             </div>
                             <div>
-                                <h4 className="text-xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+                                <h4 className="text-xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
                                     {selectedDate
                                         ? selectedDate.toLocaleDateString(
                                               'id-ID',
@@ -260,7 +260,7 @@ export default function ProgramCalendar({
                                           )
                                         : 'Pilih Tanggal'}
                                 </h4>
-                                <p className="mt-1 text-sm sm:text-base font-semibold text-slate-500">
+                                <p className="mt-1 text-sm font-semibold text-slate-500 sm:text-base">
                                     {selectedEvents.length} program dijadwalkan
                                 </p>
                             </div>
@@ -289,7 +289,7 @@ export default function ProgramCalendar({
                                         className="group flex flex-col gap-6 rounded-[2.5rem] border border-white bg-white/80 p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] sm:flex-row sm:p-8"
                                     >
                                         <div className="flex-1">
-                                            <div className="mb-2 sm:mb-4 flex flex-wrap items-center gap-3">
+                                            <div className="mb-2 flex flex-wrap items-center gap-3 sm:mb-4">
                                                 <span className="rounded-full bg-indigo-50 px-3.5 py-1.5 text-xs font-bold tracking-wide text-indigo-600 uppercase">
                                                     {evt.type}
                                                 </span>
@@ -310,10 +310,10 @@ export default function ProgramCalendar({
                                                     </span>
                                                 )}
                                             </div>
-                                            <h3 className="mb-3 text-lg sm:text-2xl leading-snug font-extrabold text-slate-800 transition-colors group-hover:text-blue-600">
+                                            <h3 className="mb-3 text-lg leading-snug font-extrabold text-slate-800 transition-colors group-hover:text-blue-600 sm:text-2xl">
                                                 {evt.title}
                                             </h3>
-                                            <p className="mb-6 line-clamp-2 text-sm sm:text-base leading-relaxed text-slate-500">
+                                            <p className="mb-6 line-clamp-2 text-sm leading-relaxed text-slate-500 sm:text-base">
                                                 {evt.description ||
                                                     'Tidak ada deskripsi rinci untuk kegiatan ini.'}
                                             </p>
@@ -321,7 +321,7 @@ export default function ProgramCalendar({
                                         <div className="flex items-center justify-start border-t border-slate-100 pt-6 sm:w-auto sm:justify-end sm:border-t-0 sm:border-l sm:pt-0 sm:pl-8">
                                             <Link
                                                 href={`/program?id=${evt.programId}`}
-                                                className="inline-flex w-full items-center justify-center rounded-3xl bg-blue-600 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-extrabold whitespace-nowrap text-white shadow-[0_6px_15px_rgba(37,99,235,0.25)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-blue-700 hover:shadow-[0_10px_25px_rgba(37,99,235,0.35)] active:scale-95 sm:w-auto"
+                                                className="inline-flex w-full items-center justify-center rounded-3xl bg-blue-600 px-6 py-3 text-sm font-extrabold whitespace-nowrap text-white shadow-[0_6px_15px_rgba(37,99,235,0.25)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-blue-700 hover:shadow-[0_10px_25px_rgba(37,99,235,0.35)] active:scale-95 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
                                             >
                                                 Lihat Detail
                                             </Link>
@@ -333,7 +333,7 @@ export default function ProgramCalendar({
                     </div>
                 </div>
 
-                <div className="mx-auto mt-5 sm:mt-12 flex justify-center border-t border-slate-100 pt-8">
+                <div className="mx-auto mt-5 flex justify-center border-t border-slate-100 pt-8 sm:mt-12">
                     <Link
                         href="/kalender-akademik"
                         className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-blue-200 bg-white px-5 py-3 text-sm font-extrabold tracking-wide text-blue-600 shadow-[0_8px_25px_rgba(59,130,246,0.15)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-blue-400 hover:bg-blue-50 hover:shadow-[0_12px_30px_rgba(59,130,246,0.25)] active:scale-95 sm:gap-3 sm:px-8 sm:py-4 sm:text-base"

@@ -1,6 +1,10 @@
 import { Head } from '@inertiajs/react';
+import {
+    ArrowUpRight,
+    Table as TableIcon,
+    FileText,
+} from '@phosphor-icons/react';
 import DashboardLayout from '../../layouts/DashboardLayout';
-import { ArrowUpRight, Table as TableIcon, FileText } from '@phosphor-icons/react';
 
 export default function TransactionsIndex({
     sheetUrl,
@@ -10,17 +14,24 @@ export default function TransactionsIndex({
     sheetStatus: 'active' | 'preparing' | 'hidden';
 }) {
     const getEmbedUrl = (url: string | null) => {
-        if (!url) return '';
+        if (!url) {
+return '';
+}
+
         const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+
         if (match && match[1]) {
             let embed = `https://docs.google.com/spreadsheets/d/${match[1]}/edit?rm=minimal`;
             const gidMatch = url.match(/[#&?]gid=([0-9]+)/);
+
             if (gidMatch && gidMatch[1]) {
                 // &single=true&widget=false menyembunyikan tab di bawah agar hanya menampilkan sheet spesifik
                 embed += `&gid=${gidMatch[1]}&single=true&widget=false&chrome=false`;
             }
+
             return embed;
         }
+
         return url;
     };
 
@@ -59,7 +70,8 @@ export default function TransactionsIndex({
                             Laporan Sedang Disiapkan
                         </h3>
                         <p className="max-w-md text-base font-medium text-slate-500">
-                            Bendahara sedang menyusun laporan keuangan saat ini. Silakan periksa kembali nanti.
+                            Bendahara sedang menyusun laporan keuangan saat ini.
+                            Silakan periksa kembali nanti.
                         </p>
                     </div>
                 ) : sheetStatus === 'hidden' || !sheetUrl ? (
@@ -74,14 +86,15 @@ export default function TransactionsIndex({
                             Google Sheet Belum Terhubung
                         </h3>
                         <p className="max-w-md text-base font-medium text-slate-500">
-                            Admin belum mengatur tautan Google Sheet untuk keuangan di Pengaturan.
+                            Admin belum mengatur tautan Google Sheet untuk
+                            keuangan di Pengaturan.
                         </p>
                     </div>
                 ) : (
                     <div className="flex flex-col bg-slate-50">
                         <iframe
                             src={getEmbedUrl(sheetUrl)}
-                            className="h-[500px] sm:h-[700px] w-full border-0"
+                            className="h-[500px] w-full border-0 sm:h-[700px]"
                             title="Data Keuangan"
                             allowFullScreen
                         ></iframe>

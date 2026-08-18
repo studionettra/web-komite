@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
+import { UsersThree, Smiley, Backpack, Confetti } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { UsersThree, Smiley, Backpack, Confetti } from '@phosphor-icons/react';
 
 // Static image imports from resources/images
 import anggotaHumasMamaFath from '../../../images/komite/anggota-humas-mama-fath.jpeg';
@@ -132,8 +132,13 @@ export default function Organization() {
     return (
         <PublicLayout>
             <Head>
-                <title>Susunan Pengurus - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu</title>
-                <meta name="description" content="Profil dan susunan pengurus Komite KBIT-TKIT Al-Ikhlash Pasar Minggu. Kenali tim yang berdedikasi mendukung pendidikan anak Anda." />
+                <title>
+                    Susunan Pengurus - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu
+                </title>
+                <meta
+                    name="description"
+                    content="Profil dan susunan pengurus Komite KBIT-TKIT Al-Ikhlash Pasar Minggu. Kenali tim yang berdedikasi mendukung pendidikan anak Anda."
+                />
             </Head>
 
             {/* Hero Section */}
@@ -207,14 +212,14 @@ export default function Organization() {
             {/* Structure Grid */}
             <section className="relative overflow-hidden bg-white pt-12 pb-16 sm:pt-20 sm:pb-32">
                 {/* Modern Grid Background */}
-                <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#f1f5f9_1px,transparent_1px),linear-gradient(to_bottom,#f1f5f9_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
-                
+                <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#f1f5f9_1px,transparent_1px),linear-gradient(to_bottom,#f1f5f9_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)] bg-[size:4rem_4rem]"></div>
+
                 {/* Seamless Gradient from Hero */}
-                <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-sky-50 to-transparent -z-10"></div>
+                <div className="absolute top-0 right-0 left-0 -z-10 h-40 bg-gradient-to-b from-sky-50 to-transparent"></div>
 
                 {/* Playful Background Elements */}
                 <div className="absolute top-1/4 -left-32 -z-10 h-[500px] w-[500px] rounded-full bg-blue-200/30 mix-blend-multiply blur-3xl"></div>
-                <div className="absolute bottom-1/4 -right-32 -z-10 h-[600px] w-[600px] rounded-full bg-yellow-200/20 mix-blend-multiply blur-3xl"></div>
+                <div className="absolute -right-32 bottom-1/4 -z-10 h-[600px] w-[600px] rounded-full bg-yellow-200/20 mix-blend-multiply blur-3xl"></div>
                 <div className="absolute top-3/4 left-1/4 -z-10 h-[400px] w-[400px] rounded-full bg-pink-200/20 mix-blend-multiply blur-3xl"></div>
 
                 <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

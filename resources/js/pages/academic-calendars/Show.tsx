@@ -41,11 +41,12 @@ export default function AcademicCalendarsShow({
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
-        name: '',
-        year: '',
-        effective_days: '',
-    });
+    const { data, setData, post, processing, errors, reset, clearErrors } =
+        useForm({
+            name: '',
+            year: '',
+            effective_days: '',
+        });
 
     const openCreate = () => {
         reset();
@@ -110,7 +111,7 @@ export default function AcademicCalendarsShow({
                         className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
                         onClick={() => setIsModalOpen(false)}
                     ></div>
-                    <div className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto custom-scrollbar transform rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
+                    <div className="custom-scrollbar relative max-h-[90vh] w-full max-w-xl transform overflow-y-auto rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8">
                         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-white px-8 py-6">
                             <h3 className="flex items-center gap-3 text-lg font-semibold text-slate-900">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
@@ -130,14 +131,15 @@ export default function AcademicCalendarsShow({
                             <div className="space-y-6 px-8 py-6">
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-slate-700">
-                                        Nama Bulan <span className="text-rose-500">*</span>
+                                        Nama Bulan{' '}
+                                        <span className="text-rose-500">*</span>
                                     </label>
                                     <select
                                         value={data.name}
                                         onChange={(e) =>
                                             setData('name', e.target.value)
                                         }
-                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         required
                                     >
                                         <option value="" disabled>
@@ -157,14 +159,15 @@ export default function AcademicCalendarsShow({
                                 </div>
                                 <div>
                                     <label className="mb-2 block text-sm font-medium text-slate-700">
-                                        Tahun <span className="text-rose-500">*</span>
+                                        Tahun{' '}
+                                        <span className="text-rose-500">*</span>
                                     </label>
                                     <select
                                         value={data.year}
                                         onChange={(e) =>
                                             setData('year', e.target.value)
                                         }
-                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         required
                                     >
                                         <option value="" disabled>
@@ -190,9 +193,12 @@ export default function AcademicCalendarsShow({
                                         type="text"
                                         value={data.effective_days}
                                         onChange={(e) =>
-                                            setData('effective_days', e.target.value)
+                                            setData(
+                                                'effective_days',
+                                                e.target.value,
+                                            )
                                         }
-                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                                        className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3 font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 focus:outline-none"
                                         placeholder="Contoh: 15 hari"
                                     />
                                     {errors.effective_days && (
@@ -202,7 +208,7 @@ export default function AcademicCalendarsShow({
                                     )}
                                 </div>
                             </div>
-                            
+
                             <div className="flex flex-col-reverse gap-3 border-t border-slate-100 bg-slate-50 px-8 py-6 sm:flex-row sm:justify-end">
                                 <button
                                     type="button"
@@ -216,7 +222,9 @@ export default function AcademicCalendarsShow({
                                     disabled={processing}
                                     className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95 sm:w-auto"
                                 >
-                                    {processing ? 'Menyimpan...' : 'Tambah Bulan'}
+                                    {processing
+                                        ? 'Menyimpan...'
+                                        : 'Tambah Bulan'}
                                 </button>
                             </div>
                         </form>
@@ -232,9 +240,12 @@ export default function AcademicCalendarsShow({
                                 weight="duotone"
                                 className="mb-4 h-16 w-16 text-slate-300"
                             />
-                            <h3 className="text-lg font-bold text-slate-700">Belum Ada Bulan</h3>
+                            <h3 className="text-lg font-bold text-slate-700">
+                                Belum Ada Bulan
+                            </h3>
                             <p className="mt-1 text-sm font-medium text-slate-500">
-                                Anda belum menambahkan bulan pada tahun ajaran ini.
+                                Anda belum menambahkan bulan pada tahun ajaran
+                                ini.
                             </p>
                             {canManage && (
                                 <button
@@ -247,19 +258,19 @@ export default function AcademicCalendarsShow({
                             )}
                         </div>
                     )}
-                    
+
                     {academicYear.months?.map((month: any) => (
                         <div
                             key={month.id}
                             className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200/50"
                         >
-                            <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-gradient-to-br from-blue-50 to-indigo-50 opacity-50 transition-transform duration-500 group-hover:scale-150"></div>
-                            
+                            <div className="absolute -top-6 -right-6 h-24 w-24 rounded-full bg-gradient-to-br from-blue-50 to-indigo-50 opacity-50 transition-transform duration-500 group-hover:scale-150"></div>
+
                             <div className="relative z-10">
                                 <div className="mb-5 flex items-start justify-between">
                                     <div className="flex items-center gap-3">
                                         <div className="flex h-12 w-12 flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-md">
-                                            <span className="text-sm font-bold uppercase leading-none tracking-wider">
+                                            <span className="text-sm leading-none font-bold tracking-wider uppercase">
                                                 {month.name.substring(0, 3)}
                                             </span>
                                         </div>
@@ -272,46 +283,63 @@ export default function AcademicCalendarsShow({
                                             </span>
                                         </div>
                                     </div>
-                                    
+
                                     {canManage && (
                                         <button
-                                            onClick={() => deleteMonth(month.id, month.name)}
-                                            className="rounded-xl bg-rose-50 p-2.5 text-rose-500 opacity-0 transition-all hover:bg-rose-100 hover:text-rose-600 group-hover:opacity-100"
+                                            onClick={() =>
+                                                deleteMonth(
+                                                    month.id,
+                                                    month.name,
+                                                )
+                                            }
+                                            className="rounded-xl bg-rose-50 p-2.5 text-rose-500 opacity-0 transition-all group-hover:opacity-100 hover:bg-rose-100 hover:text-rose-600"
                                             title="Hapus Bulan"
                                         >
-                                            <Trash weight="fill" className="h-4 w-4" />
+                                            <Trash
+                                                weight="fill"
+                                                className="h-4 w-4"
+                                            />
                                         </button>
                                     )}
                                 </div>
 
                                 <div className="space-y-3 rounded-2xl bg-slate-50 p-4">
                                     <div className="flex items-center justify-between">
-                                        <span className="text-xs font-bold text-slate-500">Hari Efektif</span>
+                                        <span className="text-xs font-bold text-slate-500">
+                                            Hari Efektif
+                                        </span>
                                         <span className="rounded-lg bg-white px-2.5 py-1 text-xs font-bold text-slate-800 shadow-sm">
                                             {month.effective_days || '-'}
                                         </span>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <span className="text-xs font-bold text-slate-500">Agenda Kegiatan</span>
+                                        <span className="text-xs font-bold text-slate-500">
+                                            Agenda Kegiatan
+                                        </span>
                                         <span className="rounded-lg bg-white px-2.5 py-1 text-xs font-bold text-slate-800 shadow-sm">
                                             {month.activities_count || 0}
                                         </span>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <span className="text-xs font-bold text-slate-500">Program Belajar</span>
+                                        <span className="text-xs font-bold text-slate-500">
+                                            Program Belajar
+                                        </span>
                                         <span className="rounded-lg bg-white px-2.5 py-1 text-xs font-bold text-slate-800 shadow-sm">
                                             {month.learning_programs_count || 0}
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div className="relative z-10 mt-5 pt-5 border-t border-slate-100">
+
+                            <div className="relative z-10 mt-5 border-t border-slate-100 pt-5">
                                 <Link
                                     href={`/academic-calendar/months/${month.id}/edit`}
                                     className="group/btn flex w-full items-center justify-center gap-2 rounded-xl bg-slate-800 py-3 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-slate-700 hover:shadow-lg"
                                 >
-                                    <PencilSimple weight="bold" className="h-4 w-4 transition-transform group-hover/btn:-translate-y-0.5 group-hover/btn:rotate-12" />
+                                    <PencilSimple
+                                        weight="bold"
+                                        className="h-4 w-4 transition-transform group-hover/btn:-translate-y-0.5 group-hover/btn:rotate-12"
+                                    />
                                     Kelola Data Bulan Ini
                                 </Link>
                             </div>

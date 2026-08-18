@@ -1,5 +1,4 @@
 import { Head, useForm } from '@inertiajs/react';
-import DashboardLayout from '../../../layouts/DashboardLayout';
 import {
     ArrowUpRight,
     Table as TableIcon,
@@ -7,6 +6,7 @@ import {
     X,
 } from '@phosphor-icons/react';
 import { useState } from 'react';
+import DashboardLayout from '../../../layouts/DashboardLayout';
 
 export default function KorlasCollectionsIndex({
     classroom,
@@ -20,11 +20,16 @@ export default function KorlasCollectionsIndex({
     // Transform normal Google Sheet URL to an embed-friendly URL
     // Using rm=minimal hides the top toolbars but keeps the sheet tabs at the bottom
     const getEmbedUrl = (url: string | null) => {
-        if (!url) return '';
+        if (!url) {
+return '';
+}
+
         const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+
         if (match && match[1]) {
             return `https://docs.google.com/spreadsheets/d/${match[1]}/edit?rm=minimal`;
         }
+
         return url;
     };
 
@@ -353,7 +358,7 @@ export default function KorlasCollectionsIndex({
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="sm:w-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
+                                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95 sm:w-auto"
                                 >
                                     {processing
                                         ? 'Menyimpan...'

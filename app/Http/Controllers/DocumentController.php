@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Alert;
 use App\Models\Document;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $role = $request->user()->roles->first()->name ?? '';
         if (! in_array($role, ['Superadmin', 'Sekretaris'])) {
@@ -65,7 +66,7 @@ class DocumentController extends Controller
         return back();
     }
 
-    public function destroy(Request $request, Document $document): \Illuminate\Http\RedirectResponse
+    public function destroy(Request $request, Document $document): RedirectResponse
     {
         $role = $request->user()->roles->first()->name ?? '';
         if (! in_array($role, ['Superadmin', 'Sekretaris'])) {

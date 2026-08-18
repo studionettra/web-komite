@@ -1,6 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
-import PublicLayout from '@/layouts/PublicLayout';
 import { ShieldCheck, ArrowLeft } from '@phosphor-icons/react';
+import PublicLayout from '@/layouts/PublicLayout';
 
 export default function PrivacyPolicy() {
     return (

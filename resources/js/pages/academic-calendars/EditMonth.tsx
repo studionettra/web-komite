@@ -182,7 +182,8 @@ export default function AcademicCalendarsEditMonth({
                             Agenda: {month.name} {month.year}
                         </h1>
                         <p className="mt-0.5 text-sm text-slate-500">
-                            Kelola kegiatan dan program pembelajaran untuk bulan ini.
+                            Kelola kegiatan dan program pembelajaran untuk bulan
+                            ini.
                         </p>
                     </div>
                 </div>
@@ -201,25 +202,30 @@ export default function AcademicCalendarsEditMonth({
             <form onSubmit={submit} className="space-y-6">
                 {/* General Info */}
                 <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                    <h2 className="mb-4 text-base font-semibold text-slate-900 border-b border-slate-100 pb-3">
+                    <h2 className="mb-4 border-b border-slate-100 pb-3 text-base font-semibold text-slate-900">
                         Informasi Umum
                     </h2>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                         <div>
                             <label className="mb-1.5 block text-xs font-semibold text-slate-700">
-                                Nama Bulan <span className="text-rose-500">*</span>
+                                Nama Bulan{' '}
+                                <span className="text-rose-500">*</span>
                             </label>
                             <select
                                 value={data.name}
                                 onChange={(e) =>
                                     setData('name', e.target.value)
                                 }
-                                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500 focus:outline-none"
                                 required
                             >
-                                <option value="" disabled>Pilih Bulan</option>
+                                <option value="" disabled>
+                                    Pilih Bulan
+                                </option>
                                 {MONTHS.map((m) => (
-                                    <option key={m} value={m}>{m}</option>
+                                    <option key={m} value={m}>
+                                        {m}
+                                    </option>
                                 ))}
                             </select>
                         </div>
@@ -232,12 +238,16 @@ export default function AcademicCalendarsEditMonth({
                                 onChange={(e) =>
                                     setData('year', e.target.value)
                                 }
-                                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500 focus:outline-none"
                                 required
                             >
-                                <option value="" disabled>Pilih Tahun</option>
+                                <option value="" disabled>
+                                    Pilih Tahun
+                                </option>
                                 {YEARS.map((y) => (
-                                    <option key={y} value={y}>{y}</option>
+                                    <option key={y} value={y}>
+                                        {y}
+                                    </option>
                                 ))}
                             </select>
                         </div>
@@ -251,7 +261,7 @@ export default function AcademicCalendarsEditMonth({
                                 onChange={(e) =>
                                     setData('effective_days', e.target.value)
                                 }
-                                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium transition-all focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500 focus:outline-none"
                             />
                         </div>
                     </div>
@@ -261,7 +271,10 @@ export default function AcademicCalendarsEditMonth({
                 <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                     <div className="mb-5 flex items-center justify-between border-b border-slate-100 pb-4">
                         <h2 className="flex items-center gap-2 text-base font-semibold text-slate-900">
-                            <Clock weight="bold" className="h-5 w-5 text-blue-600" />
+                            <Clock
+                                weight="bold"
+                                className="h-5 w-5 text-blue-600"
+                            />
                             Kegiatan
                         </h2>
                         <button
@@ -276,13 +289,20 @@ export default function AcademicCalendarsEditMonth({
                     <div className="space-y-4">
                         {data.activities.length === 0 ? (
                             <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 py-8 text-center text-sm text-slate-500">
-                                Belum ada kegiatan. Klik tombol "Tambah Kegiatan" di atas.
+                                Belum ada kegiatan. Klik tombol "Tambah
+                                Kegiatan" di atas.
                             </div>
                         ) : (
                             data.activities.map(
                                 (activity: any, index: number) => {
-                                    const maxDays = getMaxDays(data.name, data.year);
-                                    const dateError = validateDateString(activity.date_string, maxDays);
+                                    const maxDays = getMaxDays(
+                                        data.name,
+                                        data.year,
+                                    );
+                                    const dateError = validateDateString(
+                                        activity.date_string,
+                                        maxDays,
+                                    );
 
                                     return (
                                         <div
@@ -297,11 +317,16 @@ export default function AcademicCalendarsEditMonth({
                                                 </div>
                                                 <button
                                                     type="button"
-                                                    onClick={() => removeActivity(index)}
+                                                    onClick={() =>
+                                                        removeActivity(index)
+                                                    }
                                                     className="rounded-md p-1 text-slate-400 hover:bg-rose-50 hover:text-rose-600"
                                                     title="Hapus baris"
                                                 >
-                                                    <Trash weight="bold" className="h-4 w-4" />
+                                                    <Trash
+                                                        weight="bold"
+                                                        className="h-4 w-4"
+                                                    />
                                                 </button>
                                             </div>
 
@@ -312,9 +337,18 @@ export default function AcademicCalendarsEditMonth({
                                                     </label>
                                                     <input
                                                         type="text"
-                                                        value={activity.date_string || ''}
-                                                        onChange={(e) => updateActivity(index, 'date_string', e.target.value)}
-                                                        className={`w-full rounded-lg border ${dateError ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500/20' : 'border-slate-200 focus:border-blue-500 focus:ring-blue-500/20'} bg-slate-50 px-3 py-1.5 text-sm transition-all focus:bg-white focus:outline-none focus:ring-1`}
+                                                        value={
+                                                            activity.date_string ||
+                                                            ''
+                                                        }
+                                                        onChange={(e) =>
+                                                            updateActivity(
+                                                                index,
+                                                                'date_string',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className={`w-full rounded-lg border ${dateError ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500/20' : 'border-slate-200 focus:border-blue-500 focus:ring-blue-500/20'} bg-slate-50 px-3 py-1.5 text-sm transition-all focus:bg-white focus:ring-1 focus:outline-none`}
                                                         placeholder="Contoh: 14 - 31"
                                                     />
                                                     {dateError && (
@@ -325,13 +359,22 @@ export default function AcademicCalendarsEditMonth({
                                                 </div>
                                                 <div className="sm:col-span-4">
                                                     <label className="mb-1 block text-[11px] font-bold text-slate-500 uppercase">
-                                                        Nama Kegiatan <span className="text-rose-500">*</span>
+                                                        Nama Kegiatan{' '}
+                                                        <span className="text-rose-500">
+                                                            *
+                                                        </span>
                                                     </label>
                                                     <input
                                                         type="text"
                                                         value={activity.name}
-                                                        onChange={(e) => updateActivity(index, 'name', e.target.value)}
-                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500/20"
+                                                        onChange={(e) =>
+                                                            updateActivity(
+                                                                index,
+                                                                'name',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500/20 focus:outline-none"
                                                         required
                                                     />
                                                 </div>
@@ -341,21 +384,41 @@ export default function AcademicCalendarsEditMonth({
                                                     </label>
                                                     <input
                                                         type="text"
-                                                        value={activity.description || ''}
-                                                        onChange={(e) => updateActivity(index, 'description', e.target.value)}
-                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500/20"
+                                                        value={
+                                                            activity.description ||
+                                                            ''
+                                                        }
+                                                        onChange={(e) =>
+                                                            updateActivity(
+                                                                index,
+                                                                'description',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500/20 focus:outline-none"
                                                     />
                                                 </div>
                                                 <div className="sm:col-span-12">
-                                                    <label className="flex cursor-pointer items-center gap-2 mt-1">
+                                                    <label className="mt-1 flex cursor-pointer items-center gap-2">
                                                         <input
                                                             type="checkbox"
-                                                            checked={activity.is_committee_program}
-                                                            onChange={(e) => updateActivity(index, 'is_committee_program', e.target.checked)}
+                                                            checked={
+                                                                activity.is_committee_program
+                                                            }
+                                                            onChange={(e) =>
+                                                                updateActivity(
+                                                                    index,
+                                                                    'is_committee_program',
+                                                                    e.target
+                                                                        .checked,
+                                                                )
+                                                            }
                                                             className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                                                         />
                                                         <span className="text-xs font-medium text-slate-700">
-                                                            Program Komite (diselenggarakan oleh Komite Sekolah)
+                                                            Program Komite
+                                                            (diselenggarakan
+                                                            oleh Komite Sekolah)
                                                         </span>
                                                     </label>
                                                 </div>
@@ -372,7 +435,10 @@ export default function AcademicCalendarsEditMonth({
                 <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                     <div className="mb-5 flex items-center justify-between border-b border-slate-100 pb-4">
                         <h2 className="flex items-center gap-2 text-base font-semibold text-slate-900">
-                            <BookOpen weight="bold" className="h-5 w-5 text-emerald-600" />
+                            <BookOpen
+                                weight="bold"
+                                className="h-5 w-5 text-emerald-600"
+                            />
                             Program Pembelajaran
                         </h2>
                         <button
@@ -392,8 +458,14 @@ export default function AcademicCalendarsEditMonth({
                         ) : (
                             data.learning_programs.map(
                                 (program: any, index: number) => {
-                                    const maxDays = getMaxDays(data.name, data.year);
-                                    const dateError = validateDateString(program.date_string, maxDays);
+                                    const maxDays = getMaxDays(
+                                        data.name,
+                                        data.year,
+                                    );
+                                    const dateError = validateDateString(
+                                        program.date_string,
+                                        maxDays,
+                                    );
 
                                     return (
                                         <div
@@ -408,11 +480,16 @@ export default function AcademicCalendarsEditMonth({
                                                 </div>
                                                 <button
                                                     type="button"
-                                                    onClick={() => removeProgram(index)}
+                                                    onClick={() =>
+                                                        removeProgram(index)
+                                                    }
                                                     className="rounded-md p-1 text-slate-400 hover:bg-rose-50 hover:text-rose-600"
                                                     title="Hapus baris"
                                                 >
-                                                    <Trash weight="bold" className="h-4 w-4" />
+                                                    <Trash
+                                                        weight="bold"
+                                                        className="h-4 w-4"
+                                                    />
                                                 </button>
                                             </div>
 
@@ -423,9 +500,18 @@ export default function AcademicCalendarsEditMonth({
                                                     </label>
                                                     <input
                                                         type="text"
-                                                        value={program.week_string || ''}
-                                                        onChange={(e) => updateProgram(index, 'week_string', e.target.value)}
-                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500/20"
+                                                        value={
+                                                            program.week_string ||
+                                                            ''
+                                                        }
+                                                        onChange={(e) =>
+                                                            updateProgram(
+                                                                index,
+                                                                'week_string',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-emerald-500 focus:bg-white focus:ring-1 focus:ring-emerald-500/20 focus:outline-none"
                                                         placeholder="I / II"
                                                     />
                                                 </div>
@@ -435,9 +521,18 @@ export default function AcademicCalendarsEditMonth({
                                                     </label>
                                                     <input
                                                         type="text"
-                                                        value={program.date_string || ''}
-                                                        onChange={(e) => updateProgram(index, 'date_string', e.target.value)}
-                                                        className={`w-full rounded-lg border ${dateError ? 'border-rose-300 focus:border-rose-500' : 'border-slate-200 focus:border-emerald-500'} bg-slate-50 px-3 py-1.5 text-sm transition-all focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500/20`}
+                                                        value={
+                                                            program.date_string ||
+                                                            ''
+                                                        }
+                                                        onChange={(e) =>
+                                                            updateProgram(
+                                                                index,
+                                                                'date_string',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className={`w-full rounded-lg border ${dateError ? 'border-rose-300 focus:border-rose-500' : 'border-slate-200 focus:border-emerald-500'} bg-slate-50 px-3 py-1.5 text-sm transition-all focus:bg-white focus:ring-1 focus:ring-emerald-500/20 focus:outline-none`}
                                                         placeholder="7 - 11"
                                                     />
                                                     {dateError && (
@@ -452,9 +547,17 @@ export default function AcademicCalendarsEditMonth({
                                                     </label>
                                                     <input
                                                         type="text"
-                                                        value={program.topic || ''}
-                                                        onChange={(e) => updateProgram(index, 'topic', e.target.value)}
-                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500/20"
+                                                        value={
+                                                            program.topic || ''
+                                                        }
+                                                        onChange={(e) =>
+                                                            updateProgram(
+                                                                index,
+                                                                'topic',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-emerald-500 focus:bg-white focus:ring-1 focus:ring-emerald-500/20 focus:outline-none"
                                                     />
                                                 </div>
                                                 <div className="sm:col-span-6">
@@ -463,9 +566,18 @@ export default function AcademicCalendarsEditMonth({
                                                     </label>
                                                     <input
                                                         type="text"
-                                                        value={program.sub_topic || ''}
-                                                        onChange={(e) => updateProgram(index, 'sub_topic', e.target.value)}
-                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500/20"
+                                                        value={
+                                                            program.sub_topic ||
+                                                            ''
+                                                        }
+                                                        onChange={(e) =>
+                                                            updateProgram(
+                                                                index,
+                                                                'sub_topic',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-emerald-500 focus:bg-white focus:ring-1 focus:ring-emerald-500/20 focus:outline-none"
                                                     />
                                                 </div>
                                                 <div className="sm:col-span-6">
@@ -474,9 +586,18 @@ export default function AcademicCalendarsEditMonth({
                                                     </label>
                                                     <input
                                                         type="text"
-                                                        value={program.description || ''}
-                                                        onChange={(e) => updateProgram(index, 'description', e.target.value)}
-                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500/20"
+                                                        value={
+                                                            program.description ||
+                                                            ''
+                                                        }
+                                                        onChange={(e) =>
+                                                            updateProgram(
+                                                                index,
+                                                                'description',
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm transition-all focus:border-emerald-500 focus:bg-white focus:ring-1 focus:ring-emerald-500/20 focus:outline-none"
                                                     />
                                                 </div>
                                             </div>
@@ -492,7 +613,7 @@ export default function AcademicCalendarsEditMonth({
                     <button
                         type="submit"
                         disabled={processing}
-                        className="sm:w-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95"
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:from-blue-500 hover:to-indigo-500 hover:shadow-lg active:scale-95 sm:w-auto"
                     >
                         <FloppyDisk weight="bold" className="h-4 w-4" />
                         {processing ? 'Menyimpan...' : 'Simpan Semua Perubahan'}

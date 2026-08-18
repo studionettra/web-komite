@@ -254,8 +254,13 @@ export default function Programs({ programs }: any) {
     return (
         <PublicLayout>
             <Head>
-                <title>Program Kerja - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu</title>
-                <meta name="description" content="Informasi lengkap mengenai program kerja, kegiatan, dan agenda Komite KBIT-TKIT Al-Ikhlash Pasar Minggu." />
+                <title>
+                    Program Kerja - Komite KBIT-TKIT Al-Ikhlash Pasar Minggu
+                </title>
+                <meta
+                    name="description"
+                    content="Informasi lengkap mengenai program kerja, kegiatan, dan agenda Komite KBIT-TKIT Al-Ikhlash Pasar Minggu."
+                />
             </Head>
 
             <section className="relative z-0 overflow-hidden border-b-[6px] border-dashed border-sky-200 bg-sky-50 pt-28 pb-20 text-center sm:pt-32 sm:pb-32">
