@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             AcademicCalendarSeeder::class,
             ClassroomSeeder::class,
             ProgramSeeder::class,
+            StudentSeeder::class,
         ]);
     }
 }
