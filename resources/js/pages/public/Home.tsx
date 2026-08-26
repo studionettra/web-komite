@@ -136,11 +136,6 @@ export default function Home({
                                                 key={`banner-${banner.id}`}
                                             >
                                                 <div className="group relative h-full w-full bg-slate-900">
-                                                    <picture className="block h-full w-full">
-                                                        <source
-                                                            srcSet={`/storage/${banner.image.replace(/\.(jpg|jpeg|png)$/i, '.webp')}?v=2`}
-                                                            type="image/webp"
-                                                        />
                                                         <img
                                                             src={`/storage/${banner.image}?v=2`}
                                                             alt={
@@ -159,7 +154,6 @@ export default function Home({
                                                             }
                                                             className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
                                                         />
-                                                    </picture>
                                                     {/* Optional subtle gradient at bottom just for pagination visibility */}
                                                     <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-slate-950/50 to-transparent"></div>
                                                 </div>
@@ -176,12 +170,7 @@ export default function Home({
                                             <SwiperSlide
                                                 key={`prog-img-${idx}`}
                                             >
-                                                <div className="group relative h-full w-full bg-slate-900">
-                                                    <picture className="block h-full w-full">
-                                                        <source
-                                                            srcSet={`/storage/${img.replace(/\.(jpg|jpeg|png)$/i, '.webp')}`}
-                                                            type="image/webp"
-                                                        />
+                                                    <div className="group relative h-full w-full bg-slate-900">
                                                         <img
                                                             src={`/storage/${img}`}
                                                             alt={`${heroProgram.title} - ${idx + 1}`}
@@ -203,7 +192,6 @@ export default function Home({
                                                             }
                                                             className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
                                                         />
-                                                    </picture>
                                                     {/* Playful Bottom Gradient Overlay */}
                                                     <div className="absolute inset-x-0 top-1/3 bottom-0 bg-linear-to-t from-sky-950/95 via-sky-900/50 to-transparent"></div>
                                                     <div className="absolute inset-0 flex items-end pb-16 sm:pb-20 lg:pb-24">
