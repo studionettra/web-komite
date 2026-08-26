@@ -273,14 +273,16 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                                 </p>
                             </div>
 
-                            <NavLink
-                                href="/users"
-                                icon={UserGear}
-                                pathname={pathname}
-                                onClick={closeSidebar}
-                            >
-                                Pengguna
-                            </NavLink>
+                            {auth?.is_primary_superadmin && (
+                                <NavLink
+                                    href="/users"
+                                    icon={UserGear}
+                                    pathname={pathname}
+                                    onClick={closeSidebar}
+                                >
+                                    Pengguna
+                                </NavLink>
+                            )}
                             <NavLink
                                 href="/admin/classrooms"
                                 icon={Users}

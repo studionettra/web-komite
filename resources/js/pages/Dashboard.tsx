@@ -98,7 +98,7 @@ export default function Dashboard(props: any) {
                                 Logged in as {role}
                             </div>
                             <h1 className="text-2xl font-bold tracking-tight text-slate-800 drop-shadow-sm sm:text-3xl">
-                                Selamat Datang, <br className="sm:hidden" />
+                                Selamat Datang,<br /> <br className="sm:hidden" />
                                 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                                     {auth?.user?.name || 'Pengurus'}
                                 </span>

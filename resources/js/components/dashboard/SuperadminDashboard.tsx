@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Briefcase, Users, ArrowUpRight } from '@phosphor-icons/react';
 
 export default function SuperadminDashboard({
@@ -6,6 +6,8 @@ export default function SuperadminDashboard({
     ongoing_programs: ongoingPrograms,
     analytics,
 }: any) {
+    const { auth } = usePage<any>().props;
+
     return (
         <div className="space-y-4 sm:space-y-6">
             <h2 className="mb-2 px-1 text-lg font-bold tracking-tight text-slate-900">
@@ -60,16 +62,18 @@ export default function SuperadminDashboard({
                                 className="h-3.5 w-3.5"
                             />
                         </Link>
-                        <Link
-                            href="/users"
-                            className="inline-flex items-center justify-between rounded-lg bg-white/10 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-white/20"
-                        >
-                            Kelola Pengguna{' '}
-                            <ArrowUpRight
-                                weight="bold"
-                                className="h-3.5 w-3.5"
-                            />
-                        </Link>
+                        {auth?.is_primary_superadmin && (
+                            <Link
+                                href="/users"
+                                className="inline-flex items-center justify-between rounded-lg bg-white/10 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-white/20"
+                            >
+                                Kelola Pengguna{' '}
+                                <ArrowUpRight
+                                    weight="bold"
+                                    className="h-3.5 w-3.5"
+                                />
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

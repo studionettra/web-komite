@@ -50,7 +50,7 @@ class InstagramPostController extends Controller
         ]);
 
         $data = $request->only(['url', 'is_active', 'order']);
-        
+
         $instagram->update($data);
 
         Cache::forget('home.instagram_posts');

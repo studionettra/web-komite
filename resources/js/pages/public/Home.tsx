@@ -693,81 +693,72 @@ export default function Home({
             </section>
 
             {/* Instagram Feed Section */}
-            <section className="relative overflow-hidden border-t-[6px] border-dashed border-pink-100 bg-pink-50/30 pt-16 pb-20 sm:pt-28 sm:pb-32">
+            <section className="relative overflow-hidden border-t-[6px] border-dashed border-pink-100 bg-pink-50/30 py-16 sm:py-24">
                 {/* Decorative Background Blobs for Instagram */}
                 <div className="absolute -top-40 -left-40 -z-10 h-125 w-125 rounded-full bg-pink-200/30 mix-blend-multiply blur-3xl"></div>
                 <div className="absolute top-1/2 -right-40 -z-10 h-150 w-150 -translate-y-1/2 rounded-full bg-yellow-200/30 mix-blend-multiply blur-3xl"></div>
 
                 <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="mb-12 flex flex-col items-center justify-center text-center sm:mb-20">
-                        <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-linear-to-tr from-yellow-400 via-red-500 to-purple-500 text-white shadow-xl shadow-pink-500/20 sm:h-24 sm:w-24 sm:rounded-4xl">
-                            <svg
-                                className="h-10 w-10 sm:h-12 sm:w-12"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                                aria-hidden="true"
+                    <div className="mb-12 flex flex-col items-center justify-between gap-6 sm:mb-16 md:flex-row md:items-end">
+                        <div className="max-w-2xl text-center md:text-left">
+                            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-200/50 bg-white/60 px-3 py-1.5 text-[11px] font-bold tracking-wider text-pink-700 uppercase backdrop-blur-md sm:mb-5 sm:px-4 sm:text-xs">
+                                <InstagramLogo className="h-3.5 w-3.5" weight="bold" />
+                                Instagram
+                            </div>
+                            <h2 className="mb-3 text-2xl font-bold tracking-tight text-slate-900 sm:mb-4 sm:text-3xl md:text-4xl">
+                                Ikuti Aktivitas Kami
+                            </h2>
+                            <p className="text-base leading-relaxed font-medium text-slate-600 sm:text-lg">
+                                Lihat keseruan kegiatan anak-anak dan terhubung
+                                dengan komunitas KBIT-TKIT Al-Ikhlash.
+                            </p>
+                        </div>
+                        <div className="flex shrink-0 justify-center md:justify-end">
+                            <a
+                                href="https://www.instagram.com/tkit.alikhlash/?hl=en"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 rounded-full bg-linear-to-tr from-yellow-500 via-red-500 to-purple-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-pink-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-pink-500/30 sm:px-8 sm:py-3.5 sm:text-base"
                             >
-                                <path
-                                    fillRule="evenodd"
-                                    d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
-                                    clipRule="evenodd"
-                                />
-                            </svg>
+                                <InstagramLogo className="h-5 w-5" weight="bold" />
+                                Follow @tkit.alikhlash
+                            </a>
                         </div>
-                        <h2 className="mb-5 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl">
-                            Ikuti Aktivitas Kami di Instagram
-                        </h2>
-                        <p className="mb-8 max-w-2xl text-base leading-relaxed font-medium text-slate-600 sm:text-lg">
-                            Dapatkan pembaruan terbaru, lihat keseruan kegiatan
-                            anak-anak, dan terhubung dengan komunitas komite
-                            KBIT-TKIT Al-Ikhlash.
-                        </p>
-                        <a
-                            href="https://www.instagram.com/tkit.alikhlash/?hl=en"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-slate-900/20 transition-all duration-300 hover:-translate-y-1 hover:bg-slate-800 hover:shadow-xl sm:text-base"
-                        >
-                            Follow @tkit.alikhlash
-                        </a>
                     </div>
 
-                    <div className="relative mt-8 min-h-75 w-full sm:mt-12">
-                        {/* Soft background framing for widget */}
-                        <div className="absolute -inset-4 rounded-[3rem] bg-white/60 shadow-xl shadow-sky-900/5 backdrop-blur-md sm:-inset-6"></div>
-                        <div className="relative z-10 mx-auto w-full max-w-6xl">
-                            {isMounted && instagramPosts?.length > 0 ? (
-                                <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 sm:space-y-0">
-                                    {instagramPosts.map((post: any) => {
-                                        const cleanUrl = post.url.split('?')[0];
+                    {isMounted && instagramPosts?.length > 0 ? (
+                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            {instagramPosts.map((post: any) => {
+                                const cleanUrl = post.url.split('?')[0];
 
-                                        return (
-                                            <div
-                                                key={post.id}
-                                                className="group relative mb-6 break-inside-avoid overflow-hidden rounded-3xl bg-white shadow-lg shadow-slate-200/50 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-300/50"
-                                            >
-                                                <div className="w-full bg-white flex justify-center">
-                                                    <InstagramEmbed 
-                                                        url={cleanUrl} 
-                                                        width="100%" 
-                                                    />
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            ) : (
-                                <div className="flex flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white py-20 text-center shadow-sm">
-                                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 text-slate-300">
-                                        <InstagramLogo className="h-8 w-8" weight="duotone" />
+                                return (
+                                    <div
+                                        key={post.id}
+                                        className="overflow-hidden rounded-2xl border border-white/50 bg-white shadow-lg shadow-pink-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-pink-900/10"
+                                    >
+                                        <div className="w-full [&_iframe]:!max-h-[520px]">
+                                            <InstagramEmbed
+                                                url={cleanUrl}
+                                                width="100%"
+                                            />
+                                        </div>
                                     </div>
-                                    <p className="text-sm font-bold text-slate-600">
-                                        Belum ada post Instagram yang ditautkan.
-                                    </p>
-                                </div>
-                            )}
+                                );
+                            })}
                         </div>
-                    </div>
+                    ) : (
+                        <div className="flex flex-col items-center justify-center rounded-[2rem] border-2 border-dashed border-slate-200/60 bg-white/40 p-12 text-center sm:p-16">
+                            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
+                                <InstagramLogo className="h-8 w-8" weight="duotone" />
+                            </div>
+                            <h3 className="text-lg font-bold text-slate-700">
+                                Belum Ada Post Instagram
+                            </h3>
+                            <p className="mt-2 text-sm text-slate-500">
+                                Post Instagram belum ditautkan saat ini.
+                            </p>
+                        </div>
+                    )}
                 </div>
             </section>
         </PublicLayout>

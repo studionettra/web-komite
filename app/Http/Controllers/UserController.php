@@ -6,14 +6,29 @@ use App\Helpers\Alert;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+class UserController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            function ($request, $next) {
+                $firstSuperadmin = User::role('Superadmin')->orderBy('id', 'asc')->first();
+                if ($firstSuperadmin && auth()->id() !== $firstSuperadmin->id) {
+                    abort(403, 'Hanya Superadmin Utama yang dapat mengakses halaman ini.');
+                }
+
+                return $next($request);
+            },
+        ];
+    }
+
     public function index()
     {
         $users = User::with('roles')->paginate(10);
@@ -85,6 +100,12 @@ class UserController extends Controller
 
     public function destroy(User $user): RedirectResponse
     {
+        if (auth()->id() === $user->id) {
+            Alert::error('Gagal', 'Anda tidak dapat menghapus akun Anda sendiri.');
+
+            return back();
+        }
+
         if ($user->hasRole('Superadmin') && User::role('Superadmin')->count() === 1) {
             Alert::error('Gagal', 'Tidak dapat menghapus satu-satunya Superadmin.');
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,11 +36,18 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $isPrimarySuperadmin = false;
+        if ($request->user() && $request->user()->hasRole('Superadmin')) {
+            $firstSuperadmin = User::role('Superadmin')->orderBy('id', 'asc')->first();
+            $isPrimarySuperadmin = $firstSuperadmin && $request->user()->id === $firstSuperadmin->id;
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user() ? $request->user()->load('roles') : null,
+                'is_primary_superadmin' => $isPrimarySuperadmin,
             ],
             'flash' => [
                 'alert' => $request->session()->get('alert'),
