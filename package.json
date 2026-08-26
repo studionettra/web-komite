@@ -24,6 +24,7 @@
         "eslint-plugin-import": "^2.32.0",
         "eslint-plugin-react": "^7.37.3",
         "eslint-plugin-react-hooks": "^7.0.0",
+        "fontaine": "^0.8.0",
         "prettier": "^3.4.2",
         "prettier-plugin-tailwindcss": "^0.6.11",
         "typescript-eslint": "^8.23.0"
@@ -45,6 +46,7 @@
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
         "react-hot-toast": "^2.6.0",
+        "react-social-media-embed": "^2.5.18",
         "swiper": "^14.1.0",
         "tailwind-merge": "^3.0.1",
         "tailwindcss": "^4.0.0",

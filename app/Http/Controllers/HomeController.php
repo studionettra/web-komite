@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Alert;
 use App\Models\Banner;
 use App\Models\Classroom;
+use App\Models\InstagramPost;
 use App\Models\Post;
 use App\Models\Program;
 use App\Models\ProgramActivity;
@@ -24,7 +25,7 @@ class HomeController extends Controller
         $heroProgram = $this->resolveHeroProgram($today);
 
         $banners = Cache::remember('home.banners', 600, function () {
-            return Banner::where('is_active', true)->orderBy('order', 'asc')->orderBy('created_at', 'desc')->get();
+            return Banner::where('is_active', true)->orderBy('order', 'asc')->orderBy('created_at', 'desc')->get()->toArray();
         });
 
         return Inertia::render('public/Home', [
@@ -33,7 +34,10 @@ class HomeController extends Controller
             'activePrograms' => Inertia::defer(fn () => $this->getActivePrograms($today, $heroProgram)),
             'upcomingSessions' => Inertia::defer(fn () => $this->getUpcomingSessions($today)),
             'recentPosts' => Inertia::defer(fn () => Cache::remember('home.recentPosts', 300, function () {
-                return Post::where('is_published', true)->orderBy('published_at', 'desc')->take(3)->get();
+                return Post::where('is_published', true)->orderBy('published_at', 'desc')->take(3)->get()->toArray();
+            })),
+            'instagramPosts' => Inertia::defer(fn () => Cache::remember('home.instagram_posts', 600, function () {
+                return InstagramPost::where('is_active', true)->orderBy('order', 'asc')->orderBy('created_at', 'desc')->take(6)->get()->toArray();
             })),
         ]);
     }

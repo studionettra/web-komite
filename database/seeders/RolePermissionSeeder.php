@@ -26,6 +26,7 @@ class RolePermissionSeeder extends Seeder
         $roleAnggota = Role::firstOrCreate(['name' => 'Anggota Komite']);
         $roleKorlas = Role::firstOrCreate(['name' => 'Korlas']);
         $roleHumas = Role::firstOrCreate(['name' => 'Humas']);
+        $roleSosmed = Role::firstOrCreate(['name' => 'Sosmed']);
 
         // Create Permissions
         $permissionManagePosts = Permission::firstOrCreate(['name' => 'manage_posts']);
@@ -34,6 +35,7 @@ class RolePermissionSeeder extends Seeder
         // Assign Permissions to Roles
         $roleSuperadmin->syncPermissions([$permissionManagePosts, $permissionManageCategories]);
         $roleHumas->syncPermissions([$permissionManagePosts, $permissionManageCategories]);
+        $roleSosmed->syncPermissions([$permissionManagePosts, $permissionManageCategories]);
 
         // Create Users
 
@@ -62,17 +64,17 @@ class RolePermissionSeeder extends Seeder
         User::updateOrCreate(['email' => 'ketua_sosmed@komite.com'], [
             'name' => 'Mamah Athar - KBIT (Novita Diah)',
             'password' => Hash::make('password123'),
-        ])->assignRole($roleAnggota);
+        ])->assignRole($roleSosmed);
 
         User::updateOrCreate(['email' => 'anggota_sosmed_1@komite.com'], [
             'name' => 'Mamah Shanum - BL1 (Widiya)',
             'password' => Hash::make('password123'),
-        ])->assignRole($roleAnggota);
+        ])->assignRole($roleSosmed);
 
         User::updateOrCreate(['email' => 'anggota_sosmed_2@komite.com'], [
             'name' => 'Mamah Baarik - B (Rosmanih)',
             'password' => Hash::make('password123'),
-        ])->assignRole($roleAnggota);
+        ])->assignRole($roleSosmed);
 
         // Bidang Konsumsi
         User::updateOrCreate(['email' => 'ketua_konsumsi@komite.com'], [

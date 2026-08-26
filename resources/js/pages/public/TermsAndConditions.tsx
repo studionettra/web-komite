@@ -67,7 +67,7 @@ export default function TermsAndConditions() {
                                 .
                             </p>
 
-                            <h3 className="mt-10 mb-4 text-slate-800">
+                            <h3 className="mt-10 mb-4 font-bold text-slate-800">
                                 1. Definisi dan Penggunaan Layanan
                             </h3>
                             <p>
@@ -79,7 +79,7 @@ export default function TermsAndConditions() {
                                 Komite, Sekolah, dan Wali Murid.
                             </p>
 
-                            <h3 className="mt-10 mb-4 text-slate-800">
+                            <h3 className="mt-10 mb-4 font-bold text-slate-800">
                                 2. Kewajiban dan Larangan Pengguna
                             </h3>
                             <p>
@@ -151,7 +151,7 @@ export default function TermsAndConditions() {
                                 </div>
                             </div>
 
-                            <h3 className="mt-10 mb-4 text-slate-800">
+                            <h3 className="mt-10 mb-4 font-bold text-slate-800">
                                 3. Hak Kekayaan Intelektual
                             </h3>
                             <p>
@@ -163,7 +163,7 @@ export default function TermsAndConditions() {
                                 ditunjuk, serta dilindungi oleh hukum Hak Cipta.
                             </p>
 
-                            <h3 className="mt-10 mb-4 text-slate-800">
+                            <h3 className="mt-10 mb-4 font-bold text-slate-800">
                                 4. Batasan Tanggung Jawab (Disclaimer)
                             </h3>
                             <p>
@@ -219,7 +219,7 @@ export default function TermsAndConditions() {
                                 </div>
                             </div>
 
-                            <h3 className="mt-10 mb-4 text-slate-800">
+                            <h3 className="mt-10 mb-4 font-bold text-slate-800">
                                 5. Pelanggaran Syarat dan Ketentuan
                             </h3>
                             <div className="not-prose my-6">

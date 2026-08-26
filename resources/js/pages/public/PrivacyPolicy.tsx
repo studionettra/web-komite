@@ -59,7 +59,7 @@ export default function PrivacyPolicy() {
                                 Republik Indonesia.
                             </p>
 
-                            <h3 className="mt-10 mb-4 text-slate-800">
+                            <h3 className="mt-10 mb-4 font-bold text-slate-800">
                                 1. Perolehan dan Pengumpulan Data Pribadi
                             </h3>
                             <p>
@@ -112,7 +112,7 @@ export default function PrivacyPolicy() {
                                 murid.
                             </p>
 
-                            <h3 className="mt-10 mb-4 text-slate-800">
+                            <h3 className="mt-10 mb-4 font-bold text-slate-800">
                                 2. Penggunaan Data Pribadi
                             </h3>
                             <p>
@@ -162,7 +162,7 @@ export default function PrivacyPolicy() {
                                 </div>
                             </div>
 
-                            <h3 className="mt-10 mb-4 text-slate-800">
+                            <h3 className="mt-10 mb-4 font-bold text-slate-800">
                                 3. Penyimpanan dan Keamanan Data Pribadi
                             </h3>
                             <p>
@@ -188,7 +188,7 @@ export default function PrivacyPolicy() {
                                 </div>
                             </div>
 
-                            <h3 className="mt-10 mb-4 text-slate-800">
+                            <h3 className="mt-10 mb-4 font-bold text-slate-800">
                                 4. Hak Subjek Data Pribadi
                             </h3>
                             <p>
@@ -241,8 +241,56 @@ export default function PrivacyPolicy() {
                                 Kelas (Korlas) Anda.
                             </p>
 
-                            <h3 className="mt-10 mb-4 text-slate-800">
-                                5. Perubahan Kebijakan Privasi
+                            <h3 className="mt-10 mb-4 font-bold text-slate-800">
+                                5. Penggunaan Cookies dan Pelacakan (Tracking)
+                            </h3>
+                            <p>
+                                Komite TKIT Al-Ikhlash sangat menghargai privasi Anda dalam menelusuri situs ini:
+                            </p>
+                            <div className="not-prose my-8 grid gap-4">
+                                <div className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:p-6">
+                                    <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                                        <span className="text-sm font-extrabold">1</span>
+                                    </div>
+                                    <div>
+                                        <div className="text-base font-extrabold text-slate-800">
+                                            Tidak Ada Pelacakan Pemasaran
+                                        </div>
+                                        <div className="mt-1 text-sm leading-relaxed font-medium text-slate-600">
+                                            Kami <strong>tidak</strong> menggunakan <i>Tracking Cookies</i> pihak ketiga (seperti Google Analytics atau Facebook Pixel) untuk memantau gerak-gerik atau riwayat penjelajahan Anda di halaman publik seperti Kabar Terkini.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:p-6">
+                                    <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                                        <span className="text-sm font-extrabold">2</span>
+                                    </div>
+                                    <div>
+                                        <div className="text-base font-extrabold text-slate-800">
+                                            Cookies Esensial Keamanan
+                                        </div>
+                                        <div className="mt-1 text-sm leading-relaxed font-medium text-slate-600">
+                                            Kami hanya menggunakan <i>Cookies</i> fungsional yang aktif semata-mata saat Anda <i>Login</i> untuk mengakses fitur <strong>Laporan Keuangan</strong> dan <strong>Kalender Akademik</strong>, guna memvalidasi sesi Anda secara aman dan melindungi situs dari pemalsuan permintaan silang.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:p-6">
+                                    <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+                                        <span className="text-sm font-extrabold">3</span>
+                                    </div>
+                                    <div>
+                                        <div className="text-base font-extrabold text-slate-800">
+                                            Log Audit Akses
+                                        </div>
+                                        <div className="mt-1 text-sm leading-relaxed font-medium text-slate-600">
+                                            Untuk menjaga transparansi, sistem kami dapat mencatat riwayat (log) ketika sebuah akun otentik mengakses laporan keuangan dan kalender akademik. Hal ini merupakan standar keamanan internal, bukan pelacakan profil personal.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 className="mt-10 mb-4 font-bold text-slate-800">
+                                6. Perubahan Kebijakan Privasi
                             </h3>
                             <p>
                                 Kami berhak untuk memperbarui atau mengubah

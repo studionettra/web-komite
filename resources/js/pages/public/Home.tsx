@@ -14,8 +14,9 @@ import {
     UsersThree,
     ArrowUpRight,
     Article,
+    InstagramLogo,
 } from '@phosphor-icons/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -23,6 +24,7 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
 import ProgramCalendar from '../../components/public/ProgramCalendar';
 import PublicLayout from '../../layouts/PublicLayout';
+import { InstagramEmbed } from 'react-social-media-embed';
 
 export default function Home({
     heroProgram,
@@ -30,87 +32,12 @@ export default function Home({
     upcomingSessions,
     banners,
     recentPosts,
+    instagramPosts,
 }: any) {
+    const [isMounted, setIsMounted] = useState(false);
+
     useEffect(() => {
-        let script: HTMLScriptElement | null = null;
-        let cleanerInterval: any;
-
-        // Tunda eksekusi script Elfsight agar tidak memblokir render (LCP)
-        const initTimer = setTimeout(() => {
-            script = document.createElement('script');
-            script.src = 'https://elfsightcdn.com/platform.js';
-            script.async = true;
-            document.body.appendChild(script);
-
-            // Skrip untuk membersihkan watermark secara agresif lewat Javascript
-            cleanerInterval = setInterval(() => {
-                // Cari elemen link yang mengarah ke elfsight
-                const links = document.querySelectorAll(
-                    'a[href*="elfsight.com"], a[href*="elfsight"]',
-                );
-                links.forEach((link) => {
-                    // Sembunyikan elemen
-                    (link as HTMLElement).style.setProperty(
-                        'display',
-                        'none',
-                        'important',
-                    );
-                });
-
-                // Cari elemen badge dengan nama class spesifik
-                const badges = document.querySelectorAll(
-                    '[class*="Badge__Container"], [class*="Watermark__Container"], .eapps-link',
-                );
-                badges.forEach((badge) => {
-                    (badge as HTMLElement).style.setProperty(
-                        'display',
-                        'none',
-                        'important',
-                    );
-                });
-
-                // Cek jika ada shadow root
-                const widget = document.querySelector(
-                    '.elfsight-app-81fba1fa-87f5-4b47-bdbd-1eff0f9bdbf6',
-                );
-
-                if (widget && widget.shadowRoot) {
-                    const shadowLinks = widget.shadowRoot.querySelectorAll(
-                        'a[href*="elfsight.com"]',
-                    );
-                    shadowLinks.forEach((link) => {
-                        (link as HTMLElement).style.setProperty(
-                            'display',
-                            'none',
-                            'important',
-                        );
-                    });
-
-                    const shadowBadges = widget.shadowRoot.querySelectorAll(
-                        '[class*="Badge__Container"], [class*="Watermark__Container"]',
-                    );
-                    shadowBadges.forEach((badge) => {
-                        (badge as HTMLElement).style.setProperty(
-                            'display',
-                            'none',
-                            'important',
-                        );
-                    });
-                }
-            }, 300);
-        }, 3500); // Tunda 3.5 detik
-
-        return () => {
-            clearTimeout(initTimer);
-
-            if (cleanerInterval) {
-clearInterval(cleanerInterval);
-}
-
-            if (script && document.body.contains(script)) {
-                document.body.removeChild(script);
-            }
-        };
+        setIsMounted(true);
     }, []);
 
     const getProgramIcon = (title: string) => {
@@ -808,10 +735,38 @@ clearInterval(cleanerInterval);
                     <div className="relative mt-8 min-h-75 w-full sm:mt-12">
                         {/* Soft background framing for widget */}
                         <div className="absolute -inset-4 rounded-[3rem] bg-white/60 shadow-xl shadow-sky-900/5 backdrop-blur-md sm:-inset-6"></div>
-                        <div
-                            className="elfsight-app-81fba1fa-87f5-4b47-bdbd-1eff0f9bdbf6 relative z-10"
-                            data-elfsight-app-lazy="true"
-                        ></div>
+                        <div className="relative z-10 mx-auto w-full max-w-6xl">
+                            {isMounted && instagramPosts?.length > 0 ? (
+                                <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 sm:space-y-0">
+                                    {instagramPosts.map((post: any) => {
+                                        const cleanUrl = post.url.split('?')[0];
+
+                                        return (
+                                            <div
+                                                key={post.id}
+                                                className="group relative mb-6 break-inside-avoid overflow-hidden rounded-3xl bg-white shadow-lg shadow-slate-200/50 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-300/50"
+                                            >
+                                                <div className="w-full bg-white flex justify-center">
+                                                    <InstagramEmbed 
+                                                        url={cleanUrl} 
+                                                        width="100%" 
+                                                    />
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            ) : (
+                                <div className="flex flex-col items-center justify-center rounded-3xl border border-slate-200 bg-white py-20 text-center shadow-sm">
+                                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 text-slate-300">
+                                        <InstagramLogo className="h-8 w-8" weight="duotone" />
+                                    </div>
+                                    <p className="text-sm font-bold text-slate-600">
+                                        Belum ada post Instagram yang ditautkan.
+                                    </p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </section>

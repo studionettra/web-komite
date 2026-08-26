@@ -1,7 +1,7 @@
 import '../css/app.css';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -13,8 +13,16 @@ createInertiaApp({
             import.meta.glob('./pages/**/*.tsx'),
         ) as any,
     setup({ el, App, props }) {
-        const root = createRoot(el);
-        root.render(<App {...props} />);
+        if (typeof window === 'undefined') {
+            return <App {...props} />;
+        }
+
+        if (el && el.hasChildNodes()) {
+            hydrateRoot(el, <App {...props} />);
+        } else if (el) {
+            const root = createRoot(el);
+            root.render(<App {...props} />);
+        }
     },
     progress: {
         color: '#4B5563',

@@ -12,6 +12,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\InstagramPostController;
 use App\Http\Controllers\Korlas\CollectionController;
 use App\Http\Controllers\Korlas\StudentController;
 use App\Http\Controllers\MeetingController;
@@ -100,10 +101,11 @@ Route::middleware(['auth', 'prevent-back-history'])->group(function (): void {
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
     // Superadmin | Humas restricted routes
-    Route::middleware(['role:Superadmin|Humas'])->prefix('admin')->name('admin.')->group(function (): void {
+    Route::middleware(['role:Superadmin|Humas|Sosmed'])->prefix('admin')->name('admin.')->group(function (): void {
         Route::resource('categories', CategoryController::class)->except(['create', 'show', 'edit']);
         Route::post('posts/upload-image', [AdminPostController::class, 'uploadImage'])->name('posts.upload-image');
         Route::resource('posts', AdminPostController::class)->except(['show']);
+        Route::resource('instagram', InstagramPostController::class)->except(['create', 'show', 'edit']);
     });
 
     Route::middleware(['role:Superadmin|Bendahara'])->group(function (): void {

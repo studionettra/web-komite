@@ -240,9 +240,17 @@ export default function AcademicCalendarGate({
                                         target="_blank"
                                         className="font-bold text-sky-600 transition-colors hover:text-sky-500 hover:underline"
                                     >
-                                        syarat dan ketentuan
+                                        Syarat &amp; Ketentuan
                                     </a>{' '}
-                                    akses data.
+                                    serta{' '}
+                                    <a
+                                        href="/kebijakan-privasi"
+                                        target="_blank"
+                                        className="font-bold text-sky-600 transition-colors hover:text-sky-500 hover:underline"
+                                    >
+                                        Kebijakan Privasi
+                                    </a>
+                                    .
                                 </label>
                                 {errors.agreed && (
                                     <p className="mt-1 text-xs font-medium text-red-500">

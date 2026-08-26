@@ -159,7 +159,7 @@ params.search = search;
             <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
                 <div className="flex flex-col gap-8 lg:flex-row">
                     {/* Main Content */}
-                    <div className="lg:w-3/4">
+                    <div className="order-2 lg:order-1 lg:w-3/4">
                         {posts.data.length === 0 ? (
                             <div className="flex flex-col items-center justify-center rounded-[2.5rem] border border-slate-100 bg-white p-16 text-center shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
                                 <MagnifyingGlass
@@ -335,7 +335,7 @@ params.search = search;
                     </div>
 
                     {/* Sidebar */}
-                    <div className="lg:w-1/4">
+                    <div className="order-1 lg:order-2 lg:w-1/4">
                         <div className="sticky top-28 space-y-8">
                             <div className="rounded-[2rem] border border-slate-100 bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
                                 <h3 className="mb-4 border-b border-slate-100 pb-4 text-lg font-extrabold text-slate-800">

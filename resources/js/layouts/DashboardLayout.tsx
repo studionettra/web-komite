@@ -14,6 +14,7 @@ import {
     ImageSquare,
     Newspaper,
     Tag,
+    InstagramLogo,
 } from '@phosphor-icons/react';
 import type { ReactNode } from 'react';
 import { useState, Suspense, lazy } from 'react';
@@ -197,28 +198,42 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     )}
 
                     {(auth?.user?.roles?.[0]?.name === 'Superadmin' ||
-                        auth?.user?.roles?.[0]?.name === 'Humas') && (
+                        auth?.user?.roles?.[0]?.name === 'Humas' ||
+                        auth?.user?.roles?.[0]?.name === 'Sosmed') && (
                         <>
                             <div className="px-4 pt-6 pb-2">
                                 <p className="text-[11px] font-extrabold tracking-widest text-slate-400 uppercase">
-                                    Menu Humas
+                                    Menu Publikasi
                                 </p>
                             </div>
+                            {(auth?.user?.roles?.[0]?.name === 'Superadmin' ||
+                                auth?.user?.roles?.[0]?.name === 'Humas') && (
+                                <>
+                                    <NavLink
+                                        href="/admin/posts"
+                                        icon={Newspaper}
+                                        pathname={pathname}
+                                        onClick={closeSidebar}
+                                    >
+                                        Kelola Kabar
+                                    </NavLink>
+                                    <NavLink
+                                        href="/admin/categories"
+                                        icon={Tag}
+                                        pathname={pathname}
+                                        onClick={closeSidebar}
+                                    >
+                                        Kategori Kabar
+                                    </NavLink>
+                                </>
+                            )}
                             <NavLink
-                                href="/admin/posts"
-                                icon={Newspaper}
+                                href="/admin/instagram"
+                                icon={InstagramLogo}
                                 pathname={pathname}
                                 onClick={closeSidebar}
                             >
-                                Kelola Kabar
-                            </NavLink>
-                            <NavLink
-                                href="/admin/categories"
-                                icon={Tag}
-                                pathname={pathname}
-                                onClick={closeSidebar}
-                            >
-                                Kategori Kabar
+                                Feed Instagram
                             </NavLink>
                         </>
                     )}

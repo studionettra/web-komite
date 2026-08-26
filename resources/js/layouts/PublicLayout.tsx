@@ -313,34 +313,30 @@ export default function PublicLayout({
                         </div>
 
                         <div className="relative z-10 border-t-2 border-sky-100 pt-6">
-                            <div className="flex flex-col items-center justify-center gap-3 text-center text-sm text-slate-500 sm:flex-row sm:gap-5">
+                            <div className="flex flex-wrap items-center justify-center gap-4 text-center text-sm font-medium text-slate-500 sm:gap-6">
                                 <Link
                                     href="/kebijakan-privasi"
-                                    className="font-semibold text-slate-600 transition-colors hover:text-blue-600"
+                                    className="transition-colors hover:text-blue-600"
                                 >
                                     Kebijakan Privasi
                                 </Link>
-                                <span className="hidden text-slate-300 sm:inline">
-                                    &middot;
-                                </span>
+                                <span className="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block"></span>
                                 <Link
                                     href="/syarat-dan-ketentuan"
-                                    className="font-semibold text-slate-600 transition-colors hover:text-blue-600"
+                                    className="transition-colors hover:text-blue-600"
                                 >
                                     Syarat &amp; Ketentuan
                                 </Link>
-                                <span className="hidden text-slate-300 sm:inline">
-                                    &middot;
-                                </span>
+                                <span className="hidden h-1 w-1 rounded-full bg-slate-300 sm:inline-block"></span>
                                 <Link
                                     href="/login"
-                                    className="inline-flex items-center gap-1.5 text-slate-400 transition-colors hover:text-blue-600"
+                                    className="group inline-flex items-center gap-1.5 transition-colors hover:text-blue-600"
                                 >
                                     <SignIn
-                                        weight="regular"
-                                        className="h-3.5 w-3.5"
+                                        weight="bold"
+                                        className="h-4 w-4 text-slate-400 transition-colors group-hover:text-blue-600"
                                     />
-                                    Login Pengurus
+                                    <span>Login Pengurus</span>
                                 </Link>
                             </div>
                             <div className="mt-4 flex flex-col items-center justify-between gap-2 text-xs text-slate-400 sm:flex-row">
