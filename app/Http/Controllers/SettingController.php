@@ -22,7 +22,7 @@ class SettingController extends Controller
         }
 
         // Tampilkan Spreadsheet ID atau URL yang tersimpan
-        $googleSpreadsheetId = $settings['google_spreadsheet_id'] ?? env('GOOGLE_SPREADSHEET_ID', '');
+        $googleSpreadsheetId = $settings['google_spreadsheet_id'] ?? config('services.google.spreadsheet_id', '');
         $googleSpreadsheetStatus = $settings['google_spreadsheet_status'] ?? 'hidden';
 
         // Buat format URL penuh agar mudah dipahami user

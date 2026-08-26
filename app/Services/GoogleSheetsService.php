@@ -53,7 +53,7 @@ class GoogleSheetsService
         }
 
         // Fallback to .env
-        $envId = env('GOOGLE_SPREADSHEET_ID');
+        $envId = config('services.google.spreadsheet_id');
         if (! empty($envId)) {
             return $envId;
         }

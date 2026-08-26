@@ -26,6 +26,10 @@ return [
         'spreadsheet_id' => env('GOOGLE_SPREADSHEET_ID'),
     ],
 
+    'turnstile' => [
+        'secret' => env('TURNSTILE_SECRET_KEY'),
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

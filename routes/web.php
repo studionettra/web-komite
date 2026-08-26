@@ -42,7 +42,7 @@ Route::get('/syarat-dan-ketentuan', [HomeController::class, 'termsAndConditions'
 
 Route::middleware(['guest', 'prevent-back-history'])->group(function (): void {
     Route::get('/login', [AuthController::class, 'create'])->name('login');
-    Route::post('/login', [AuthController::class, 'store']);
+    Route::post('/login', [AuthController::class, 'store'])->middleware('throttle:5,1');
 });
 
 Route::middleware(['auth', 'prevent-back-history'])->group(function (): void {

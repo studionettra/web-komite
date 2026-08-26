@@ -131,7 +131,7 @@ class HomeController extends Controller
             $settings = json_decode(File::get($settingsPath), true) ?? [];
         }
 
-        $sheetId = $settings['google_spreadsheet_id'] ?? env('GOOGLE_SPREADSHEET_ID');
+        $sheetId = $settings['google_spreadsheet_id'] ?? config('services.google.spreadsheet_id');
         $sheetStatus = $settings['google_spreadsheet_status'] ?? 'hidden';
         $sheetUrl = $sheetId ? "https://docs.google.com/spreadsheets/d/{$sheetId}/edit" : null;
 
