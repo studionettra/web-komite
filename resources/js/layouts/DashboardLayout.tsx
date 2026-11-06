@@ -275,14 +275,24 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                             </div>
 
                             {auth?.is_primary_superadmin && (
-                                <NavLink
-                                    href="/users"
-                                    icon={UserGear}
-                                    pathname={pathname}
-                                    onClick={closeSidebar}
-                                >
-                                    Pengguna
-                                </NavLink>
+                                <>
+                                    <NavLink
+                                        href="/users"
+                                        icon={UserGear}
+                                        pathname={pathname}
+                                        onClick={closeSidebar}
+                                    >
+                                        Pengguna
+                                    </NavLink>
+                                    <NavLink
+                                        href="/admin/committee-members"
+                                        icon={IdentificationCard}
+                                        pathname={pathname}
+                                        onClick={closeSidebar}
+                                    >
+                                        Pengurus Komite
+                                    </NavLink>
+                                </>
                             )}
                             <NavLink
                                 href="/admin/classrooms"
@@ -291,14 +301,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                                 onClick={closeSidebar}
                             >
                                 Data Kelas
-                            </NavLink>
-                            <NavLink
-                                href="/admin/committee-members"
-                                icon={IdentificationCard}
-                                pathname={pathname}
-                                onClick={closeSidebar}
-                            >
-                                Pengurus Komite
                             </NavLink>
                             <NavLink
                                 href="/roles"

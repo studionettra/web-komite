@@ -5,12 +5,28 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Alert;
 use App\Http\Controllers\Controller;
 use App\Models\CommitteeMember;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-class CommitteeMemberController extends Controller
+class CommitteeMemberController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            function ($request, $next) {
+                $firstSuperadmin = User::role('Superadmin')->orderBy('id', 'asc')->first();
+                if ($firstSuperadmin && auth()->id() !== $firstSuperadmin->id) {
+                    abort(403, 'Hanya Superadmin Utama yang dapat mengakses halaman ini.');
+                }
+
+                return $next($request);
+            },
+        ];
+    }
+
     public function index()
     {
         $members = CommitteeMember::orderBy('division_order', 'asc')
