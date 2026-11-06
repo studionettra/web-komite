@@ -11,6 +11,7 @@ import {
     X,
     CalendarBlank,
     Gear,
+    IdentificationCard,
     ImageSquare,
     Newspaper,
     Tag,
@@ -290,6 +291,14 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                                 onClick={closeSidebar}
                             >
                                 Data Kelas
+                            </NavLink>
+                            <NavLink
+                                href="/admin/committee-members"
+                                icon={IdentificationCard}
+                                pathname={pathname}
+                                onClick={closeSidebar}
+                            >
+                                Pengurus Komite
                             </NavLink>
                             <NavLink
                                 href="/roles"

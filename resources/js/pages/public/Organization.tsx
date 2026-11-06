@@ -19,11 +19,15 @@ import sekretarisMamaDaania from '../../../images/komite/sekretaris-mama-daania.
 import wakilKetuaMamaGhani from '../../../images/komite/wakil-ketua-mama-ghani.jpeg';
 import PublicLayout from '../../layouts/PublicLayout';
 
-export default function Organization() {
+export default function Organization({
+    divisions = [],
+}: {
+    divisions?: any[];
+}) {
     const [isLoaded, setIsLoaded] = useState(false);
     useEffect(() => setIsLoaded(true), []);
 
-    const pengurus = [
+    const fallbackPengurus = [
         {
             title: 'Kepala Sekolah',
             members: [
@@ -115,6 +119,9 @@ export default function Organization() {
             ],
         },
     ];
+
+    const displayDivisions =
+        divisions && divisions.length > 0 ? divisions : fallbackPengurus;
 
     const getInitials = (name: string) => {
         const match = name.match(/\(([^)]+)\)/);
@@ -223,7 +230,7 @@ export default function Organization() {
                 <div className="absolute top-3/4 left-1/4 -z-10 h-[400px] w-[400px] rounded-full bg-pink-200/20 mix-blend-multiply blur-3xl"></div>
 
                 <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                    {pengurus.map((divisi, idx) => (
+                    {displayDivisions.map((divisi: any, idx: number) => (
                         <div
                             key={idx}
                             className="border-b-2 border-dashed border-slate-200 py-12 last:border-0 sm:py-20"

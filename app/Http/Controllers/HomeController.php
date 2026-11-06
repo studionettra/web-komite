@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Alert;
 use App\Models\Banner;
 use App\Models\Classroom;
+use App\Models\CommitteeMember;
 use App\Models\InstagramPost;
 use App\Models\Post;
 use App\Models\Program;
@@ -110,7 +111,28 @@ class HomeController extends Controller
 
     public function organization()
     {
-        return Inertia::render('public/Organization');
+        $members = CommitteeMember::active()
+            ->ordered()
+            ->get();
+
+        $divisions = $members->groupBy('division')->map(function ($group, $divisionName) {
+            return [
+                'title' => $divisionName,
+                'division_order' => $group->first()->division_order ?? 0,
+                'members' => $group->map(function ($m) {
+                    return [
+                        'id' => $m->id,
+                        'name' => $m->name,
+                        'role' => $m->position,
+                        'image' => $m->photo_url,
+                    ];
+                })->values()->toArray(),
+            ];
+        })->values()->toArray();
+
+        return Inertia::render('public/Organization', [
+            'divisions' => $divisions,
+        ]);
     }
 
     public function finance(Request $request)

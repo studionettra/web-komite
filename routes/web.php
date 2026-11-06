@@ -4,6 +4,7 @@ use App\Http\Controllers\AcademicCalendarController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClassroomController;
+use App\Http\Controllers\Admin\CommitteeMemberController;
 use App\Http\Controllers\Admin\InstagramPostController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\AdminAcademicMonthController;
@@ -119,5 +120,8 @@ Route::middleware(['auth', 'prevent-back-history'])->group(function (): void {
 
         // Admin Classroom Routes
         Route::resource('/admin/classrooms', ClassroomController::class)->except(['create', 'show', 'edit']);
+
+        // Admin Committee Members Routes
+        Route::resource('/admin/committee-members', CommitteeMemberController::class)->except(['create', 'show', 'edit']);
     });
 });
