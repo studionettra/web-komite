@@ -2,6 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import {
     CalendarBlank,
     ChalkboardTeacher,
+    CheckCircle,
     Clock,
     BowlFood,
     GraduationCap,
@@ -39,6 +40,36 @@ export default function Home({
     useEffect(() => {
         setIsMounted(true);
     }, []);
+
+    const getHeroProgramBadge = (status: string) => {
+        switch (status) {
+            case 'ongoing':
+                return {
+                    label: 'Sedang Berlangsung',
+                    className:
+                        'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30',
+                };
+            case 'completed':
+                return {
+                    label: 'Program Telah Selesai',
+                    className:
+                        'bg-sky-500/20 text-sky-200 border border-sky-400/30',
+                };
+            case 'cancelled':
+                return {
+                    label: 'Dibatalkan',
+                    className:
+                        'bg-rose-500/20 text-rose-300 border border-rose-500/30',
+                };
+            case 'planned':
+            default:
+                return {
+                    label: 'Program Terdekat',
+                    className:
+                        'bg-blue-500/30 text-blue-300 border border-blue-400/30',
+                };
+        }
+    };
 
     const getProgramIcon = (title: string) => {
         if (!title) {
@@ -136,24 +167,24 @@ export default function Home({
                                                 key={`banner-${banner.id}`}
                                             >
                                                 <div className="group relative h-full w-full bg-slate-900">
-                                                        <img
-                                                            src={`/storage/${banner.image}?v=2`}
-                                                            alt={
-                                                                banner.title ||
-                                                                'Banner'
-                                                            }
-                                                            fetchPriority={
-                                                                index === 0
-                                                                    ? 'high'
-                                                                    : 'auto'
-                                                            }
-                                                            loading={
-                                                                index === 0
-                                                                    ? 'eager'
-                                                                    : 'lazy'
-                                                            }
-                                                            className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
-                                                        />
+                                                    <img
+                                                        src={`/storage/${banner.image}?v=2`}
+                                                        alt={
+                                                            banner.title ||
+                                                            'Banner'
+                                                        }
+                                                        fetchPriority={
+                                                            index === 0
+                                                                ? 'high'
+                                                                : 'auto'
+                                                        }
+                                                        loading={
+                                                            index === 0
+                                                                ? 'eager'
+                                                                : 'lazy'
+                                                        }
+                                                        className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
+                                                    />
                                                     {/* Optional subtle gradient at bottom just for pagination visibility */}
                                                     <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-slate-950/50 to-transparent"></div>
                                                 </div>
@@ -170,41 +201,48 @@ export default function Home({
                                             <SwiperSlide
                                                 key={`prog-img-${idx}`}
                                             >
-                                                    <div className="group relative h-full w-full bg-slate-900">
-                                                        <img
-                                                            src={`/storage/${img}`}
-                                                            alt={`${heroProgram.title} - ${idx + 1}`}
-                                                            fetchPriority={
-                                                                (!banners ||
-                                                                    banners.length ===
-                                                                        0) &&
-                                                                idx === 0
-                                                                    ? 'high'
-                                                                    : 'auto'
-                                                            }
-                                                            loading={
-                                                                (!banners ||
-                                                                    banners.length ===
-                                                                        0) &&
-                                                                idx === 0
-                                                                    ? 'eager'
-                                                                    : 'lazy'
-                                                            }
-                                                            className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
-                                                        />
+                                                <div className="group relative h-full w-full bg-slate-900">
+                                                    <img
+                                                        src={`/storage/${img}`}
+                                                        alt={`${heroProgram.title} - ${idx + 1}`}
+                                                        fetchPriority={
+                                                            (!banners ||
+                                                                banners.length ===
+                                                                    0) &&
+                                                            idx === 0
+                                                                ? 'high'
+                                                                : 'auto'
+                                                        }
+                                                        loading={
+                                                            (!banners ||
+                                                                banners.length ===
+                                                                    0) &&
+                                                            idx === 0
+                                                                ? 'eager'
+                                                                : 'lazy'
+                                                        }
+                                                        className="h-full w-full object-cover object-center transition-transform duration-10000 ease-linear group-hover:scale-110"
+                                                    />
                                                     {/* Playful Bottom Gradient Overlay */}
                                                     <div className="absolute inset-x-0 top-1/3 bottom-0 bg-linear-to-t from-sky-950/95 via-sky-900/50 to-transparent"></div>
                                                     <div className="absolute inset-0 flex items-end pb-16 sm:pb-20 lg:pb-24">
                                                         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                                                             <div className="max-w-3xl text-left">
-                                                                <div
-                                                                    className={`mb-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase backdrop-blur-md sm:mb-3 sm:gap-2 sm:px-3 sm:py-1 sm:text-xs ${heroProgram.status === 'ongoing' ? 'bg-emerald-500/20 text-emerald-300' : 'bg-blue-500/30 text-blue-300'}`}
-                                                                >
-                                                                    {heroProgram.status ===
-                                                                    'ongoing'
-                                                                        ? 'Sedang Berlangsung'
-                                                                        : 'Program Terdekat'}
-                                                                </div>
+                                                                {(() => {
+                                                                    const badge =
+                                                                        getHeroProgramBadge(
+                                                                            heroProgram.status,
+                                                                        );
+                                                                    return (
+                                                                        <div
+                                                                            className={`mb-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase backdrop-blur-md sm:mb-3 sm:gap-2 sm:px-3 sm:py-1 sm:text-xs ${badge.className}`}
+                                                                        >
+                                                                            {
+                                                                                badge.label
+                                                                            }
+                                                                        </div>
+                                                                    );
+                                                                })()}
                                                                 <h1 className="mb-2 text-3xl leading-[1.15] font-bold tracking-tight text-white drop-shadow-lg sm:mb-3 sm:text-5xl lg:text-6xl">
                                                                     {
                                                                         heroProgram.title
@@ -253,16 +291,22 @@ export default function Home({
                                                                                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                                                                                     />
                                                                                 </svg>
-                                                                                {new Date(
-                                                                                    displayDate,
-                                                                                ).toLocaleDateString(
-                                                                                    'id-ID',
-                                                                                    {
-                                                                                        day: 'numeric',
-                                                                                        month: 'long',
-                                                                                        year: 'numeric',
-                                                                                    },
-                                                                                )}
+                                                                                <span>
+                                                                                    {heroProgram.status ===
+                                                                                    'completed'
+                                                                                        ? 'Terlaksana: '
+                                                                                        : ''}
+                                                                                    {new Date(
+                                                                                        displayDate,
+                                                                                    ).toLocaleDateString(
+                                                                                        'id-ID',
+                                                                                        {
+                                                                                            day: 'numeric',
+                                                                                            month: 'long',
+                                                                                            year: 'numeric',
+                                                                                        },
+                                                                                    )}
+                                                                                </span>
                                                                             </div>
                                                                         ) : null;
                                                                     })()}
@@ -290,14 +334,21 @@ export default function Home({
                                             <div className="absolute inset-0 flex items-end pb-16 sm:pb-20 lg:pb-24">
                                                 <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                                                     <div className="max-w-3xl text-left">
-                                                        <div
-                                                            className={`mb-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase backdrop-blur-md sm:mb-3 sm:gap-2 sm:px-3 sm:py-1 sm:text-xs ${heroProgram.status === 'ongoing' ? 'bg-emerald-500/20 text-emerald-300' : 'bg-blue-500/30 text-blue-300'}`}
-                                                        >
-                                                            {heroProgram.status ===
-                                                            'ongoing'
-                                                                ? 'Sedang Berlangsung'
-                                                                : 'Program Terdekat'}
-                                                        </div>
+                                                        {(() => {
+                                                            const badge =
+                                                                getHeroProgramBadge(
+                                                                    heroProgram.status,
+                                                                );
+                                                            return (
+                                                                <div
+                                                                    className={`mb-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase backdrop-blur-md sm:mb-3 sm:gap-2 sm:px-3 sm:py-1 sm:text-xs ${badge.className}`}
+                                                                >
+                                                                    {
+                                                                        badge.label
+                                                                    }
+                                                                </div>
+                                                            );
+                                                        })()}
                                                         <h1 className="mb-2 text-3xl leading-[1.15] font-bold tracking-tight text-white drop-shadow-lg sm:mb-3 sm:text-5xl lg:text-6xl">
                                                             {heroProgram.title}
                                                         </h1>
@@ -343,16 +394,22 @@ export default function Home({
                                                                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                                                                             />
                                                                         </svg>
-                                                                        {new Date(
-                                                                            displayDate,
-                                                                        ).toLocaleDateString(
-                                                                            'id-ID',
-                                                                            {
-                                                                                day: 'numeric',
-                                                                                month: 'long',
-                                                                                year: 'numeric',
-                                                                            },
-                                                                        )}
+                                                                        <span>
+                                                                            {heroProgram.status ===
+                                                                            'completed'
+                                                                                ? 'Terlaksana: '
+                                                                                : ''}
+                                                                            {new Date(
+                                                                                displayDate,
+                                                                            ).toLocaleDateString(
+                                                                                'id-ID',
+                                                                                {
+                                                                                    day: 'numeric',
+                                                                                    month: 'long',
+                                                                                    year: 'numeric',
+                                                                                },
+                                                                            )}
+                                                                        </span>
                                                                     </div>
                                                                 ) : null;
                                                             })()}
@@ -396,91 +453,149 @@ export default function Home({
                 <div className="absolute top-1/2 -right-32 -z-10 h-80 w-80 rounded-full bg-pink-100/40 mix-blend-multiply blur-3xl"></div>
 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    {/* Upcoming Sessions Content (Inside Hero Section) */}
-                    {upcomingSessions &&
-                        Array.isArray(upcomingSessions) &&
-                        upcomingSessions.length > 0 && (
-                            <div className="relative mt-4 mb-4 sm:mt-8 sm:mb-8">
-                                <div className="mb-8 flex flex-col items-center justify-between gap-4 text-center sm:mb-12 sm:flex-row sm:text-left">
-                                    <div>
-                                        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl">
-                                            Program Yang Akan Datang
-                                        </h2>
-                                        <p className="mt-2 text-sm text-slate-500 sm:mt-3 sm:text-base">
-                                            Jadwal sesi program yang akan datang
-                                        </p>
-                                    </div>
-                                    <Link
-                                        href="/program"
-                                        className="group inline-flex items-center gap-1.5 rounded-full border-2 border-blue-200 bg-white px-6 py-2.5 text-sm font-extrabold text-blue-600 shadow-[0_4px_15px_rgba(59,130,246,0.15)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-blue-400 hover:bg-blue-50 hover:shadow-[0_8px_20px_rgba(59,130,246,0.25)] active:scale-95 sm:gap-2 sm:px-8 sm:py-3.5 sm:text-base"
-                                    >
-                                        Lihat Semua{' '}
-                                        <span
-                                            aria-hidden="true"
-                                            className="text-lg transition-transform group-hover:translate-x-1"
-                                        >
-                                            &rarr;
-                                        </span>
-                                    </Link>
-                                </div>
-                                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                                    {upcomingSessions.map((session: any) => (
-                                        <div
-                                            key={session.id}
-                                            className="group relative overflow-hidden rounded-4xl border border-slate-100/60 bg-white/80 p-6 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-blue-100 hover:shadow-xl hover:shadow-blue-900/5 sm:rounded-[2.5rem] sm:p-8"
-                                        >
-                                            {/* Decorative soft glow */}
-                                            <div className="absolute -top-24 -right-24 h-48 w-48 rounded-full bg-blue-50/50 blur-3xl transition-all duration-500 group-hover:bg-blue-100/50"></div>
+                    <div className="relative mt-4 mb-4 sm:mt-8 sm:mb-8">
+                        <div className="mb-8 flex flex-col items-center justify-between gap-4 text-center sm:mb-12 sm:flex-row sm:text-left">
+                            <div>
+                                <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl md:text-4xl">
+                                    Program Yang Akan Datang
+                                </h2>
+                                <p className="mt-2 text-sm text-slate-500 sm:mt-3 sm:text-base">
+                                    Jadwal sesi program dan agenda kegiatan
+                                    komite
+                                </p>
+                            </div>
+                            <Link
+                                href="/program"
+                                className="group inline-flex items-center gap-1.5 rounded-full border-2 border-blue-200 bg-white px-6 py-2.5 text-sm font-extrabold text-blue-600 shadow-[0_4px_15px_rgba(59,130,246,0.15)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-blue-400 hover:bg-blue-50 hover:shadow-[0_8px_20px_rgba(59,130,246,0.25)] active:scale-95 sm:gap-2 sm:px-8 sm:py-3.5 sm:text-base"
+                            >
+                                Lihat Semua{' '}
+                                <span
+                                    aria-hidden="true"
+                                    className="text-lg transition-transform group-hover:translate-x-1"
+                                >
+                                    &rarr;
+                                </span>
+                            </Link>
+                        </div>
 
-                                            <div className="relative z-10">
-                                                <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-                                                    <span className="inline-flex items-center rounded-full bg-blue-50 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-blue-600 uppercase transition-colors group-hover:bg-blue-100">
-                                                        {new Date(
-                                                            session.activity_date,
-                                                        ).toLocaleDateString(
-                                                            'id-ID',
-                                                            {
-                                                                day: 'numeric',
-                                                                month: 'long',
-                                                                year: 'numeric',
-                                                            },
-                                                        )}
-                                                    </span>
-                                                    {(session.start_time ||
-                                                        session.end_time) && (
-                                                        <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1.5 text-xs font-semibold text-slate-500">
-                                                            <Clock
-                                                                weight="bold"
-                                                                className="h-3 w-3"
-                                                            />
-                                                            {session.start_time?.substring(
-                                                                0,
-                                                                5,
-                                                            ) || ''}{' '}
-                                                            {session.end_time
-                                                                ? `- ${session.end_time.substring(0, 5)}`
-                                                                : ''}
-                                                        </span>
+                        {upcomingSessions === undefined ? (
+                            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                                {[1, 2, 3].map((i) => (
+                                    <div
+                                        key={i}
+                                        className="animate-pulse rounded-4xl border border-slate-100/60 bg-white/80 p-6 shadow-sm sm:rounded-[2.5rem] sm:p-8"
+                                    >
+                                        <div className="mb-4 flex items-center justify-between">
+                                            <div className="h-6 w-28 rounded-full bg-slate-200"></div>
+                                            <div className="h-6 w-16 rounded-full bg-slate-200"></div>
+                                        </div>
+                                        <div className="mb-3 h-6 w-3/4 rounded-lg bg-slate-200"></div>
+                                        <div className="h-4 w-full rounded bg-slate-200"></div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : upcomingSessions &&
+                          Array.isArray(upcomingSessions) &&
+                          upcomingSessions.length > 0 ? (
+                            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                                {upcomingSessions.map((session: any) => (
+                                    <div
+                                        key={session.id}
+                                        className="group relative overflow-hidden rounded-4xl border border-slate-100/60 bg-white/80 p-6 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-blue-100 hover:shadow-xl hover:shadow-blue-900/5 sm:rounded-[2.5rem] sm:p-8"
+                                    >
+                                        {/* Decorative soft glow */}
+                                        <div className="absolute -top-24 -right-24 h-48 w-48 rounded-full bg-blue-50/50 blur-3xl transition-all duration-500 group-hover:bg-blue-100/50"></div>
+
+                                        <div className="relative z-10">
+                                            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                                                <span className="inline-flex items-center rounded-full bg-blue-50 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-blue-600 uppercase transition-colors group-hover:bg-blue-100">
+                                                    {new Date(
+                                                        session.activity_date,
+                                                    ).toLocaleDateString(
+                                                        'id-ID',
+                                                        {
+                                                            day: 'numeric',
+                                                            month: 'long',
+                                                            year: 'numeric',
+                                                        },
                                                     )}
-                                                </div>
-                                                <h4 className="mb-2 text-lg leading-snug font-bold text-slate-900 transition-colors group-hover:text-blue-600 sm:text-xl">
-                                                    {session.title}
-                                                </h4>
-                                                {session.program && (
-                                                    <p className="line-clamp-2 text-sm leading-relaxed font-medium text-slate-500">
-                                                        {session.program.title}
-                                                    </p>
+                                                </span>
+                                                {(session.start_time ||
+                                                    session.end_time) && (
+                                                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1.5 text-xs font-semibold text-slate-500">
+                                                        <Clock
+                                                            weight="bold"
+                                                            className="h-3 w-3"
+                                                        />
+                                                        {session.start_time?.substring(
+                                                            0,
+                                                            5,
+                                                        ) || ''}{' '}
+                                                        {session.end_time
+                                                            ? `- ${session.end_time.substring(0, 5)}`
+                                                            : ''}
+                                                    </span>
                                                 )}
                                             </div>
-                                            {getProgramIcon(
-                                                session.program?.title ||
-                                                    session.title,
+                                            <h4 className="mb-2 text-lg leading-snug font-bold text-slate-900 transition-colors group-hover:text-blue-600 sm:text-xl">
+                                                {session.title}
+                                            </h4>
+                                            {session.program && (
+                                                <p className="line-clamp-2 text-sm leading-relaxed font-medium text-slate-500">
+                                                    {session.program.title}
+                                                </p>
                                             )}
                                         </div>
-                                    ))}
+                                        {getProgramIcon(
+                                            session.program?.title ||
+                                                session.title,
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="relative overflow-hidden rounded-[2.5rem] border border-blue-100/80 bg-linear-to-b from-sky-50/50 via-white to-white p-8 text-center shadow-lg shadow-sky-900/5 backdrop-blur-xl sm:p-12 md:p-14">
+                                <div className="absolute -top-12 -right-12 -z-10 h-44 w-44 rounded-full bg-blue-100/50 blur-3xl"></div>
+                                <div className="absolute -bottom-12 -left-12 -z-10 h-44 w-44 rounded-full bg-emerald-100/40 blur-3xl"></div>
+
+                                <div className="mx-auto max-w-xl">
+                                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-3xl bg-blue-100/80 text-blue-600 shadow-inner sm:h-20 sm:w-20 sm:rounded-[1.75rem]">
+                                        <CheckCircle
+                                            weight="duotone"
+                                            className="h-9 w-9 text-blue-600 sm:h-11 sm:w-11"
+                                        />
+                                    </div>
+                                    <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3.5 py-1 text-xs font-bold tracking-wide text-blue-600 uppercase">
+                                        Agenda Periode Ini Tuntas
+                                    </span>
+                                    <h3 className="mt-3 text-xl font-extrabold tracking-tight text-slate-800 sm:text-2xl md:text-3xl">
+                                        Seluruh Program Telah Terlaksana
+                                    </h3>
+                                    <p className="mt-3 text-sm leading-relaxed font-medium text-slate-600 sm:text-base">
+                                        Alhamdulillah, seluruh agenda dan sesi
+                                        kegiatan program komite untuk periode
+                                        ini telah rampung dilaksanakan. Nantikan
+                                        pembaruan jadwal selanjutnya atau simak
+                                        kilas balik dokumentasi kegiatan kami.
+                                    </p>
+                                    <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:mt-8 sm:gap-4">
+                                        <Link
+                                            href="/program"
+                                            className="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-[0_6px_20px_rgba(37,99,235,0.25)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-[0_8px_25px_rgba(37,99,235,0.35)] active:scale-95 sm:px-7 sm:py-3.5 sm:text-base"
+                                        >
+                                            Lihat Arsip Program
+                                        </Link>
+                                        <Link
+                                            href="/kalender-akademik"
+                                            className="inline-flex items-center justify-center rounded-full border-2 border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 active:scale-95 sm:px-7 sm:py-3.5 sm:text-base"
+                                        >
+                                            Buka Kalender Akademik
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         )}
+                    </div>
                 </div>
             </section>
 
@@ -690,7 +805,10 @@ export default function Home({
                     <div className="mb-12 flex flex-col items-center justify-between gap-6 sm:mb-16 md:flex-row md:items-end">
                         <div className="max-w-2xl text-center md:text-left">
                             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-200/50 bg-white/60 px-3 py-1.5 text-[11px] font-bold tracking-wider text-pink-700 uppercase backdrop-blur-md sm:mb-5 sm:px-4 sm:text-xs">
-                                <InstagramLogo className="h-3.5 w-3.5" weight="bold" />
+                                <InstagramLogo
+                                    className="h-3.5 w-3.5"
+                                    weight="bold"
+                                />
                                 Instagram
                             </div>
                             <h2 className="mb-3 text-2xl font-bold tracking-tight text-slate-900 sm:mb-4 sm:text-3xl md:text-4xl">
@@ -708,7 +826,10 @@ export default function Home({
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 rounded-full bg-linear-to-tr from-yellow-500 via-red-500 to-purple-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-pink-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-pink-500/30 sm:px-8 sm:py-3.5 sm:text-base"
                             >
-                                <InstagramLogo className="h-5 w-5" weight="bold" />
+                                <InstagramLogo
+                                    className="h-5 w-5"
+                                    weight="bold"
+                                />
                                 Follow @tkit.alikhlash
                             </a>
                         </div>
@@ -737,7 +858,10 @@ export default function Home({
                     ) : (
                         <div className="flex flex-col items-center justify-center rounded-[2rem] border-2 border-dashed border-slate-200/60 bg-white/40 p-12 text-center sm:p-16">
                             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
-                                <InstagramLogo className="h-8 w-8" weight="duotone" />
+                                <InstagramLogo
+                                    className="h-8 w-8"
+                                    weight="duotone"
+                                />
                             </div>
                             <h3 className="text-lg font-bold text-slate-700">
                                 Belum Ada Post Instagram
